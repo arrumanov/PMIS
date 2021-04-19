@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  projectgql:
+    image: ${DOCKER_REGISTRY-}projectgql
+    build:
+      context: .
+      dockerfile: ProjectGql/Dockerfile
