@@ -17,7 +17,8 @@ namespace PMIS.ProjectGql
         {
             services.AddPooledDbContextFactory<ProjectPortfolioDbContext>(
                 //options => options.UseNpgsql("Data Source=Projects.db"));
-                options => options.UseNpgsql("Host=localhost;Port=5432;Database=ProjectPortfolios;Username=postgres;Password=A2t=A2t="));
+                //options => options.UseNpgsql("Host=localhost;Port=5432;Database=ProjectPortfolios;Username=postgres;Password=A2t=A2t="));
+                options => options.UseNpgsql("Host=host.docker.internal;Port=5432;Database=ProjectPortfolios;Username=postgres;Password=A2t=A2t="));
 
             services
                 .AddGraphQLServer()
