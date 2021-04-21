@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: ProjectGql/Dockerfile
+
+  dogovorgql:
+    image: ${DOCKER_REGISTRY-}dogovorgql
+    build:
+      context: .
+      dockerfile: DogovorGql/Dockerfile
+
