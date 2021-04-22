@@ -13,3 +13,15 @@ services:
       context: .
       dockerfile: DogovorGql/Dockerfile
 
+
+  gatewaygql:
+    image: ${DOCKER_REGISTRY-}gatewaygql
+    build:
+      context: .
+      dockerfile: GatewayGql/Dockerfile
+
+  redis:
+    image: redis
+    ports:
+    - 6379:6379
+

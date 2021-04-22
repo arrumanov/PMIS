@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:23582",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:63086",
+      "sslPort": 44395
     }
   },
   "profiles": {
@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ProjectGql": {
+    "GetewayGql": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

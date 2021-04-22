@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using PMIS.ProjectGql.Data;
 using PMIS.ProjectGql.Projects;
 using PMIS.ProjectGql.Types;
+using StackExchange.Redis;
 
 namespace PMIS.ProjectGql
 {
@@ -27,19 +28,31 @@ namespace PMIS.ProjectGql
                 options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services
+                //.AddSingleton(ConnectionMultiplexer.Connect("redis:6379"))
+                .AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"))
                 .AddGraphQLServer()
                 //.AddQueryType<ProjectQueries>()
                 //.AddMutationType<ProjectsMutations>();
                 .AddQueryType(d => d.Name("Query"))
-                .AddTypeExtension<ProjectQueries>()
                 .AddTypeExtension<ProjectQueries>()
                 .AddMutationType(d => d.Name("Mutation"))
                 .AddTypeExtension<ProjectsMutations>()
                 .AddType<ProjectType>()
                 .EnableRelaySupport()
                 .AddFiltering()
-                .AddSorting();
-                //.AddDataLoader<ProjectByIdDataLoader>();
+                .AddSorting()
+                // We initialize the schema on startup so it is published to the redis as soon as possible
+                .InitializeOnStartup()
+                // We configure the publish definition
+                .PublishSchemaDefinition(c => c
+                    // The name of the schema. This name should be unique
+                    .SetName("projects")
+                    .PublishToRedis(
+                        // The configuration name under which the schema should be published
+                        "PMIS",
+                        // The connection multiplexer that should be used for publishing
+                        sp => sp.GetRequiredService<ConnectionMultiplexer>()));
+            //.AddDataLoader<ProjectByIdDataLoader>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
