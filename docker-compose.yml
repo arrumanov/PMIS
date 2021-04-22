@@ -2,20 +2,20 @@ version: '3.4'
 
 services:
   projectgql:
-    image: ${DOCKER_REGISTRY-}projectgql
+    image: projectgql
     build:
       context: .
       dockerfile: ProjectGql/Dockerfile
 
   dogovorgql:
-    image: ${DOCKER_REGISTRY-}dogovorgql
+    image: dogovorgql
     build:
       context: .
       dockerfile: DogovorGql/Dockerfile
 
 
   gatewaygql:
-    image: ${DOCKER_REGISTRY-}gatewaygql
+    image: gatewaygql
     build:
       context: .
       dockerfile: GatewayGql/Dockerfile

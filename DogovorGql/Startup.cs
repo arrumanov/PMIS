@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,14 +25,16 @@ namespace PMIS.DogovorGql
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPooledDbContextFactory<DogovorDbContext>(
-                options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                //Настройки при запуске в IIS
+                //options => options.UseNpgsql(Configuration.GetConnectionString("IISConnection")));
+                //services.AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"));
+                //Настройки при запуске в Docker
+                options => options.UseNpgsql(Configuration.GetConnectionString("DockerConnection")));
+            services.AddSingleton(ConnectionMultiplexer.Connect("redis:6379"));
+
 
             services
-                //.AddSingleton(ConnectionMultiplexer.Connect("redis:6379"))
-                .AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"))
                 .AddGraphQLServer()
-                //.AddQueryType<ContractQueries>()
-                //.AddMutationType<ContractsMutations>();
                 .AddQueryType(d => d.Name("Query"))
                 .AddTypeExtension<ContractQueries>()
                 .AddTypeExtension<ContractQueries>()
@@ -54,7 +55,6 @@ namespace PMIS.DogovorGql
                         "PMIS",
                         // The connection multiplexer that should be used for publishing
                         sp => sp.GetRequiredService<ConnectionMultiplexer>()));
-            //.AddDataLoader<ContractByIdDataLoader>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using StackExchange.Redis;
 
 namespace GatewayGql
@@ -15,25 +11,23 @@ namespace GatewayGql
     {
         public const string Projects = "projects";
         public const string Dogovors = "dogovors";
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient(Projects, c => c.BaseAddress = new Uri("http://localhost:23582/graphql"));
-            services.AddHttpClient(Dogovors, c => c.BaseAddress = new Uri("http://localhost:6092/graphql"));
-            //services.AddSingleton(ConnectionMultiplexer.Connect("redis:6379"));
-            services.AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"));
+            //Настройки при запуске в IIS
+            //services.AddHttpClient(Projects, c => c.BaseAddress = new Uri("http://localhost:23582/graphql"));
+            //services.AddHttpClient(Dogovors, c => c.BaseAddress = new Uri("http://localhost:6092/graphql"));
+            //https://github.com/ChilliCream/hotchocolate-examples/tree/master/misc/Stitching/federated-with-hot-reload
+            //docker run --name redis-stitching -p 7000:6379 -d redis
+            //services.AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"));
 
-            //services
-            //    .AddGraphQLServer()
-            //    // add the remote schemas
-            //    .AddRemoteSchema(Projects)
-            //    .AddRemoteSchema(Dogovors);
+            //Настройки при запуске в Docker
+            services.AddHttpClient(Projects, c => c.BaseAddress = new Uri("http://projectgql/graphql"));
+            services.AddHttpClient(Dogovors, c => c.BaseAddress = new Uri("http://dogovorgql/graphql"));
+            services.AddSingleton(ConnectionMultiplexer.Connect("redis:6379"));
 
             services
                 .AddGraphQLServer()
-                //.AddQueryType(d => d.Name("Query"))
                 .AddRemoteSchemasFromRedis("PMIS", sp => sp.GetRequiredService<ConnectionMultiplexer>());
         }
 

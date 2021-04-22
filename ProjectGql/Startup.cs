@@ -25,14 +25,15 @@ namespace PMIS.ProjectGql
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPooledDbContextFactory<ProjectPortfolioDbContext>(
-                options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                //Настройки при запуске в IIS
+                //options => options.UseNpgsql(Configuration.GetConnectionString("IISConnection")));
+                //services.AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"));
+                //Настройки при запуске в Docker
+                options => options.UseNpgsql(Configuration.GetConnectionString("DockerConnection")));
+            services.AddSingleton(ConnectionMultiplexer.Connect("redis:6379"));
 
             services
-                //.AddSingleton(ConnectionMultiplexer.Connect("redis:6379"))
-                .AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"))
                 .AddGraphQLServer()
-                //.AddQueryType<ProjectQueries>()
-                //.AddMutationType<ProjectsMutations>();
                 .AddQueryType(d => d.Name("Query"))
                 .AddTypeExtension<ProjectQueries>()
                 .AddMutationType(d => d.Name("Mutation"))
