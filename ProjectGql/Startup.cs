@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PMIS.ProjectGql.Data;
+using PMIS.ProjectGql.IntegrationEvents;
 using PMIS.ProjectGql.Projects;
 using PMIS.ProjectGql.Types;
 using StackExchange.Redis;
@@ -26,11 +27,11 @@ namespace PMIS.ProjectGql
         {
             services.AddPooledDbContextFactory<ProjectPortfolioDbContext>(
                 //Настройки при запуске в IIS
-                //options => options.UseNpgsql(Configuration.GetConnectionString("IISConnection")));
-                //services.AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"));
-                //Настройки при запуске в Docker
-                options => options.UseNpgsql(Configuration.GetConnectionString("DockerConnection")));
-            services.AddSingleton(ConnectionMultiplexer.Connect("redis:6379"));
+                options => options.UseNpgsql(Configuration.GetConnectionString("IISConnection")));
+            services.AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"));
+            //Настройки при запуске в Docker
+            //    options => options.UseNpgsql(Configuration.GetConnectionString("DockerConnection")));
+            //services.AddSingleton(ConnectionMultiplexer.Connect("redis:6379"));
 
             services
                 .AddGraphQLServer()
@@ -54,6 +55,13 @@ namespace PMIS.ProjectGql
                         // The connection multiplexer that should be used for publishing
                         sp => sp.GetRequiredService<ConnectionMultiplexer>()));
             //.AddDataLoader<ProjectByIdDataLoader>();
+
+            services.AddHostedService<DWHWorker>();
+            services.AddHostedService<ProjectIndexWorker>();
+            services.RegisterConfigurationServices(Configuration);
+            services.RegisterQueueServices(Configuration);
+            services.RegisterRepositoryServices();
+            services.RegisterLogging(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

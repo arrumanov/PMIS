@@ -6,16 +6,28 @@ using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Types.Relay;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using PMIS.Contracts;
 using PMIS.DogovorGql.Data;
 using PMIS.DogovorGql.DataLoader;
 using PMIS.DogovorGql.Extensions;
+using PMIS.DogovorGql.IntegrationEvents;
 
 namespace PMIS.DogovorGql.Contracts
 {
     [ExtendObjectType(Name = "Query")]
     public class ContractQueries
     {
+        private readonly IPublishEndpoint _endpoint;
+        private readonly IServiceProvider _serviceProvider;
+
+        public ContractQueries(IPublishEndpoint endpoint, IServiceProvider serviceProvider)
+        {
+            _endpoint = endpoint;
+            _serviceProvider = serviceProvider;
+        }
+
         [UseDogovorDbContext]
         [UsePaging]
         public IQueryable<Contract> GetContracts(
@@ -26,8 +38,19 @@ namespace PMIS.DogovorGql.Contracts
         public Task<Contract> GetContractByNameAsync(
             string name,
             [ScopedService] DogovorDbContext context,
-            CancellationToken cancellationToken) =>
-            context.Contracts.FirstAsync(p => p.Name == name);
+            CancellationToken cancellationToken)
+        {
+            var project = new ProjectDto()
+            {
+                Name = "Project 1",
+                Price = 45,
+                Quantity = 99
+            };
+            var projectService = (IProjectService)_serviceProvider.GetService(typeof(IProjectService));
+            projectService.Put(project, cancellationToken);
+
+            return context.Contracts.FirstAsync(p => p.Name == name);
+        }
 
         [UseDogovorDbContext]
         public async Task<IEnumerable<Contract>> GetContractByNamesAsync(

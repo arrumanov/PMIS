@@ -16,6 +16,8 @@ services:
 
   gatewaygql:
     image: gatewaygql
+    ports:
+      - 5200:80
     build:
       context: .
       dockerfile: GatewayGql/Dockerfile
@@ -24,4 +26,20 @@ services:
     image: redis
     ports:
     - 6379:6379
+
+
+  eventbus:
+    image: ${DOCKER_REGISTRY-}eventbus
+    ports:
+      - 5500:80
+    build:
+      context: .
+      dockerfile: EventBus/Dockerfile
+
+  rabbitmq:
+    container_name: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    image: rabbitmq:3-management
 
