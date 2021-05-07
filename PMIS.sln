@@ -43,11 +43,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGatewaysGql", "src\ApiGa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C0E6565E-2BC8-4603-98AE-6B8747D95C0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogovor.Infrastructure", "src\Services\Dogovor\Dogovor.Infrastructure\Dogovor.Infrastructure.csproj", "{C9EC13F3-6B73-4A94-9C0C-3F2D8E02DEB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dogovor.Infrastructure", "src\Services\Dogovor\Dogovor.Infrastructure\Dogovor.Infrastructure.csproj", "{C9EC13F3-6B73-4A94-9C0C-3F2D8E02DEB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogovor.CrossCutting.Ioc", "src\Services\Dogovor\Dogovor.CrossCutting.Ioc\Dogovor.CrossCutting.Ioc.csproj", "{9A2B3A12-9C89-44A1-8E03-31C0E4C34F05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dogovor.CrossCutting.Ioc", "src\Services\Dogovor\Dogovor.CrossCutting.Ioc\Dogovor.CrossCutting.Ioc.csproj", "{9A2B3A12-9C89-44A1-8E03-31C0E4C34F05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogovor.CrossCutting", "src\Services\Dogovor\Dogovor.CrossCutting\Dogovor.CrossCutting.csproj", "{A58A4882-1D42-4F74-A4E8-D22589B9C566}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dogovor.CrossCutting", "src\Services\Dogovor\Dogovor.CrossCutting\Dogovor.CrossCutting.csproj", "{A58A4882-1D42-4F74-A4E8-D22589B9C566}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogovor.Domain", "src\Services\Dogovor\Dogovor.Domain\Dogovor.Domain.csproj", "{36937A83-D791-49AF-A25F-E19BF4011862}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogovor.Domain.Service", "src\Services\Dogovor\Dogovor.Domain.Service\Dogovor.Domain.Service.csproj", "{C596FB03-7B00-452F-AAD3-7A65F7A9B195}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogovor.Application", "src\Services\Dogovor\Dogovor.Application\Dogovor.Application.csproj", "{2D39BB78-A693-4025-94A9-3EFB1B838696}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -215,6 +221,42 @@ Global
 		{A58A4882-1D42-4F74-A4E8-D22589B9C566}.Release|x64.Build.0 = Release|Any CPU
 		{A58A4882-1D42-4F74-A4E8-D22589B9C566}.Release|x86.ActiveCfg = Release|Any CPU
 		{A58A4882-1D42-4F74-A4E8-D22589B9C566}.Release|x86.Build.0 = Release|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Debug|x64.Build.0 = Debug|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Debug|x86.Build.0 = Debug|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Release|x64.ActiveCfg = Release|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Release|x64.Build.0 = Release|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Release|x86.ActiveCfg = Release|Any CPU
+		{36937A83-D791-49AF-A25F-E19BF4011862}.Release|x86.Build.0 = Release|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Debug|x64.Build.0 = Debug|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Debug|x86.Build.0 = Debug|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Release|x64.ActiveCfg = Release|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Release|x64.Build.0 = Release|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Release|x86.ActiveCfg = Release|Any CPU
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195}.Release|x86.Build.0 = Release|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Debug|x64.Build.0 = Debug|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Debug|x86.Build.0 = Debug|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Release|x64.ActiveCfg = Release|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Release|x64.Build.0 = Release|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Release|x86.ActiveCfg = Release|Any CPU
+		{2D39BB78-A693-4025-94A9-3EFB1B838696}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -237,6 +279,9 @@ Global
 		{C9EC13F3-6B73-4A94-9C0C-3F2D8E02DEB7} = {EBF60033-4AE1-442E-A3B7-BF9FD56916EC}
 		{9A2B3A12-9C89-44A1-8E03-31C0E4C34F05} = {EBF60033-4AE1-442E-A3B7-BF9FD56916EC}
 		{A58A4882-1D42-4F74-A4E8-D22589B9C566} = {EBF60033-4AE1-442E-A3B7-BF9FD56916EC}
+		{36937A83-D791-49AF-A25F-E19BF4011862} = {EBF60033-4AE1-442E-A3B7-BF9FD56916EC}
+		{C596FB03-7B00-452F-AAD3-7A65F7A9B195} = {EBF60033-4AE1-442E-A3B7-BF9FD56916EC}
+		{2D39BB78-A693-4025-94A9-3EFB1B838696} = {EBF60033-4AE1-442E-A3B7-BF9FD56916EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB5A7879-385B-4A7E-860D-0B980AED0E98}

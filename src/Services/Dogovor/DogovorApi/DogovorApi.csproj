@@ -8,8 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GraphQL" Version="2.4.0" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.4.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="11.2.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dogovor.Application\Dogovor.Application.csproj" />
+    <ProjectReference Include="..\Dogovor.CrossCutting.Ioc\Dogovor.CrossCutting.Ioc.csproj" />
+    <ProjectReference Include="..\Dogovor.Domain.Service\Dogovor.Domain.Service.csproj" />
+    <ProjectReference Include="..\Dogovor.Infrastructure\Dogovor.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
