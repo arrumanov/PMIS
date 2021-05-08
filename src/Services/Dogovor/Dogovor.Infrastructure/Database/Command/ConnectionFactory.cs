@@ -14,11 +14,11 @@ namespace Dogovor.Infrastructure.Database.Command
                 case DatabaseProvider.POSTGRES:
                     return options
                         .UseNpgsql(config.WriteDatabase,
-                            opt => opt.MigrationsAssembly("Graph.API"));
+                            opt => opt.MigrationsAssembly("DogovorApi"));
                 case DatabaseProvider.MSSQL:
                     return options
                         .UseSqlServer(config.WriteDatabase,
-                            opt => opt.MigrationsAssembly("Graph.API"));
+                            opt => opt.MigrationsAssembly("DogovorApi"));
                 default:
                     return options
                         .UseInMemoryDatabase("graphdb");

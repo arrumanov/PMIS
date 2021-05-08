@@ -145,6 +145,7 @@ namespace Dogovor.CrossCutting.Ioc
             #region Query
 
             serviceCollection.AddSingleton<ProjectQuery>();
+            serviceCollection.AddSingleton<ProjectHcQuery>();
 
             serviceCollection.AddSingleton<ProjectFilterType>();
 

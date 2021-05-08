@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dogovor.Application.Graph.Project.Query;
 using Dogovor.CrossCutting.Ioc;
 using Dogovor.Infrastructure.Database;
 using Dogovor.Infrastructure.Database.Command;
@@ -42,6 +43,15 @@ namespace DogovorApi
             services.ResolveGraphDependencies();
             services.ResolveRequestHandlers();
             services.ResolveAuxiliaries();
+
+            //-------- Hot Chocolate -----------//
+
+            services
+                .AddGraphQLServer()
+                .AddQueryType<ProjectHcQuery>()
+                .AddFiltering();
+
+            //-------- Hot Chocolate -----------//
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +78,17 @@ namespace DogovorApi
                 GraphQLEndPoint = "/api/graphql",
 
             });
+
+            //-------- Hot Chocolate -----------//
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGraphQL();
+            });
+
+            //-------- Hot Chocolate -----------//
 
             app.UseHttpsRedirection();
             UpdateDatabase(app);

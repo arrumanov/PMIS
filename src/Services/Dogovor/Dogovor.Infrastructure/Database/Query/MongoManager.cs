@@ -44,7 +44,12 @@ namespace Dogovor.Infrastructure.Database.Query
             return JsonConvert.DeserializeObject<IEnumerable<T>>(json);
         }
 
+        public virtual Task<IQueryable<T>> Get()
+        {
+            var finder = _Collection.AsQueryable();
 
+            return Task.FromResult((IQueryable<T>)finder);
+        }
 
         public virtual async Task<T> GetById(Guid id, string[] fields)
         {
@@ -54,6 +59,25 @@ namespace Dogovor.Infrastructure.Database.Query
             try
             {
                 var finder = await _Collection.Find(filter).Project(projection).FirstAsync();
+
+                var json = ReplaceIdentification(finder.ToJson());
+
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+            catch
+            {
+                return default;
+            }
+
+        }
+
+        public virtual async Task<T> GetById(Guid id)
+        {
+            var filter = Builders<T>.Filter.Eq(MONGO_ID, id.ToString());
+
+            try
+            {
+                var finder = await _Collection.Find(filter).FirstAsync();
 
                 var json = ReplaceIdentification(finder.ToJson());
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dogovor.CrossCutting.Extensions.GraphQL;
 using Dogovor.CrossCutting.Interfaces;
@@ -20,9 +21,19 @@ namespace Dogovor.Infrastructure.Database.Query.Manager
             return _Manager.Get(fields, filters, order, skip, take);
         }
 
+        public Task<IQueryable<T>> Get()
+        {
+            return _Manager.Get();
+        }
+
         public Task<T> GetById(Guid id, string[] fields)
         {
             return _Manager.GetById(id, fields);
+        }
+
+        public Task<T> GetById(Guid id)
+        {
+            return _Manager.GetById(id);
         }
 
         public Task<bool> Index(T entry)

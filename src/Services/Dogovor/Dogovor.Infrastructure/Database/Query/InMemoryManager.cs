@@ -39,6 +39,11 @@ namespace Dogovor.Infrastructure.Database.Query
             return Task.FromResult(result);
         }
 
+        public Task<IQueryable<T>> Get()
+        {
+            return Task.FromResult(_Data.AsQueryable());
+        }
+
         public Task<T> GetById(Guid id, string[] fields)
         {
             var query = _Data.AsQueryable()
@@ -51,6 +56,16 @@ namespace Dogovor.Infrastructure.Database.Query
             var result = JsonConvert.DeserializeObject<T>(json);
 
             return Task.FromResult(result);
+        }
+
+        public Task<T> GetById(Guid id)
+        {
+            var query = _Data.AsQueryable()
+                              .Where(i => i.Id == id.ToString())
+                              .Skip(0).Take(1)
+                              .FirstOrDefault();
+
+            return Task.FromResult(query);
         }
 
         public Task<bool> Index(T entry)

@@ -41,12 +41,33 @@ namespace Dogovor.Infrastructure.Database.Query
             return response.Documents.AsEnumerable();
         }
 
+        public async Task<IQueryable<T>> Get()
+        {
+            var request = new SearchRequest<T>(_Index);
+
+            var response = await _Client.SearchAsync<T>(request);
+
+            return response.Documents.AsQueryable();
+        }
+
         public async Task<T> GetById(Guid id, string[] fields)
         {
             var request = new SearchRequest(_Index)
             {
                 Query = new TermQuery() { Field = "_id", Value = id.ToString(), IsStrict = true },
                 Source = GetProjection(fields)
+            };
+
+            var response = await _Client.SearchAsync<T>(request);
+
+            return response.Documents.FirstOrDefault();
+        }
+
+        public async Task<T> GetById(Guid id)
+        {
+            var request = new SearchRequest(_Index)
+            {
+                Query = new TermQuery() { Field = "_id", Value = id.ToString(), IsStrict = true }
             };
 
             var response = await _Client.SearchAsync<T>(request);
