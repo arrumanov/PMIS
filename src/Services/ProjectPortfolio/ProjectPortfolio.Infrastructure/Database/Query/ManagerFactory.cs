@@ -1,9 +1,9 @@
-﻿using Dogovor.CrossCutting.Interfaces;
+﻿using ProjectPortfolio.CrossCutting.Interfaces;
 using Microsoft.Extensions.Options;
 
 //https://logz.io/blog/elasticsearch-vs-mongodb/
 //https://mindmajix.com/mongodb-vs-elasticsearch
-namespace Dogovor.Infrastructure.Database.Query
+namespace ProjectPortfolio.Infrastructure.Database.Query
 {
     public class ManagerFactory
     {

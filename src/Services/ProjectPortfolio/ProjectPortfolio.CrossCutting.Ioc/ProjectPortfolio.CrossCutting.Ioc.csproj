@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectPortfolio.Application\ProjectPortfolio.Application.csproj" />
+    <ProjectReference Include="..\ProjectPortfolio.CrossCutting\ProjectPortfolio.CrossCutting.csproj" />
+    <ProjectReference Include="..\ProjectPortfolio.Domain.Service\ProjectPortfolio.Domain.Service.csproj" />
+    <ProjectReference Include="..\ProjectPortfolio.Domain\ProjectPortfolio.Domain.csproj" />
+    <ProjectReference Include="..\ProjectPortfolio.Infrastructure\ProjectPortfolio.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

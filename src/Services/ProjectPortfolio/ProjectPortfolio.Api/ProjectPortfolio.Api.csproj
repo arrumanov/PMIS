@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>138b1787-b2c2-486e-b628-f09ea7d5361a</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectPortfolio.Application\ProjectPortfolio.Application.csproj" />
+    <ProjectReference Include="..\ProjectPortfolio.CrossCutting.Ioc\ProjectPortfolio.CrossCutting.Ioc.csproj" />
+    <ProjectReference Include="..\ProjectPortfolio.Domain.Service\ProjectPortfolio.Domain.Service.csproj" />
+    <ProjectReference Include="..\ProjectPortfolio.Infrastructure\ProjectPortfolio.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

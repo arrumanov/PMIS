@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="HotChocolate.Data" Version="11.2.2" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectPortfolio.CrossCutting\ProjectPortfolio.CrossCutting.csproj" />
+    <ProjectReference Include="..\ProjectPortfolio.Infrastructure\ProjectPortfolio.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Graph\Project\Mutation\" />
+    <Folder Include="Graph\Project\Types\Input\" />
+    <Folder Include="Graph\Project\Types\Query\" />
+    <Folder Include="Graph\Task\Mutation\" />
+    <Folder Include="Graph\Task\Query\" />
+    <Folder Include="Graph\Task\Types\Input\" />
+    <Folder Include="Graph\Task\Types\Query\" />
+    <Folder Include="Graph\User\Mutation\" />
+    <Folder Include="Graph\User\Query\" />
+    <Folder Include="Graph\User\Types\Input\" />
+    <Folder Include="Graph\User\Types\Query\" />
+  </ItemGroup>
+
+</Project>
