@@ -2,7 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Graph\Project\ProjectMutation.cs~RF8e97e8.TMP" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
@@ -20,9 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Graph\Project\Mutation\" />
-    <Folder Include="Graph\Project\Types\Input\" />
-    <Folder Include="Graph\Project\Types\Query\" />
     <Folder Include="Graph\Task\Mutation\" />
     <Folder Include="Graph\Task\Query\" />
     <Folder Include="Graph\Task\Types\Input\" />

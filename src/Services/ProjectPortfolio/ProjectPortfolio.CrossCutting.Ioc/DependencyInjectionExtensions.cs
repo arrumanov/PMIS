@@ -1,7 +1,7 @@
 ﻿using ProjectPortfolio.Application.Commands.Project;
 using ProjectPortfolio.Application.Commands.Task;
 using ProjectPortfolio.Application.Commands.User;
-using ProjectPortfolio.Application.Graph.Project.Query;
+using ProjectPortfolio.Application.Graph.Project;
 using ProjectPortfolio.Application.MessageHandler;
 using ProjectPortfolio.Domain.Service.CommandHandler;
 using ProjectPortfolio.Domain.Service.Mappings;
@@ -106,12 +106,13 @@ namespace ProjectPortfolio.CrossCutting.Ioc
 
             #region Query
             
-            serviceCollection.AddSingleton<ProjectHcQuery>();
+            serviceCollection.AddSingleton<ProjectQuery>();
 
             #endregion
 
             #region Mutation
-            
+
+            serviceCollection.AddSingleton<ProjectMutation>();
 
             #endregion
 
@@ -120,17 +121,17 @@ namespace ProjectPortfolio.CrossCutting.Ioc
             #region Task
 
             #region Query
-            
+
 
             #endregion
 
             #region Mutation
-            
+
 
             #endregion
 
             #endregion
-            
+
         }
 
         public static void ResolveAuxiliaries(this IServiceCollection serviceCollection)

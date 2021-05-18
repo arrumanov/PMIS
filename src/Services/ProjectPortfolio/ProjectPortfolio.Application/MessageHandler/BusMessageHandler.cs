@@ -101,6 +101,16 @@ namespace ProjectPortfolio.Application.MessageHandler
             await taskManager.Index(messageData.Task);
         }
 
+        private async Task UpdateProject(Message message, IServiceScope scope)
+        {
+            var project = Newtonsoft.Json.JsonConvert.DeserializeObject<Project>(message.MessageData);
+
+            var projectManager = scope.ServiceProvider.GetRequiredService<IEntityManager<Project>>();
+
+            await projectManager.Remove(Guid.Parse(project.Id));
+            await projectManager.Index(project);
+        }
+
         #endregion
 
         #region Task

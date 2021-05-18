@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Command = ProjectPortfolio.Infrastructure.Database.Command.Model;
 using Query = ProjectPortfolio.Infrastructure.Database.Query.Model.Project;
 using UserQuery = ProjectPortfolio.Infrastructure.Database.Query.Model.User;
@@ -132,7 +133,9 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
 
         public async Task<bool> Handle(UpdateProjectInfoCommand request, CancellationToken cancellationToken)
         {
-            var projectDomain = _ProjectRepository.GetById(request.Id).Result.ToDomain<Project>(_Mapper);
+            var tt = _ProjectRepository.GetById(request.Id).Result;
+            var tt2 = _ProjectRepository.GetAll().Result.ToList();
+            var projectDomain = tt.ToDomain<Project>(_Mapper);
             projectDomain.Validate();
 
             projectDomain.SetDescription(request.Description, request.LongDescription);

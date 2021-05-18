@@ -5,9 +5,9 @@ using HotChocolate;
 using HotChocolate.Data;
 using System.Linq;
 
-namespace ProjectPortfolio.Application.Graph.Project.Query
+namespace ProjectPortfolio.Application.Graph.Project
 {
-    public class ProjectHcQuery
+    public class ProjectQuery
     {
         [UseFiltering()]
         public Task<IQueryable<Infrastructure.Database.Query.Model.Project.Project>> GetProjects(

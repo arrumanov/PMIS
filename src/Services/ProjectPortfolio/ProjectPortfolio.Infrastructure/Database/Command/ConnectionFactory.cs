@@ -21,7 +21,9 @@ namespace ProjectPortfolio.Infrastructure.Database.Command
                             opt => opt.MigrationsAssembly("DogovorApi"));
                 default:
                     return options
-                        .UseInMemoryDatabase("graphdb");
+                        .UseNpgsql("Host=localhost; Port=5432; Database=TestPPApiOne; User Id=postgres;Password=A2t=A2t=");
+                    //return options
+                    //    .UseInMemoryDatabase("graphdb");
             }
         }
     }

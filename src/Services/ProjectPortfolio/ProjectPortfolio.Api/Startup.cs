@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProjectPortfolio.Application.Graph.Project.Query;
+using ProjectPortfolio.Application.Graph.Project;
 using ProjectPortfolio.CrossCutting.Ioc;
 using ProjectPortfolio.Infrastructure.Database;
 using ProjectPortfolio.Infrastructure.Database.Command;
@@ -41,7 +41,8 @@ namespace ProjectPortfolio.Api
 
             services
                 .AddGraphQLServer()
-                .AddQueryType<ProjectHcQuery>()
+                .AddQueryType<ProjectQuery>()
+                .AddMutationType<ProjectMutation>()
                 .AddFiltering();
 
             //-------- Hot Chocolate -----------//
