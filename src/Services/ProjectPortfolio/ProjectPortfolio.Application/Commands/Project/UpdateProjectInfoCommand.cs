@@ -2,7 +2,7 @@
 
 namespace ProjectPortfolio.Application.Commands.Project
 {
-    public class UpdateProjectInfoCommand : CommandBase<bool>
+    public class UpdateProjectInfoCommand : CommandBase<Infrastructure.Database.Query.Model.Project.Project>
     {
         public Guid Id { get; set; }
         public string Description { get; set; }

@@ -66,9 +66,11 @@ namespace ProjectPortfolio.CrossCutting.Ioc
             serviceCollection.AddScoped<IRequestHandler<AddUserCommand, bool>, UserCommandHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateUserInfoCommand, bool>, UserCommandHandler>();
 
-            serviceCollection.AddScoped<IRequestHandler<AddProjectCommand, bool>, ProjectCommandHandler>();
-            serviceCollection.AddScoped<IRequestHandler<AddUserProjectCommand, bool>, ProjectCommandHandler>();
-            serviceCollection.AddScoped<IRequestHandler<RemoveUserProjectCommand, bool>, ProjectCommandHandler>();
+            serviceCollection.AddScoped<IRequestHandler<AddProjectCommand, Project>, ProjectCommandHandler>();
+            serviceCollection.AddScoped<IRequestHandler<AddUserProjectCommand, ProjectUserMessage>, ProjectCommandHandler>();
+            serviceCollection.AddScoped<IRequestHandler<RemoveUserProjectCommand, ProjectUserMessage>, ProjectCommandHandler>();
+            //todo если эту строку удалить, все равно код будет понимать, что нужно вызвать. пока не понял, как это происходит
+            serviceCollection.AddScoped<IRequestHandler<UpdateProjectInfoCommand, Project>, ProjectCommandHandler>();
 
             serviceCollection.AddScoped<IRequestHandler<AddTaskCommand, bool>, TaskCommandHandler>();
             serviceCollection.AddScoped<IRequestHandler<RemoveTaskCommand, bool>, TaskCommandHandler>();

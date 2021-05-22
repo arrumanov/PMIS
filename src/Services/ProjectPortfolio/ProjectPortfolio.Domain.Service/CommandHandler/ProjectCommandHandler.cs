@@ -10,14 +10,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using ProjectPortfolio.Infrastructure.ServiceBus;
 using ProjectPortfolio.Application.Commands.Project;
+using ProjectPortfolio.Application.MessageHandler;
 using ProjectPortfolio.Domain.Model;
 
 namespace ProjectPortfolio.Domain.Service.CommandHandler
 {
-    public class ProjectCommandHandler : IRequestHandler<AddProjectCommand, bool>,
-                                         IRequestHandler<UpdateProjectInfoCommand, bool>,
-                                         IRequestHandler<AddUserProjectCommand, bool>,
-                                         IRequestHandler<RemoveUserProjectCommand, bool>
+    public class ProjectCommandHandler : IRequestHandler<AddProjectCommand, Infrastructure.Database.Query.Model.Project.Project>,
+                                         IRequestHandler<UpdateProjectInfoCommand, Infrastructure.Database.Query.Model.Project.Project>,
+                                         IRequestHandler<AddUserProjectCommand, ProjectUserMessage>,
+                                         IRequestHandler<RemoveUserProjectCommand, ProjectUserMessage>
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IServiceBus _Bus;
@@ -38,7 +39,7 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
             _Mapper = mapper;
         }
 
-        public async Task<bool> Handle(AddProjectCommand request, CancellationToken cancellationToken)
+        public async Task<Infrastructure.Database.Query.Model.Project.Project> Handle(AddProjectCommand request, CancellationToken cancellationToken)
         {
             var projectDomain = new Project(request.Description, request.LongDescription);
             projectDomain.Validate();
@@ -56,16 +57,17 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
 
             var publishMessage = new Message();
             publishMessage.MessageType = "AddProject";
-            publishMessage.SetData(projectDomain.ToQueryModel<Query.Project>(_Mapper));
+            var response = projectDomain.ToQueryModel<Query.Project>(_Mapper);
+            publishMessage.SetData(response);
 
             await _Bus.SendMessage(publishMessage);
 
             #endregion
 
-            return true;
+            return response;
         }
 
-        public async Task<bool> Handle(AddUserProjectCommand request, CancellationToken cancellationToken)
+        public async Task<ProjectUserMessage> Handle(AddUserProjectCommand request, CancellationToken cancellationToken)
         {
             var userDomain = _UserRepository.GetById(request.UserId).Result.ToDomain<User>(_Mapper);
             var projectDomain = _ProjectRepository.GetById(request.ProjectId).Result.ToDomain<Project>(_Mapper);
@@ -84,20 +86,21 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
 
             var addUserProjectMessage = new Message();
             addUserProjectMessage.MessageType = "UpdateUserProject";
-            addUserProjectMessage.SetData(new
+            var response = new ProjectUserMessage
             {
                 Project = projectDomain.ToQueryModel<Query.Project>(_Mapper),
                 User = userDomain.ToQueryModel<UserQuery.User>(_Mapper)
-            }); 
+            };
+            addUserProjectMessage.SetData(response); 
 
             await _Bus.SendMessage(addUserProjectMessage);
 
             #endregion
 
-            return true;
+            return response;
         }
 
-        public async Task<bool> Handle(RemoveUserProjectCommand request, CancellationToken cancellationToken)
+        public async Task<ProjectUserMessage> Handle(RemoveUserProjectCommand request, CancellationToken cancellationToken)
         {
             var userDomain = _UserRepository.GetById(request.UserId).Result.ToDomain<User>(_Mapper);
             var projectDomain = _ProjectRepository.GetById(request.ProjectId).Result.ToDomain<Project>(_Mapper);
@@ -116,26 +119,25 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
 
             var addUserProjectMessage = new Message();
             addUserProjectMessage.MessageType = "UpdateUserProject";
-            addUserProjectMessage.SetData(new
+            var response = new ProjectUserMessage
             {
                 Project = projectDomain.ToQueryModel<Query.Project>(_Mapper),
                 User = userDomain.ToQueryModel<UserQuery.User>(_Mapper)
-            });
+            };
+            addUserProjectMessage.SetData(response);
 
             await _Bus.SendMessage(addUserProjectMessage);
 
             #endregion
 
-            return true;
+            return response;
         }
 
         
 
-        public async Task<bool> Handle(UpdateProjectInfoCommand request, CancellationToken cancellationToken)
+        public async Task<Infrastructure.Database.Query.Model.Project.Project> Handle(UpdateProjectInfoCommand request, CancellationToken cancellationToken)
         {
-            var tt = _ProjectRepository.GetById(request.Id).Result;
-            var tt2 = _ProjectRepository.GetAll().Result.ToList();
-            var projectDomain = tt.ToDomain<Project>(_Mapper);
+            var projectDomain = _ProjectRepository.GetById(request.Id).Result.ToDomain<Project>(_Mapper);
             projectDomain.Validate();
 
             projectDomain.SetDescription(request.Description, request.LongDescription);
@@ -151,13 +153,14 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
 
             var publishMessage = new Message();
             publishMessage.MessageType = "UpdateProject";
-            publishMessage.SetData(projectDomain.ToQueryModel<Query.Project>(_Mapper));
+            var response = projectDomain.ToQueryModel<Query.Project>(_Mapper);
+            publishMessage.SetData(response);
 
             await _Bus.SendMessage(publishMessage);
 
             #endregion
 
-            return true;
+            return response;
         }
     }
 }
