@@ -28,4 +28,22 @@
 20) RabbitMQ - https://www.rabbitmq.com/getstarted.html
 21) Serilog - https://serilog.net/    https://habr.com/ru/post/550582/   https://stackoverflow.com/questions/66658664/why-serilog-postgresql-sink-is-not-working-through-configuration
     Serilog Tutorial - https://blog.datalust.co/serilog-tutorial/
-22) 
+22) CI/CD (GitLab) - https://docs.gitlab.com/ee/ci/README.html 
+    Концепции CI/CD - https://docs.gitlab.com/ee/ci/introduction/index.html
+24) CI/CD (GitHub) - https://www.azuredevopslabs.com/labs/vstsextend/github/
+25) Аутентификация в .Net (Использование Active Directory в .NET и др.) - 
+    https://docs.microsoft.com/en-us/aspnet/core/security/authentication/windowsauth?view=aspnetcore-5.0&tabs=visual-studio
+    https://www.codemag.com/article/1312041/Using-Active-Directory-in-.NET
+    https://auth0.com/blog/using-ldap-with-c-sharp/
+    https://github.com/OneBitSoftware/Microsoft.AspNetCore.Authentication.ActiveDirectory/blob/master/README.md
+    https://stackoverflow.com/questions/45805411/asp-net-core-2-0-authentication-middleware/46118528#46118528
+    https://stackoverflow.com/questions/49682644/asp-net-core-2-0-ldap-active-directory-authentication
+    https://habr.com/ru/company/avanpost/blog/489852/
+26) Camunda - https://camunda.com/  (https://camundarus.ru/)
+    https://altkomsoftware.pl/en/blog/camunda-net-core-friends-foes/
+    https://habr.com/ru/post/510490/
+    https://github.com/berndruecker/camunda-csharp-showcase
+    https://docs.camunda.io/docs/guides/setting-up-development-project/
+    https://camunda.com/best-practices/_book/
+    https://tproger.ru/articles/modelirovanie-biznes-processov-praktika-ispolzovanija-camunda-bpm-v-java-razrabotke/
+
