@@ -14,11 +14,11 @@ namespace ProjectPortfolio.Infrastructure.Database.Command
                 case DatabaseProvider.POSTGRES:
                     return options
                         .UseNpgsql(config.WriteDatabase,
-                            opt => opt.MigrationsAssembly("DogovorApi"));
+                            opt => opt.MigrationsAssembly("ProjectPortfolioApi"));
                 case DatabaseProvider.MSSQL:
                     return options
                         .UseSqlServer(config.WriteDatabase,
-                            opt => opt.MigrationsAssembly("DogovorApi"));
+                            opt => opt.MigrationsAssembly("ProjectPortfolioApi"));
                 default:
                     return options
                         .UseNpgsql("Host=localhost; Port=5432; Database=TestPPApiOne; User Id=postgres;Password=A2t=A2t=");

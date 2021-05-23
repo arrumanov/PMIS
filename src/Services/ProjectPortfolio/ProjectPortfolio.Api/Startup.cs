@@ -9,6 +9,7 @@ using ProjectPortfolio.Infrastructure.Database.Command;
 using ProjectPortfolio.Infrastructure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ProjectPortfolio.Infrastructure.Extensions;
 
 namespace ProjectPortfolio.Api
 {
@@ -46,6 +47,13 @@ namespace ProjectPortfolio.Api
                 .AddFiltering();
 
             //-------- Hot Chocolate -----------//
+
+
+            //-------- Serilog -----------//
+
+            services.RegisterLogging(Configuration);
+
+            //-------- Serilog -----------//
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

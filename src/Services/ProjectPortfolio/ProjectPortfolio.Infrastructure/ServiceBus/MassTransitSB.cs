@@ -28,7 +28,7 @@ namespace ProjectPortfolio.Infrastructure.ServiceBus
                 case BusTransport.RABBITMQ:
                     bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
                     {
-                        cfg.Host(new Uri(config.Url), c =>
+                        cfg.Host(config.HostName, config.VirtualHost, c => // new Uri(config.Url), c =>
                         {
                             c.Username(config.Credentials.Username);
                             c.Password(config.Credentials.Password);
