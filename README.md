@@ -1,5 +1,20 @@
 # PMIS
 
+=======================================================================================================================================================
+
+docker network create --driver bridge elasticsearchnetwork
+
+docker run -p 9200:9200 -p 9300:9300 --network elasticsearchnetwork -e "discovery.type=single-node" --name elasticsearch elasticsearch:7.6.2
+
+docker run --network elasticsearchnetwork --name kibana -p 5601:5601 kibana:7.6.2
+
+docker container run -d --name some-rabbit -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 25672:25672 -p 15671:15671 -p 8080:15672 rabbitmq:3-management
+
+=======================================================================================================================================================
+
+
+
+
 1) Пример проекта (брал за основу) - https://github.com/gbauso/GraphAPI
 2) Use MassTransit + RabbitMQ with .Net Core 3.1 - https://feyyazacet.medium.com/use-masstransit-rabbitmq-with-net-core-3-1-33c679fcb2d
 3) A simple Pub/Sub Scenario with MassTransit 6.2 + RabbitMQ +.NET Core 3.1 + Elasticsearch + MSSQL - https://alikzlda.medium.com/a-simple-pub-sub-scenario-with-masstransit-6-2-rabbitmq-net-core-3-1-elasticsearch-mssql-5a65c993b2fd
