@@ -42,6 +42,7 @@ docker container run -d --name some-rabbit -p 4369:4369 -p 5671:5671 -p 5672:567
 19) Dapr, Tye and k8s - https://github.com/thangchung/practical-dapr     https://github.com/kimcu-on-thenet/dapr-tye-simple-microservices
 20) RabbitMQ - https://www.rabbitmq.com/getstarted.html
 21) Serilog - https://serilog.net/    https://habr.com/ru/post/550582/   https://stackoverflow.com/questions/66658664/why-serilog-postgresql-sink-is-not-working-through-configuration
+    Serilog PostgreSQL - https://stackoverflow.com/questions/66658664/why-serilog-postgresql-sink-is-not-working-through-configuration
     Serilog Tutorial - https://blog.datalust.co/serilog-tutorial/
 22) CI/CD (GitLab) - https://docs.gitlab.com/ee/ci/README.html 
     Концепции CI/CD - https://docs.gitlab.com/ee/ci/introduction/index.html
