@@ -7,5 +7,6 @@
         public BusTransport Transport { get; set; }
         public BusCrendentials Credentials { get; set; }
         public string HostName { get; set; }
+        public string VirtualHost { get; set; }
     }
 }

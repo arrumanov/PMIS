@@ -1,8 +1,11 @@
-﻿using Dogovor.Application.Commands.Project;
+﻿using Dogovor.Application.Commands.Contract;
+using Dogovor.Application.Commands.Project;
 using Dogovor.Application.Commands.Task;
 using Dogovor.Application.Commands.User;
 using Dogovor.Application.Graph;
 using Dogovor.Application.Graph.Common;
+using Dogovor.Application.Graph.Contract.Mutation;
+using Dogovor.Application.Graph.Contract.Query;
 using Dogovor.Application.Graph.Project.Mutation;
 using Dogovor.Application.Graph.Project.Query;
 using Dogovor.Application.Graph.Project.Types.Input;
@@ -24,6 +27,7 @@ using Dogovor.Infrastructure.Database.Command.Interfaces;
 using Dogovor.Infrastructure.Database.Command.Repository;
 using Dogovor.Infrastructure.Database.Query;
 using Dogovor.Infrastructure.Database.Query.Manager;
+using Dogovor.Infrastructure.Database.Query.Model.Contract;
 using Dogovor.Infrastructure.Database.Query.Model.Project;
 using Dogovor.Infrastructure.Database.Query.Model.Task;
 using Dogovor.Infrastructure.Database.Query.Model.User;
@@ -48,6 +52,7 @@ namespace Dogovor.CrossCutting.Ioc
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
             serviceCollection.AddScoped<IProjectRepository, ProjectRepository>();
             serviceCollection.AddScoped<ITaskRepository, TaskRepository>();
+            serviceCollection.AddScoped<IContractRepository, ContractRepository>();
 
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         }
@@ -59,10 +64,12 @@ namespace Dogovor.CrossCutting.Ioc
             serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<User>());
             serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<Project>());
             serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<Task>());
+            serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<Contract>());
 
             serviceCollection.AddSingleton<IEntityManager<User>, UserManager>();
             serviceCollection.AddSingleton<IEntityManager<Project>, ProjectManager>();
             serviceCollection.AddSingleton<IEntityManager<Task>, TaskManager>();
+            serviceCollection.AddSingleton<IEntityManager<Contract>, ContractManager>();
         }
 
         public static void ResolveServiceBus(this IServiceCollection serviceCollection)
@@ -76,7 +83,7 @@ namespace Dogovor.CrossCutting.Ioc
         #region Domain Service
         public static void ResolveRequestHandlers(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddMediatR(typeof(UserCommandHandler), typeof(ProjectCommandHandler), typeof(TaskCommandHandler));
+            serviceCollection.AddMediatR(typeof(UserCommandHandler), typeof(ProjectCommandHandler), typeof(TaskCommandHandler), typeof(ContractCommandHandler));
 
             serviceCollection.AddScoped<IRequestHandler<AddUserCommand, bool>, UserCommandHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateUserInfoCommand, bool>, UserCommandHandler>();
@@ -90,6 +97,9 @@ namespace Dogovor.CrossCutting.Ioc
             serviceCollection.AddScoped<IRequestHandler<ChangeAssigneeCommand, bool>, TaskCommandHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateTaskStatusCommand, bool>, TaskCommandHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateDeadlineCommand, bool>, TaskCommandHandler>();
+
+            serviceCollection.AddScoped<IRequestHandler<AddContractCommand, Contract>, ContractCommandHandler>();
+            serviceCollection.AddScoped<IRequestHandler<UpdateContractInfoCommand, Contract>, ContractCommandHandler>();
         }
 
         #endregion
@@ -193,6 +203,22 @@ namespace Dogovor.CrossCutting.Ioc
 
             #endregion
 
+            #region Contract
+
+            #region Query
+
+            serviceCollection.AddSingleton<ContractQuery>();
+
+            #endregion
+
+            #region Mutation
+
+            serviceCollection.AddSingleton<ContractMutation>();
+
+            #endregion
+
+            #endregion
+
             if (!testing) serviceCollection.AddSingleton<ISchema, GraphSchema>();
         }
 
@@ -201,7 +227,8 @@ namespace Dogovor.CrossCutting.Ioc
             serviceCollection.AddAutoMapper(typeof(UserProfile),
                                             typeof(ProjectProfile),
                                             typeof(TaskProfile),
-                                            typeof(StatusProfile));
+                                            typeof(StatusProfile),
+                                            typeof(ContractProfile));
         }
     }
 }

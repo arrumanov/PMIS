@@ -1,3 +1,5 @@
+using Dogovor.Application.Graph.Contract.Mutation;
+using Dogovor.Application.Graph.Contract.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +9,7 @@ using Dogovor.Application.Graph.Project.Query;
 using Dogovor.CrossCutting.Ioc;
 using Dogovor.Infrastructure.Database;
 using Dogovor.Infrastructure.Database.Command;
+using Dogovor.Infrastructure.Extensions;
 using Dogovor.Infrastructure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,11 +45,17 @@ namespace Dogovor.Api
 
             services
                 .AddGraphQLServer()
-                .AddQueryType<ProjectQuery>()
-                .AddMutationType<ProjectMutation>()
+                .AddQueryType<ContractQuery>()
+                .AddMutationType<ContractMutation>()
                 .AddFiltering();
 
             //-------- Hot Chocolate -----------//
+
+            //-------- Serilog -----------//
+
+            services.RegisterLogging(Configuration);
+
+            //-------- Serilog -----------//
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

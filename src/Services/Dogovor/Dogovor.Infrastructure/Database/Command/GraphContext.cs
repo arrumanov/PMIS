@@ -17,6 +17,7 @@ namespace Dogovor.Infrastructure.Database.Command
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<UserProject> UserProjects { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

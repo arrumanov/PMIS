@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Dogovor.CrossCutting.Extensions;
 using Dogovor.Infrastructure.Database.Query.Manager;
+using Dogovor.Infrastructure.Database.Query.Model.Contract;
 using Dogovor.Infrastructure.Database.Query.Model.Project;
 using Dogovor.Infrastructure.Database.Query.Model.User;
 using Dogovor.Infrastructure.ServiceBus;
@@ -38,6 +39,29 @@ namespace Dogovor.Application.MessageHandler
                 }
             }
         }
+
+        #region Contract
+
+        private async Task AddContract(Message message, IServiceScope scope)
+        {
+            var contract = Newtonsoft.Json.JsonConvert.DeserializeObject<Contract>(message.MessageData);
+
+            var manager = scope.ServiceProvider.GetRequiredService<IEntityManager<Contract>>();
+
+            await manager.Index(contract);
+        }
+
+        private async Task UpdateContract(Message message, IServiceScope scope)
+        {
+            var messageData = Newtonsoft.Json.JsonConvert.DeserializeObject<Contract>(message.MessageData);
+
+            var contractManagerManager = scope.ServiceProvider.GetRequiredService<IEntityManager<Contract>>();
+
+            await contractManagerManager.Remove(Guid.Parse(messageData.Id));
+            await contractManagerManager.Index(messageData);
+        }
+
+        #endregion
 
         #region User
 
