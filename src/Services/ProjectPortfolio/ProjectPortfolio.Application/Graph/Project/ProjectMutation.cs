@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper.Internal;
 using HotChocolate;
+using HotChocolate.Types;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectPortfolio.Application.Commands.Project;

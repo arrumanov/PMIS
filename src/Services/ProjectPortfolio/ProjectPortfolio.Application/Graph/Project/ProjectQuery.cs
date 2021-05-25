@@ -4,10 +4,12 @@ using ProjectPortfolio.Infrastructure.Database.Query.Manager;
 using HotChocolate;
 using HotChocolate.Data;
 using System.Linq;
+using HotChocolate.Types;
 using Microsoft.Extensions.Logging;
 
 namespace ProjectPortfolio.Application.Graph.Project
 {
+    //[ExtendObjectType(Name = "Query")]
     public class ProjectQuery
     {
         private readonly ILogger<ProjectQuery> _logger;

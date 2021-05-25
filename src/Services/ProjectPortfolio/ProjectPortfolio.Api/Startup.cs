@@ -10,6 +10,7 @@ using ProjectPortfolio.Infrastructure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ProjectPortfolio.Infrastructure.Extensions;
+using StackExchange.Redis;
 
 namespace ProjectPortfolio.Api
 {
@@ -29,6 +30,8 @@ namespace ProjectPortfolio.Api
             services.Configure<BusConfiguration>(Configuration.GetSection("ServiceBus"));
             services.Configure<DatabaseConfiguration>(Configuration.GetSection("ConnectionStrings"));
 
+            services.AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"));
+
             services.AddControllers();
 
             services.ResolveServiceBus();
@@ -44,7 +47,24 @@ namespace ProjectPortfolio.Api
                 .AddGraphQLServer()
                 .AddQueryType<ProjectQuery>()
                 .AddMutationType<ProjectMutation>()
-                .AddFiltering();
+                //.AddQueryType(d => d.Name("Query"))
+                //.AddTypeExtension<ProjectQuery>()
+                //.AddMutationType(d => d.Name("Mutation"))
+                //.AddTypeExtension<ProjectMutation>()
+                //.EnableRelaySupport()
+                .AddFiltering()
+                .AddSorting()
+                // We initialize the schema on startup so it is published to the redis as soon as possible
+                .InitializeOnStartup()
+                // We configure the publish definition
+                .PublishSchemaDefinition(c => c
+                    // The name of the schema. This name should be unique
+                    .SetName("projects")
+                    .PublishToRedis(
+                        // The configuration name under which the schema should be published
+                        "PMIS",
+                        // The connection multiplexer that should be used for publishing
+                        sp => sp.GetRequiredService<ConnectionMultiplexer>()));
 
             //-------- Hot Chocolate -----------//
 

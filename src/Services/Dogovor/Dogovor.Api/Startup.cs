@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Dogovor.Application.Graph.Project.Mutation;
-using Dogovor.Application.Graph.Project.Query;
 using Dogovor.CrossCutting.Ioc;
 using Dogovor.Infrastructure.Database;
 using Dogovor.Infrastructure.Database.Command;
@@ -13,6 +11,7 @@ using Dogovor.Infrastructure.Extensions;
 using Dogovor.Infrastructure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using StackExchange.Redis;
 
 namespace Dogovor.Api
 {
@@ -32,6 +31,8 @@ namespace Dogovor.Api
             services.Configure<BusConfiguration>(Configuration.GetSection("ServiceBus"));
             services.Configure<DatabaseConfiguration>(Configuration.GetSection("ConnectionStrings"));
 
+            services.AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"));
+
             services.AddControllers();
 
             services.ResolveServiceBus();
@@ -47,7 +48,24 @@ namespace Dogovor.Api
                 .AddGraphQLServer()
                 .AddQueryType<ContractQuery>()
                 .AddMutationType<ContractMutation>()
-                .AddFiltering();
+                //.AddQueryType(d => d.Name("Query"))
+                //.AddTypeExtension<ContractQuery>()
+                //.AddMutationType(d => d.Name("Mutation"))
+                //.AddTypeExtension<ContractMutation>()
+                //.EnableRelaySupport()
+                .AddFiltering()
+                .AddSorting()
+                // We initialize the schema on startup so it is published to the redis as soon as possible
+                .InitializeOnStartup()
+                // We configure the publish definition
+                .PublishSchemaDefinition(c => c
+                    // The name of the schema. This name should be unique
+                    .SetName("dogovors")
+                    .PublishToRedis(
+                        // The configuration name under which the schema should be published
+                        "PMIS",
+                        // The connection multiplexer that should be used for publishing
+                        sp => sp.GetRequiredService<ConnectionMultiplexer>()));
 
             //-------- Hot Chocolate -----------//
 

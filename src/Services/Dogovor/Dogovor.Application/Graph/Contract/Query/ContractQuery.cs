@@ -5,9 +5,11 @@ using HotChocolate;
 using HotChocolate.Data;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using HotChocolate.Types;
 
 namespace Dogovor.Application.Graph.Contract.Query
 {
+    //[ExtendObjectType(Name = "Query")]
     public class ContractQuery
     {
         private readonly ILogger<ContractQuery> _logger;
