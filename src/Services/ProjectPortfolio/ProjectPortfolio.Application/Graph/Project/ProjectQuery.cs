@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ProjectPortfolio.Application.Graph.Project
 {
-    //[ExtendObjectType(Name = "Query")]
+    [ExtendObjectType(Name = "Query")]
     public class ProjectQuery
     {
         private readonly ILogger<ProjectQuery> _logger;

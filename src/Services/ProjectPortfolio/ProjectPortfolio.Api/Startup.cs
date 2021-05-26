@@ -45,12 +45,12 @@ namespace ProjectPortfolio.Api
 
             services
                 .AddGraphQLServer()
-                .AddQueryType<ProjectQuery>()
-                .AddMutationType<ProjectMutation>()
-                //.AddQueryType(d => d.Name("Query"))
-                //.AddTypeExtension<ProjectQuery>()
-                //.AddMutationType(d => d.Name("Mutation"))
-                //.AddTypeExtension<ProjectMutation>()
+                //.AddQueryType<ProjectQuery>()
+                //.AddMutationType<ProjectMutation>()
+                .AddQueryType(d => d.Name("Query"))
+                .AddTypeExtension<ProjectQuery>()
+                .AddMutationType(d => d.Name("Mutation"))
+                .AddTypeExtension<ProjectMutation>()
                 //.EnableRelaySupport()
                 .AddFiltering()
                 .AddSorting()

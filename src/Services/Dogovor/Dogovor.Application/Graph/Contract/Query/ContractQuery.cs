@@ -9,7 +9,7 @@ using HotChocolate.Types;
 
 namespace Dogovor.Application.Graph.Contract.Query
 {
-    //[ExtendObjectType(Name = "Query")]
+    [ExtendObjectType(Name = "Query")]
     public class ContractQuery
     {
         private readonly ILogger<ContractQuery> _logger;

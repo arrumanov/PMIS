@@ -46,12 +46,12 @@ namespace Dogovor.Api
 
             services
                 .AddGraphQLServer()
-                .AddQueryType<ContractQuery>()
-                .AddMutationType<ContractMutation>()
-                //.AddQueryType(d => d.Name("Query"))
-                //.AddTypeExtension<ContractQuery>()
-                //.AddMutationType(d => d.Name("Mutation"))
-                //.AddTypeExtension<ContractMutation>()
+                //.AddQueryType<ContractQuery>()
+                //.AddMutationType<ContractMutation>()
+                .AddQueryType(d => d.Name("Query"))
+                .AddTypeExtension<ContractQuery>()
+                .AddMutationType(d => d.Name("Mutation"))
+                .AddTypeExtension<ContractMutation>()
                 //.EnableRelaySupport()
                 .AddFiltering()
                 .AddSorting()

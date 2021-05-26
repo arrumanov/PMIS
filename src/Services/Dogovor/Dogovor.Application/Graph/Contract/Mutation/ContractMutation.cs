@@ -14,7 +14,7 @@ using HotChocolate.Types;
 
 namespace Dogovor.Application.Graph.Contract.Mutation
 {
-    //[ExtendObjectType(Name = "Mutation")]
+    [ExtendObjectType(Name = "Mutation")]
     public class ContractMutation
     {
         public async Task<AddContractPayload> AddContract(

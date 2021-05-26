@@ -13,7 +13,7 @@ using ProjectPortfolio.CrossCutting.Exceptions;
 
 namespace ProjectPortfolio.Application.Graph.Project
 {
-    //[ExtendObjectType(Name = "Mutation")]
+    [ExtendObjectType(Name = "Mutation")]
     public class ProjectMutation
     {
         public async Task<AddProjectPayload> AddProject(
