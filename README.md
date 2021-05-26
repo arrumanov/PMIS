@@ -10,6 +10,8 @@ docker run --network elasticsearchnetwork --name kibana -p 5601:5601 kibana:7.6.
 
 docker container run -d --name some-rabbit -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 25672:25672 -p 15671:15671 -p 8080:15672 rabbitmq:3-management
 
+docker run --name redis-stitching -p 7000:6379 -d redis
+
 =======================================================================================================================================================
 
 
