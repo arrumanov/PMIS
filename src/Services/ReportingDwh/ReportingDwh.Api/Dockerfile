@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["src/Services/ReportingDwh.Api/ReportingDwh.Api.csproj", "src/Services/ReportingDwh.Api/"]
-RUN dotnet restore "src/Services/ReportingDwh.Api/ReportingDwh.Api.csproj"
+COPY ["src/Services/ReportingDwh/ReportingDwh.Api/ReportingDwh.Api.csproj", "src/Services/ReportingDwh/ReportingDwh.Api/"]
+RUN dotnet restore "src/Services/ReportingDwh/ReportingDwh.Api/ReportingDwh.Api.csproj"
 COPY . .
-WORKDIR "/src/src/Services/ReportingDwh.Api"
+WORKDIR "/src/src/Services/ReportingDwh/ReportingDwh.Api"
 RUN dotnet build "ReportingDwh.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
