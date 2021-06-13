@@ -5,7 +5,7 @@ namespace ProjectPortfolio.Infrastructure.Database.Command.Repository
 {
     public class TaskRepository : Repository<Task>, ITaskRepository
     {
-        public TaskRepository(GraphContext context) : base(context)
+        public TaskRepository(ProjectPortfolioContext context) : base(context)
         {
         }
 

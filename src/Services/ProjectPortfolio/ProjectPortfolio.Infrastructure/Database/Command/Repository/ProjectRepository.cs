@@ -6,7 +6,7 @@ namespace ProjectPortfolio.Infrastructure.Database.Command.Repository
 {
     public class ProjectRepository : Repository<Project>, IProjectRepository
     {
-        public ProjectRepository(GraphContext context) : base(context)
+        public ProjectRepository(ProjectPortfolioContext context) : base(context)
         {
         }
 

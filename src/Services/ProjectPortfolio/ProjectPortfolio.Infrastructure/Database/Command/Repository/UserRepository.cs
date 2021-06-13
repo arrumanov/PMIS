@@ -5,7 +5,7 @@ namespace ProjectPortfolio.Infrastructure.Database.Command.Repository
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public UserRepository(GraphContext context) : base(context)
+        public UserRepository(ProjectPortfolioContext context) : base(context)
         {
         }
 

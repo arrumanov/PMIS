@@ -9,9 +9,10 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectPortfolio.Application.Commands.Project;
 using ProjectPortfolio.Application.Graph.Common;
+using ProjectPortfolio.Application.Graph.Project.Types;
 using ProjectPortfolio.CrossCutting.Exceptions;
 
-namespace ProjectPortfolio.Application.Graph.Project
+namespace ProjectPortfolio.Application.Graph.Project.Mutation
 {
     [ExtendObjectType(Name = "Mutation")]
     public class ProjectMutation

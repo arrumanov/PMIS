@@ -2,13 +2,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProjectPortfolio.Application.Graph.Project;
 using ProjectPortfolio.CrossCutting.Ioc;
 using ProjectPortfolio.Infrastructure.Database;
 using ProjectPortfolio.Infrastructure.Database.Command;
 using ProjectPortfolio.Infrastructure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ProjectPortfolio.Application.Graph.Project.Mutation;
+using ProjectPortfolio.Application.Graph.Project.Query;
 using ProjectPortfolio.Infrastructure.Extensions;
 using StackExchange.Redis;
 
@@ -105,7 +106,7 @@ namespace ProjectPortfolio.Api
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
-                using (var context = serviceScope.ServiceProvider.GetRequiredService<GraphContext>())
+                using (var context = serviceScope.ServiceProvider.GetRequiredService<ProjectPortfolioContext>())
                 {
                     context.Database.EnsureCreated();
                     if (!context.Database.IsInMemory()) context.Database.Migrate();

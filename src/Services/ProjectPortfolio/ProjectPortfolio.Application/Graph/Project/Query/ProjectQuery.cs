@@ -7,7 +7,7 @@ using System.Linq;
 using HotChocolate.Types;
 using Microsoft.Extensions.Logging;
 
-namespace ProjectPortfolio.Application.Graph.Project
+namespace ProjectPortfolio.Application.Graph.Project.Query
 {
     [ExtendObjectType(Name = "Query")]
     public class ProjectQuery

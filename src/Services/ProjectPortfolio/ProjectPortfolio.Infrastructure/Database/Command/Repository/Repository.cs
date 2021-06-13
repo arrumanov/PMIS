@@ -9,9 +9,9 @@ namespace ProjectPortfolio.Infrastructure.Database.Command.Repository
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        protected GraphContext _Context;
+        protected ProjectPortfolioContext _Context;
 
-        public Repository(GraphContext context)
+        public Repository(ProjectPortfolioContext context)
         {
             _Context = context;
         }

@@ -7,9 +7,9 @@ namespace ProjectPortfolio.Infrastructure.Database.Command
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly GraphContext _Context;
+        private readonly ProjectPortfolioContext _Context;
 
-        public UnitOfWork(GraphContext context)
+        public UnitOfWork(ProjectPortfolioContext context)
         {
             _Context = context;
         }

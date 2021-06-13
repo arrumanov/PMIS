@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ProjectPortfolio.Application.Graph.Common;
 
-namespace ProjectPortfolio.Application.Graph.Project
+namespace ProjectPortfolio.Application.Graph.Project.Types
 {
     public class AddUserProjectPayload : ProjectPayloadBase
     {

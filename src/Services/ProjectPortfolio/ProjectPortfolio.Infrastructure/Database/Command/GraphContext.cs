@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjectPortfolio.Infrastructure.Database.Command
 {
-    public class GraphContext : DbContext
+    public class ProjectPortfolioContext : DbContext
     {
-        public GraphContext(DbContextOptions options) : base(options)
+        public ProjectPortfolioContext(DbContextOptions options) : base(options)
         {
         }
 

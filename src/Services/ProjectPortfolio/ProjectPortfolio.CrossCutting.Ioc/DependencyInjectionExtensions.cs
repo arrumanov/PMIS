@@ -1,7 +1,6 @@
 ﻿using ProjectPortfolio.Application.Commands.Project;
 using ProjectPortfolio.Application.Commands.Task;
 using ProjectPortfolio.Application.Commands.User;
-using ProjectPortfolio.Application.Graph.Project;
 using ProjectPortfolio.Application.MessageHandler;
 using ProjectPortfolio.Domain.Service.CommandHandler;
 using ProjectPortfolio.Domain.Service.Mappings;
@@ -18,6 +17,8 @@ using ProjectPortfolio.Infrastructure.ServiceBus;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using ProjectPortfolio.Application.Graph.Project.Mutation;
+using ProjectPortfolio.Application.Graph.Project.Query;
 
 namespace ProjectPortfolio.CrossCutting.Ioc
 {
@@ -26,7 +27,7 @@ namespace ProjectPortfolio.CrossCutting.Ioc
         #region Infrastructure
         public static void ResolveCommandDatabase(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddDbContext<GraphContext>((serviceProvider, opts) => {
+            serviceCollection.AddDbContext<ProjectPortfolioContext>((serviceProvider, opts) => {
                 opts.SetConnectionConfig(serviceProvider.GetService<IOptions<DatabaseConfiguration>>());
             });
 
