@@ -2,15 +2,17 @@
 
 =======================================================================================================================================================
 
-docker network create --driver bridge elasticsearchnetwork
+docker network create --driver bridge pmis-network
 
-docker run -p 9200:9200 -p 9300:9300 --network elasticsearchnetwork -e "discovery.type=single-node" --name elasticsearch elasticsearch:7.6.2
+(docker pull docker.elastic.co/elasticsearch/elasticsearch:7.13.2)
+(хотел дать имя pmis-elasticsearch вместо elasticsearch, то в этом случае почему-то эластик не видит кибана)
+docker run -p 9200:9200 -p 9300:9300 --network pmis-network -e "discovery.type=single-node" --name elasticsearch elasticsearch:7.13.2
 
-docker run --network elasticsearchnetwork --name kibana -p 5601:5601 kibana:7.6.2
+docker run --network pmis-network --name pmis-kibana -p 5601:5601 kibana:7.13.2
 
-docker container run -d --name some-rabbit -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 25672:25672 -p 15671:15671 -p 8080:15672 rabbitmq:3-management
+docker run --network pmis-network -d --name pmis-rabbit -p 5672:5672 -p 5673:5673 -p 15672:15672 rabbitmq:3-management
 
-docker run --name redis-stitching -p 7000:6379 -d redis
+docker run --network pmis-network --name pmis-redis-stitching -p 7000:6379 -d redis
 
 =======================================================================================================================================================
 
