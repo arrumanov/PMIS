@@ -26,6 +26,7 @@ namespace Dogovor.Application.Graph.Contract.Mutation
             {
                 Name = input.Name
             };
+
             using (var scope = serviceProvider.CreateScope())
             {
                 var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
