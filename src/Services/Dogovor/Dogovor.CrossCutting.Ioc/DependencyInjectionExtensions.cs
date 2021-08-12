@@ -52,6 +52,8 @@ namespace Dogovor.CrossCutting.Ioc
         #region Domain Service
         public static void ResolveRequestHandlers(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddMediatR(typeof(ContractCommandHandler));
+
             serviceCollection.AddScoped<IRequestHandler<AddContractCommand, Contract>, ContractCommandHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateContractInfoCommand, Contract>, ContractCommandHandler>();
         }

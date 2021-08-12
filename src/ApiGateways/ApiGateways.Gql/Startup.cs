@@ -15,8 +15,8 @@ namespace ApiGateways.Gql
         public void ConfigureServices(IServiceCollection services)
         {
             //Настройки при запуске в IIS
-            services.AddHttpClient(Projects, c => c.BaseAddress = new Uri("https://localhost:5004/graphql"));
-            services.AddHttpClient(Dogovors, c => c.BaseAddress = new Uri("https://localhost:5006/graphql"));
+            services.AddHttpClient(Projects, c => c.BaseAddress = new Uri("https://localhost:44342/graphql"));
+            services.AddHttpClient(Dogovors, c => c.BaseAddress = new Uri("https://localhost:44343/graphql"));
 
             //https://alikzlda.medium.com/a-simple-pub-sub-scenario-with-masstransit-6-2-rabbitmq-net-core-3-1-elasticsearch-mssql-5a65c993b2fd
             //docker run -p 9200:9200 -p 9300:9300 --network elasticsearchnetwork -e "discovery.type=single-node" --name elasticsearch elasticsearch:7.6.2
