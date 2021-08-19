@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Graph\Contract\Mutation\" />
     <Folder Include="Graph\Contract\Query\" />
+    <Folder Include="Query\Contract\" />
   </ItemGroup>
 
 </Project>

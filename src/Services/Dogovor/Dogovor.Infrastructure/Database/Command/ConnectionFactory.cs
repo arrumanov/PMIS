@@ -17,8 +17,8 @@ namespace Dogovor.Infrastructure.Database.Command
                             //, opt => opt.MigrationsAssembly("Dogovor.Api"));
                 case DatabaseProvider.MSSQL:
                     return options
-                        .UseSqlServer(config.WriteDatabase,
-                            opt => opt.MigrationsAssembly("Dogovor.Api"));
+                        .UseSqlServer(config.WriteDatabase);
+                            //, opt => opt.MigrationsAssembly("Dogovor.Api"));
                 default:
                     return options
                         .UseInMemoryDatabase("graphdb");

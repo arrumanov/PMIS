@@ -11,7 +11,7 @@ namespace Dogovor.Infrastructure.Database.Query.Model.Contract
         [BsonElement("name")]
         public string Name { get; set; }
 
-        [BsonElement("createdDate")]
-        public DateTime CreatedDate { get; set; }
+        //[BsonElement("createdDate")]
+        //public DateTime CreatedDate { get; set; }
     }
 }

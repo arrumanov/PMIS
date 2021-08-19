@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Dogovor.Infrastructure\Dogovor.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="QueryHandler\" />
+  </ItemGroup>
+
 </Project>

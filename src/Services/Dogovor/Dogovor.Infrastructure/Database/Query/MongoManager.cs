@@ -140,19 +140,19 @@ namespace Dogovor.Infrastructure.Database.Query
             switch (filter.Operation)
             {
                 case "e":
-                    return builder.Eq(field, filter.Value);
+                    return builder.Eq(field, filter.StringValue);
                 case "c":
-                    return builder.Regex(field, new BsonRegularExpression($".*{filter.Value}.*", "i"));
+                    return builder.Regex(field, new BsonRegularExpression($".*{filter.StringValue}.*", "i"));
                 case "g":
-                    return builder.Gt(field, filter.Value);
+                    return builder.Gt(field, filter.StringValue);
                 case "ge":
-                    return builder.Gte(field, filter.Value);
+                    return builder.Gte(field, filter.StringValue);
                 case "l":
-                    return builder.Lt(field, filter.Value);
+                    return builder.Lt(field, filter.StringValue);
                 case "le":
-                    return builder.Lte(field, filter.Value);
+                    return builder.Lte(field, filter.StringValue);
                 case "ne":
-                    return builder.Ne(field, filter.Value);
+                    return builder.Ne(field, filter.StringValue);
                 default:
                     return builder.Empty;
             }

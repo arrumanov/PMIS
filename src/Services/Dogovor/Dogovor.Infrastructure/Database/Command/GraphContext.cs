@@ -1,4 +1,5 @@
 ﻿using Dogovor.Infrastructure.Database.Command.Model;
+using Dogovor.Infrastructure.Database.Query.Model.Client;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dogovor.Infrastructure.Database.Command
@@ -9,7 +10,8 @@ namespace Dogovor.Infrastructure.Database.Command
         {
         }
         
-        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Contract> Contragent { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,7 +20,7 @@ namespace Dogovor.Infrastructure.Database.Command
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Contract>().HasKey(p => new { p.Id });
         }
     }
 }

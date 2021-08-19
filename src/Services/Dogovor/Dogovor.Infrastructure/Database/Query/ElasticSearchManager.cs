@@ -144,37 +144,37 @@ namespace Dogovor.Infrastructure.Database.Query
                     return new WildcardQuery()
                     {
                         Field = field,
-                        Value = $"*{graphFilter.Value.ToString().ToLower()}*"
+                        Value = $"*{graphFilter.StringValue.ToLower()}*"
                     };
                 case "e":
                     return new MatchQuery()
                     {
                         Field = $"{field}.keyword",
-                        Query = graphFilter.Value.ToString(),
+                        Query = graphFilter.StringValue,
                     };
                 case "g":
                     return new NumericRangeQuery()
                     {
                         Field = field,
-                        GreaterThan = (double)graphFilter.Value
+                        GreaterThan = Double.Parse(graphFilter.StringValue)
                     };
                 case "ge":
                     return new NumericRangeQuery()
                     {
                         Field = field,
-                        GreaterThanOrEqualTo = (double)graphFilter.Value
+                        GreaterThanOrEqualTo = Double.Parse(graphFilter.StringValue)
                     };
                 case "l":
                     return new NumericRangeQuery()
                     {
                         Field = field,
-                        LessThan = (double)graphFilter.Value
+                        LessThan = Double.Parse(graphFilter.StringValue)
                     };
                 case "le":
                     return new NumericRangeQuery()
                     {
                         Field = field,
-                        LessThanOrEqualTo = (double)graphFilter.Value
+                        LessThanOrEqualTo = Double.Parse(graphFilter.StringValue)
                     };
                 case "ne":
                     var newFilter = graphFilter;

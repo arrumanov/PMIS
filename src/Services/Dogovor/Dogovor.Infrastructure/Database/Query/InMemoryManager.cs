@@ -130,19 +130,19 @@ namespace Dogovor.Infrastructure.Database.Query
             switch (filter.Operation)
             {
                 case "e":
-                    return string.Format("{0} == \"{1}\"", field, filter.Value);
+                    return string.Format("{0} == \"{1}\"", field, filter.StringValue);
                 case "c":
-                    return string.Format("{0}.Contains(\"{1}\")", field, filter.Value);
+                    return string.Format("{0}.Contains(\"{1}\")", field, filter.StringValue);
                 case "g":
-                    return string.Format("{0} < {1}", field, filter.Value);
+                    return string.Format("{0} < {1}", field, filter.StringValue);
                 case "ge":
-                    return string.Format("{0} <= {1}", field, filter.Value);
+                    return string.Format("{0} <= {1}", field, filter.StringValue);
                 case "l":
-                    return string.Format("{0} > {1}", field, filter.Value);
+                    return string.Format("{0} > {1}", field, filter.StringValue);
                 case "le":
-                    return string.Format("{0} >= {1}", field, filter.Value);
+                    return string.Format("{0} >= {1}", field, filter.StringValue);
                 case "ne":
-                    return string.Format("{0} != \"{1}\"", field, filter.Value);
+                    return string.Format("{0} != \"{1}\"", field, filter.StringValue);
                 default:
                     return string.Empty;
             }

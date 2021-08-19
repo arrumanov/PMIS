@@ -15,6 +15,15 @@ namespace Dogovor.CrossCutting.Extensions
             return domain;
         }
 
+        public static M ToQueryModel<M>(this IModel fromRepository, IMapper mapper) where M : IQueryModel
+        {
+            if (fromRepository == null) throw new ElementNotFoundException();
+
+            var domain = mapper.Map<M>(fromRepository);
+
+            return domain;
+        }
+
         public static T ToModel<T>(this IDomain domain, IMapper mapper) where T : IModel
         {
             var commandModel = mapper.Map<T>(domain);

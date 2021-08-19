@@ -10,6 +10,7 @@ namespace Dogovor.Infrastructure.Database.Query
     public interface IManager<T> where T : class, IQueryModel
     {
         Task<bool> Index(T entry);
+        //Task<bool> IndexAll(List<T> entry);
         Task<bool> Remove(Guid entryId);
         Task<T> GetById(Guid id, string[] fields);
         Task<T> GetById(Guid id);

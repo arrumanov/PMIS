@@ -16,6 +16,7 @@ namespace Dogovor.Domain.Service.Mappings
             CreateMap<Command.Contract, Contract>();
 
             CreateMap<Contract, Query.Contract>();
+            CreateMap<Command.Contract, Query.Contract>();
         }
     }
 }
