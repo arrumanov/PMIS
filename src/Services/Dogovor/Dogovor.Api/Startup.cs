@@ -1,5 +1,6 @@
 using Dogovor.Application.Graph.Contract.Mutation;
 using Dogovor.Application.Graph.Contract.Query;
+using Dogovor.Application.Graph.Contragent.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +51,7 @@ namespace Dogovor.Api
                 //.AddMutationType<ContractMutation>()
                 .AddQueryType(d => d.Name("Query"))
                 .AddTypeExtension<ContractQuery>()
+                .AddTypeExtension<ContragentQuery>()
                 .AddMutationType(d => d.Name("Mutation"))
                 .AddTypeExtension<ContractMutation>()
                 //.EnableRelaySupport()

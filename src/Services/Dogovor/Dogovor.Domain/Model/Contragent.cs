@@ -6,32 +6,32 @@ using Dogovor.Domain.Validator;
 
 namespace Dogovor.Domain.Model
 {
-    public class Contract : IDomain
+    public class Contragent : IDomain
     {
-        public Contract(string number)
+        public Contragent(string name)
         {
             Id = Guid.NewGuid();
-            Number = number;
+            Name = name;
         }
-        public Contract(Guid id, string number)
+        public Contragent(Guid id, string name)
         {
             Id = id;
-            Number = number;
+            Name = name;
         }
 
         public Guid Id { get; private set; }
-        public string Number { get; private set; }
+        public string Name { get; private set; }
 
-        public void SetInfo(string number)
+        public void SetInfo(string name)
         {
-            this.Number = number;
+            this.Name = name;
 
             this.Validate();
         }
 
         public void Validate()
         {
-            var validator = new ContractValidator();
+            var validator = new ContragentValidator();
 
             var validationResult = validator.Validate(this);
 

@@ -1,18 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dogovor.Application.Query.Contract;
 using Dogovor.CrossCutting.Extensions;
-using Dogovor.CrossCutting.Extensions.GraphQL;
 using Dogovor.Infrastructure.Database.Command.Interfaces;
 using Dogovor.Infrastructure.ServiceBus;
 using MediatR;
 
 namespace Dogovor.Domain.Service.QueryHandler
 {
-    using ContractQuery = Infrastructure.Database.Query.Model.Contract.Contract;
+    using ContractQuery = Infrastructure.Database.Query.Model.Contract;
 
     public class ContractQueryHandler : IRequestHandler<GetContractCommand, IQueryable<ContractQuery>>
     {

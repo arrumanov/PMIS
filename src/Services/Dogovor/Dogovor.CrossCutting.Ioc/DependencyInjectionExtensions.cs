@@ -1,6 +1,7 @@
 ﻿using Dogovor.Application.Commands.Contract;
 using Dogovor.Application.Graph.Contract.Mutation;
 using Dogovor.Application.Graph.Contract.Query;
+using Dogovor.Application.Graph.Contragent.Query;
 using Dogovor.Application.MessageHandler;
 using Dogovor.Domain.Service.CommandHandler;
 using Dogovor.Domain.Service.Mappings;
@@ -10,7 +11,7 @@ using Dogovor.Infrastructure.Database.Command.Interfaces;
 using Dogovor.Infrastructure.Database.Command.Repository;
 using Dogovor.Infrastructure.Database.Query;
 using Dogovor.Infrastructure.Database.Query.Manager;
-using Dogovor.Infrastructure.Database.Query.Model.Contract;
+using Dogovor.Infrastructure.Database.Query.Model;
 using Dogovor.Infrastructure.ServiceBus;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,7 @@ namespace Dogovor.CrossCutting.Ioc
             });
             
             serviceCollection.AddScoped<IContractRepository, ContractRepository>();
+            serviceCollection.AddScoped<IContragentRepository, ContragentRepository>();
 
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         }
@@ -37,8 +39,10 @@ namespace Dogovor.CrossCutting.Ioc
             serviceCollection.AddSingleton<ManagerFactory>();
             
             serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<Contract>());
+            serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<Contragent>());
             
             serviceCollection.AddSingleton<IEntityManager<Contract>, ContractManager>();
+            serviceCollection.AddSingleton<IEntityManager<Contragent>, ContragentManager>();
         }
 
         public static void ResolveServiceBus(this IServiceCollection serviceCollection)
@@ -78,12 +82,22 @@ namespace Dogovor.CrossCutting.Ioc
             #endregion
 
             #endregion
-            
+
+            #region Contragent
+
+            #region Query
+
+            serviceCollection.AddSingleton<ContragentQuery>();
+
+            #endregion
+
+            #endregion
+
         }
 
         public static void ResolveAuxiliaries(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddAutoMapper(typeof(ContractProfile));
+            serviceCollection.AddAutoMapper(typeof(ContractProfile), typeof(ContragentProfile));
         }
     }
 }

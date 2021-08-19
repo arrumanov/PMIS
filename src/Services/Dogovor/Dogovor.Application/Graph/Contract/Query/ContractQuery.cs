@@ -66,7 +66,7 @@ namespace Dogovor.Application.Graph.Contract.Query
         //}
 
         [UseFiltering()]
-        public async Task<IEnumerable<Infrastructure.Database.Query.Model.Contract.Contract>> GetContracts(
+        public async Task<IEnumerable<Infrastructure.Database.Query.Model.Contract>> GetContracts(
             Dictionary<string, GraphFilter> filters,
             [Service] IServiceProvider serviceProvider,
             CancellationToken cancellationToken)

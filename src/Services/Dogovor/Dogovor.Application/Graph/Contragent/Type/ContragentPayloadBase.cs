@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using Dogovor.Application.Graph.Common;
 
-namespace Dogovor.Application.Graph.Contract.Types
+namespace Dogovor.Application.Graph.Contragent.Types
 {
     public class ContragentPayloadBase : Payload
     {
-        public ContragentPayloadBase(Infrastructure.Database.Query.Model.Contract contract)
+        public ContragentPayloadBase(Infrastructure.Database.Query.Model.Contragent contragent)
         {
-            Contract = contract;
+            Contragent = contragent;
         }
 
         public ContragentPayloadBase(IReadOnlyList<UserError> errors)
@@ -15,6 +15,6 @@ namespace Dogovor.Application.Graph.Contract.Types
         {
         }
 
-        public Infrastructure.Database.Query.Model.Contract? Contract { get; }
+        public Infrastructure.Database.Query.Model.Contragent? Contragent { get; }
     }
 }

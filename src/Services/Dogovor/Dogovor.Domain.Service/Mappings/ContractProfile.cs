@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Command = Dogovor.Infrastructure.Database.Command.Model;
-using Query = Dogovor.Infrastructure.Database.Query.Model.Contract;
-using Dogovor.CrossCutting.Extensions;
+using Query = Dogovor.Infrastructure.Database.Query.Model;
 using Dogovor.Domain.Model;
-using Dogovor.CrossCutting;
 
 namespace Dogovor.Domain.Service.Mappings
 {

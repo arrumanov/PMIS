@@ -40,8 +40,4 @@
     <ProjectReference Include="..\Dogovor.CrossCutting\Dogovor.CrossCutting.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Database\Query\Model\Contract\" />
-  </ItemGroup>
-
 </Project>

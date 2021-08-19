@@ -2,9 +2,9 @@
 
 namespace Dogovor.Infrastructure.Database.Query.Manager
 {
-    public class ContractManager : EntityManager<Contract>
+    public class ContragentManager : EntityManager<Contragent>
     {
-        public ContractManager(IManager<Contract> manager) : base(manager)
+        public ContragentManager(IManager<Contragent> manager) : base(manager)
         {
         }
     }

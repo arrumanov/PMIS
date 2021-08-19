@@ -1,8 +1,8 @@
 ﻿using Dogovor.CrossCutting.Interfaces;
 
-namespace Dogovor.Infrastructure.Database.Query.Model.Client
+namespace Dogovor.Infrastructure.Database.Query.Model
 {
-    public class Client : IQueryModel
+    public class Contragent : IQueryModel
     {
         public string Id { get; set; }
         public string Name { get; set; }

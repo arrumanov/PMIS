@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Dogovor.CrossCutting.Extensions;
 using Dogovor.Infrastructure.Database.Query.Manager;
-using Dogovor.Infrastructure.Database.Query.Model.Contract;
+using Dogovor.Infrastructure.Database.Query.Model;
 using Dogovor.Infrastructure.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
 
