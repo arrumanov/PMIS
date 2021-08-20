@@ -3,14 +3,14 @@ using Dogovor.Application.Graph.Common;
 
 namespace Dogovor.Application.Graph.Contract.Types
 {
-    public class ContragentPayloadBase : Payload
+    public class ContractPayloadBase : Payload
     {
-        public ContragentPayloadBase(Infrastructure.Database.Query.Model.Contract contract)
+        public ContractPayloadBase(Infrastructure.Database.Query.Model.Contract contract)
         {
             Contract = contract;
         }
 
-        public ContragentPayloadBase(IReadOnlyList<UserError> errors)
+        public ContractPayloadBase(IReadOnlyList<UserError> errors)
             : base(errors)
         {
         }

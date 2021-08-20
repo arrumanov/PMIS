@@ -2,7 +2,7 @@
 
 namespace Dogovor.Application.Graph.Contract.Types
 {
-    public class ContragentFilterInputType : FilterInputType<Infrastructure.Database.Query.Model.Contract>
+    public class ContractFilterInputType : FilterInputType<Infrastructure.Database.Query.Model.Contract>
     {
         protected override void Configure(IFilterInputTypeDescriptor<Infrastructure.Database.Query.Model.Contract> descriptor)
         {

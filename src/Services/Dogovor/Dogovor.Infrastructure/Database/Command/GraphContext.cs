@@ -11,6 +11,9 @@ namespace Dogovor.Infrastructure.Database.Command
         
         public DbSet<Contract> Contract { get; set; }
         public DbSet<Contragent> Contragent { get; set; }
+        public DbSet<Product> Subsystem { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

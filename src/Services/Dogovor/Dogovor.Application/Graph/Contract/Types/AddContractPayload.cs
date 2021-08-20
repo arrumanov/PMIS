@@ -3,7 +3,7 @@ using Dogovor.Application.Graph.Common;
 
 namespace Dogovor.Application.Graph.Contract.Types
 {
-    public class AddContractPayload : ContragentPayloadBase
+    public class AddContractPayload : ContractPayloadBase
     {
         public AddContractPayload(Infrastructure.Database.Query.Model.Contract contract)
             : base(contract)

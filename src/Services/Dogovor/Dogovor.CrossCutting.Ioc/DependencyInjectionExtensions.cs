@@ -2,6 +2,9 @@
 using Dogovor.Application.Graph.Contract.Mutation;
 using Dogovor.Application.Graph.Contract.Query;
 using Dogovor.Application.Graph.Contragent.Query;
+using Dogovor.Application.Graph.Department.Query;
+using Dogovor.Application.Graph.Product.Query;
+using Dogovor.Application.Graph.User.Query;
 using Dogovor.Application.MessageHandler;
 using Dogovor.Domain.Service.CommandHandler;
 using Dogovor.Domain.Service.Mappings;
@@ -30,6 +33,9 @@ namespace Dogovor.CrossCutting.Ioc
             
             serviceCollection.AddScoped<IContractRepository, ContractRepository>();
             serviceCollection.AddScoped<IContragentRepository, ContragentRepository>();
+            serviceCollection.AddScoped<IProductRepository, ProductRepository>();
+            serviceCollection.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            serviceCollection.AddScoped<IUserRepository, UserRepository>();
 
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         }
@@ -40,6 +46,9 @@ namespace Dogovor.CrossCutting.Ioc
             
             serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<Contract>());
             serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<Contragent>());
+            serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<Product>());
+            serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<Department>());
+            serviceCollection.AddSingleton((sp) => sp.GetRequiredService<ManagerFactory>().GetManager<User>());
             
             serviceCollection.AddSingleton<IEntityManager<Contract>, ContractManager>();
             serviceCollection.AddSingleton<IEntityManager<Contragent>, ContragentManager>();
@@ -93,11 +102,42 @@ namespace Dogovor.CrossCutting.Ioc
 
             #endregion
 
+            #region Product
+
+            #region Query
+
+            serviceCollection.AddSingleton<ProductQuery>();
+
+            #endregion
+
+            #endregion
+
+            #region Department
+
+            #region Query
+
+            serviceCollection.AddSingleton<DepartmentQuery>();
+
+            #endregion
+
+            #endregion
+
+            #region User
+
+            #region Query
+
+            serviceCollection.AddSingleton<UserQuery>();
+
+            #endregion
+
+            #endregion
+
         }
 
         public static void ResolveAuxiliaries(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddAutoMapper(typeof(ContractProfile), typeof(ContragentProfile));
+            serviceCollection.AddAutoMapper(typeof(ContractProfile), typeof(ContragentProfile), 
+                typeof(ProductProfile), typeof(DepartmentProfile), typeof(UserProfile));
         }
     }
 }
