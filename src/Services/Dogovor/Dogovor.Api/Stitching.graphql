@@ -1,0 +1,5 @@
+﻿extend type Project {
+  department: Department @delegate(path: "departmentById(id: $fields:departmentId)")
+  contragent: Contragent @delegate(path: "contragentById(id: $fields:contragentId)")
+  product: Product @delegate(path: "productById(id: $fields:productId)")
+}

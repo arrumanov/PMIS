@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -12,7 +13,8 @@ namespace Dogovor.Domain.Service.QueryHandler
 {
     using DepartmentQuery = Infrastructure.Database.Query.Model.Department;
 
-    public class DepartmentQueryHandler : IRequestHandler<GetDepartmentCommand, IQueryable<DepartmentQuery>>
+    public class DepartmentQueryHandler : IRequestHandler<GetDepartmentCommand, IQueryable<DepartmentQuery>>,
+        IRequestHandler<GetDepartmentByIdQuery, DepartmentQuery>
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IServiceBus _Bus;
@@ -37,6 +39,18 @@ namespace Dogovor.Domain.Service.QueryHandler
             var contragentsDomain = await _DepartmentRepository.Get(request.GraphFilters);
             var response = contragentsDomain.Select(item => 
                 item.ToQueryModel<DepartmentQuery>(_Mapper));
+
+            #endregion
+
+            return response;
+        }
+
+        public async Task<DepartmentQuery> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
+        {
+            #region Persistence
+            
+            var departmentDomain = await _DepartmentRepository.GetById(request.Id);
+            var response = departmentDomain.ToQueryModel<DepartmentQuery>(_Mapper);
 
             #endregion
 

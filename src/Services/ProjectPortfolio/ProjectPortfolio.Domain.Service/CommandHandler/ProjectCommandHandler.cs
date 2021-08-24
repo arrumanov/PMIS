@@ -41,7 +41,7 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
 
         public async Task<Infrastructure.Database.Query.Model.Project.Project> Handle(AddProjectCommand request, CancellationToken cancellationToken)
         {
-            var projectDomain = new Project(request.Description, request.LongDescription);
+            var projectDomain = new Project(request.Name, request.Description, request.DepartmentId, request.ContragentId, request.ProductId);
             projectDomain.Validate();
 
             #region Persistence

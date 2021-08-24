@@ -40,5 +40,21 @@ namespace Dogovor.Application.Graph.Department.Query
                 return (await mediator.Send(getDepartmentCommand, cancellationToken)).ToList();
             }
         }
+
+        public async Task<Infrastructure.Database.Query.Model.Department> GetDepartmentById(
+            string id,
+            [Service] IServiceProvider serviceProvider,
+            CancellationToken cancellationToken)
+        {
+            var getDepartmentByIdQuery = new GetDepartmentByIdQuery
+            {
+                Id = Guid.Parse(id)
+            };
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                return await mediator.Send(getDepartmentByIdQuery, cancellationToken);
+            }
+        }
     }
 }

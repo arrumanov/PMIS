@@ -1,0 +1,3 @@
+﻿extend type Project {
+  department: Department @delegate(path: "department(id: $fields:departmentId)")
+}

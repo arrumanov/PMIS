@@ -40,5 +40,21 @@ namespace Dogovor.Application.Graph.Contragent.Query
                 return (await mediator.Send(getContragentCommand, cancellationToken)).ToList();
             }
         }
+
+        public async Task<Infrastructure.Database.Query.Model.Contragent> GetContragentById(
+            string id,
+            [Service] IServiceProvider serviceProvider,
+            CancellationToken cancellationToken)
+        {
+            var getContragentByIdQuery = new GetContragentByIdQuery
+            {
+                Id = Guid.Parse(id)
+            };
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                return await mediator.Send(getContragentByIdQuery, cancellationToken);
+            }
+        }
     }
 }

@@ -69,6 +69,7 @@ namespace Dogovor.Api
                 .PublishSchemaDefinition(c => c
                     // The name of the schema. This name should be unique
                     .SetName("dogovors")
+                    .AddTypeExtensionsFromFile("./Stitching.graphql")
                     .PublishToRedis(
                         // The configuration name under which the schema should be published
                         "PMIS",

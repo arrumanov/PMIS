@@ -44,7 +44,7 @@ namespace ProjectPortfolio.Infrastructure.Database.Command
             modelBuilder.Entity<UserProject>(e =>
             {
                 e.Ignore(i => i.Id);
-                e.HasKey(i => new { i.Projectid, i.UserId });
+                e.HasKey(i => new { ProjectId = i.ProjectId, i.UserId });
             });
         }
     }

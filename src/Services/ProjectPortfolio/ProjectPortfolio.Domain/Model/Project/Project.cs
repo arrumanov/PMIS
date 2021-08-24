@@ -10,29 +10,40 @@ namespace ProjectPortfolio.Domain.Model
 {
     public class Project : IDomain
     {
-        public Project(string description, string longDescription)
+        public Project(string name, string description, Guid departmentId, Guid contragentId, Guid productId)
         {
             Id = Guid.NewGuid();
+            Name = name;
             Description = description;
-            LongDescription = longDescription;
+            DepartmentId = departmentId;
+            ContragentId = contragentId;
+            ProductId = productId;
             Users = new List<User>();
             Tasks = new List<Task>();
             State = DomainState.NEW;
         }
 
-        public Project(Guid id, string description, string longDescription, ICollection<User> users, ICollection<Task> tasks)
+        public Project(Guid id, string name, string description, Guid departmentId, Guid contragentId, Guid productId, ICollection<User> users, ICollection<Task> tasks)
         {
             Id = id;
+            Name = name;
             Description = description;
-            LongDescription = longDescription;
+            DepartmentId = departmentId;
+            ContragentId = contragentId;
+            ProductId = productId;
             Users = users;
             Tasks = tasks;
             State = DomainState.FROM_DB;
         }
 
         public Guid Id { get; private set; }
+        public string Name { get; private set; }
         public string Description { get; private set; }
-        public string LongDescription { get; private set; }
+        public Guid DepartmentId { get; set; }
+        public Guid ContragentId { get; set; }
+        public Guid ProductId { get; set; }
+
+
         public ICollection<User> Users { get; private set; }
         public ICollection<Task> Tasks { get; private set; }
         public DomainState State { get; private set; }
@@ -95,10 +106,10 @@ namespace ProjectPortfolio.Domain.Model
             Tasks.Remove(task);
         }
 
-        public void SetDescription(string description, string longDescription)
+        public void SetDescription(string name, string description)
         {
+            this.Name = name;
             this.Description = description;
-            this.LongDescription = longDescription;
 
             this.Validate();
         }

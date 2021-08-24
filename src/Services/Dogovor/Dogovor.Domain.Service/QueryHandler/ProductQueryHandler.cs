@@ -12,7 +12,8 @@ namespace Dogovor.Domain.Service.QueryHandler
 {
     using ProductQuery = Infrastructure.Database.Query.Model.Product;
 
-    public class ProductQueryHandler : IRequestHandler<GetProductCommand, IQueryable<ProductQuery>>
+    public class ProductQueryHandler : IRequestHandler<GetProductCommand, IQueryable<ProductQuery>>,
+        IRequestHandler<GetProductByIdQuery, ProductQuery>
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IServiceBus _Bus;
@@ -37,6 +38,18 @@ namespace Dogovor.Domain.Service.QueryHandler
             var contragentsDomain = await _ProductRepository.Get(request.GraphFilters);
             var response = contragentsDomain.Select(item => 
                 item.ToQueryModel<ProductQuery>(_Mapper));
+
+            #endregion
+
+            return response;
+        }
+
+        public async Task<ProductQuery> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+        {
+            #region Persistence
+
+            var productDomain = await _ProductRepository.GetById(request.Id);
+            var response = productDomain.ToQueryModel<ProductQuery>(_Mapper);
 
             #endregion
 

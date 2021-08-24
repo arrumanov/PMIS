@@ -40,5 +40,21 @@ namespace Dogovor.Application.Graph.Product.Query
                 return (await mediator.Send(getProductCommand, cancellationToken)).ToList();
             }
         }
+
+        public async Task<Infrastructure.Database.Query.Model.Product> GetProductById(
+            string id,
+            [Service] IServiceProvider serviceProvider,
+            CancellationToken cancellationToken)
+        {
+            var getProductByIdQuery = new GetProductByIdQuery
+            {
+                Id = Guid.Parse(id)
+            };
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                return await mediator.Send(getProductByIdQuery, cancellationToken);
+            }
+        }
     }
 }

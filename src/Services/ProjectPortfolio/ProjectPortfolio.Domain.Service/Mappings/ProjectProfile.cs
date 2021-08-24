@@ -15,13 +15,13 @@ namespace ProjectPortfolio.Domain.Service.Mappings
                 {
                     foreach (var user in domain.Users)
                     {
-                        var userProject = new Command.UserProject() { Projectid = domain.Id, UserId = user.Id };
+                        var userProject = new Command.UserProject() { ProjectId = domain.Id, UserId = user.Id };
                         entity.UserProjects.Add(userProject);
                     }
                 });
 
             CreateMap<Project, Command.UserProject>()
-                .ForMember(i => i.Projectid, j => j.MapFrom(m => m.Id))
+                .ForMember(i => i.ProjectId, j => j.MapFrom(m => m.Id))
                 .ForMember(i => i.UserId,
                                 j => j.MapFrom(m =>
                                                 m.Users.FirstOrDefault(u => u.State == DomainState.REMOVE_RELATION

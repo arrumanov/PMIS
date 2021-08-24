@@ -7,7 +7,7 @@ namespace ProjectPortfolio.Infrastructure.Database.Command.Model
     {
         public Guid Id { get; set; }
 
-        public Guid Projectid { get; set; }
+        public Guid ProjectId { get; set; }
         public Guid UserId { get; set; }
 
         public virtual Project Project { get; set; }

@@ -24,8 +24,11 @@ namespace ProjectPortfolio.Application.Graph.Project.Mutation
         {
             var addProjectCommand = new AddProjectCommand()
             {
+                Name = input.Name,
                 Description = input.Description,
-                LongDescription = input.LongDescription
+                DepartmentId = input.DepartmentId,
+                ContragentId = input.ContragentId,
+                ProductId = input.ProductId
             };
             using (var scope = serviceProvider.CreateScope())
             {
