@@ -39,6 +39,21 @@ namespace ProjectPortfolio.Infrastructure.Database.Command
             modelBuilder.Entity<Project>(e =>
             {
                 e.HasMany(i => i.Tasks).WithOne(i => i.Project);
+                e.Property(p => p.DepartmentIds)
+                    .HasConversion(
+                        srts => string.Join(", ", srts != null ? srts.ToArray() : new Guid[] { }),
+                        srts => srts.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList()
+                            .ConvertAll(Guid.Parse));
+                e.Property(p => p.ContragentIds)
+                    .HasConversion(
+                        srts => string.Join(", ", srts != null ? srts.ToArray() : new Guid[] { }),
+                        srts => srts.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList()
+                            .ConvertAll(Guid.Parse));
+                e.Property(p => p.ProductIds)
+                    .HasConversion(
+                        srts => string.Join(", ", srts != null ? srts.ToArray() : new Guid[] { }),
+                        srts => srts.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList()
+                            .ConvertAll(Guid.Parse));
             });
 
             modelBuilder.Entity<UserProject>(e =>

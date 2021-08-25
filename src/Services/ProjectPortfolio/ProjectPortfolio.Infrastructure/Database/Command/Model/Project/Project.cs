@@ -23,18 +23,18 @@ namespace ProjectPortfolio.Infrastructure.Database.Command.Model
         //public Guid TypeId { get; set; }
 
         //public Guid InitiatorId { get; set; }
-        
+
         //public Guid CuratorId { get; set; }
-        
+
         //public Guid ManagerId { get; set; }
-        
-        //public Guid ResponsibleDepartmentId { get; set; }
-        
-        public Guid DepartmentId { get; set; }
 
-        public Guid ContragentId { get; set; }
+        public Guid ResponsibleDepartmentId { get; set; }
 
-        public Guid ProductId { get; set; }
+        public ICollection<Guid> DepartmentIds { get; set; }
+
+        public ICollection<Guid> ContragentIds { get; set; }
+
+        public ICollection<Guid> ProductIds { get; set; }
 
         //public Guid ProbabilityId { get; set; }
 

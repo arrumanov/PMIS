@@ -11,6 +11,7 @@ using Dogovor.CrossCutting.Extensions.GraphQL;
 using HotChocolate.Types;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Dogovor.Application.Graph.Department.Query
 {
@@ -42,13 +43,30 @@ namespace Dogovor.Application.Graph.Department.Query
         }
 
         public async Task<Infrastructure.Database.Query.Model.Department> GetDepartmentById(
-            string id,
+            [GraphQLType(typeof(IdType))] Guid id,
             [Service] IServiceProvider serviceProvider,
             CancellationToken cancellationToken)
         {
             var getDepartmentByIdQuery = new GetDepartmentByIdQuery
             {
-                Id = Guid.Parse(id)
+                Id = id
+            };
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                return await mediator.Send(getDepartmentByIdQuery, cancellationToken);
+            }
+        }
+
+        public async Task<IEnumerable<Infrastructure.Database.Query.Model.Department>> GetDepartmentsOfProject(
+            string ids,
+            [Service] IServiceProvider serviceProvider,
+            CancellationToken cancellationToken)
+        {
+            var guids = JsonConvert.DeserializeObject<List<Guid>>(ids);
+            var getDepartmentByIdQuery = new GetDepartmentsByIdsQuery
+            {
+                Ids = guids //ids.Select(Guid.Parse).ToList()
             };
             using (var scope = serviceProvider.CreateScope())
             {

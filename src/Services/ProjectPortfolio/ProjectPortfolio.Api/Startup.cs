@@ -1,3 +1,4 @@
+using HotChocolate.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,6 +47,7 @@ namespace ProjectPortfolio.Api
 
             services
                 .AddGraphQLServer()
+                //.AddType(new UuidType('D'))
                 //.AddQueryType<ProjectQuery>()
                 //.AddMutationType<ProjectMutation>()
                 .AddQueryType(d => d.Name("Query"))

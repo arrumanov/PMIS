@@ -11,6 +11,7 @@ using Dogovor.CrossCutting.Extensions.GraphQL;
 using HotChocolate.Types;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Dogovor.Application.Graph.Product.Query
 {
@@ -42,18 +43,35 @@ namespace Dogovor.Application.Graph.Product.Query
         }
 
         public async Task<Infrastructure.Database.Query.Model.Product> GetProductById(
-            string id,
+            [GraphQLType(typeof(IdType))] Guid id,
             [Service] IServiceProvider serviceProvider,
             CancellationToken cancellationToken)
         {
             var getProductByIdQuery = new GetProductByIdQuery
             {
-                Id = Guid.Parse(id)
+                Id = id
             };
             using (var scope = serviceProvider.CreateScope())
             {
                 var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
                 return await mediator.Send(getProductByIdQuery, cancellationToken);
+            }
+        }
+
+        public async Task<IEnumerable<Infrastructure.Database.Query.Model.Product>> GetProductsOfProject(
+            string ids,
+            [Service] IServiceProvider serviceProvider,
+            CancellationToken cancellationToken)
+        {
+            var guids = JsonConvert.DeserializeObject<List<Guid>>(ids);
+            var getProductsByIdsQuery = new GetProductsByIdsQuery
+            {
+                Ids = guids
+            };
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                return await mediator.Send(getProductsByIdsQuery, cancellationToken);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Command = ProjectPortfolio.Infrastructure.Database.Command.Model;
 using Query = ProjectPortfolio.Infrastructure.Database.Query.Model.Project;
 using UserQuery = ProjectPortfolio.Infrastructure.Database.Query.Model.User;
@@ -41,7 +40,8 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
 
         public async Task<Infrastructure.Database.Query.Model.Project.Project> Handle(AddProjectCommand request, CancellationToken cancellationToken)
         {
-            var projectDomain = new Project(request.Name, request.Description, request.DepartmentId, request.ContragentId, request.ProductId);
+            var projectDomain = new Project(request.Name, request.Description, request.ResponsibleDepartmentId, 
+                request.DepartmentIds, request.ContragentIds, request.ProductIds);
             projectDomain.Validate();
 
             #region Persistence

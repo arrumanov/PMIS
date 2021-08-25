@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dogovor.Application.Query.Contragent;
-using Dogovor.Application.Query.Department;
 using Dogovor.CrossCutting.Extensions;
 using Dogovor.Infrastructure.Database.Command.Interfaces;
 using Dogovor.Infrastructure.ServiceBus;
@@ -14,7 +14,8 @@ namespace Dogovor.Domain.Service.QueryHandler
     using ContragentQuery = Infrastructure.Database.Query.Model.Contragent;
 
     public class ContragentQueryHandler : IRequestHandler<GetContragentCommand, IQueryable<ContragentQuery>>,
-        IRequestHandler<GetContragentByIdQuery, ContragentQuery>
+        IRequestHandler<GetContragentByIdQuery, ContragentQuery>,
+        IRequestHandler<GetContragentsByIdsQuery, IEnumerable<ContragentQuery>>
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IServiceBus _Bus;
@@ -51,6 +52,18 @@ namespace Dogovor.Domain.Service.QueryHandler
 
             var contragentDomain = await _ContragentRepository.GetById(request.Id);
             var response = contragentDomain.ToQueryModel<ContragentQuery>(_Mapper);
+
+            #endregion
+
+            return response;
+        }
+
+        public async Task<IEnumerable<ContragentQuery>> Handle(GetContragentsByIdsQuery request, CancellationToken cancellationToken)
+        {
+            #region Persistence
+
+            var contragentsDomain = await _ContragentRepository.GetByIds(request.Ids);
+            var response = contragentsDomain.Select(item => item.ToQueryModel<ContragentQuery>(_Mapper));
 
             #endregion
 

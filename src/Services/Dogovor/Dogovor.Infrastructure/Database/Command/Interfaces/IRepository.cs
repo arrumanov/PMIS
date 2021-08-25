@@ -10,6 +10,7 @@ namespace Dogovor.Infrastructure.Database.Command.Interfaces
     {
         Task Add(T obj);
         Task<T> GetById(Guid id);
+        Task<IEnumerable<T>> GetByIds(List<Guid> ids);
         Task<IQueryable<T>> GetAll();
         Task<IQueryable<T>> Get(IDictionary<string, GraphFilter> filters);
         Task Update(T obj);

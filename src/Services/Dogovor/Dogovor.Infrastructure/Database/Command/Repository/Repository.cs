@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper.Internal;
 using Dogovor.CrossCutting.Extensions;
 using Dogovor.CrossCutting.Extensions.GraphQL;
+using Dogovor.CrossCutting.Interfaces;
 using Dogovor.Infrastructure.Database.Command.Interfaces;
 using Dogovor.Infrastructure.Database.Command.Model;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace Dogovor.Infrastructure.Database.Command.Repository
 {
-    public abstract class Repository<T> : IRepository<T> where T : class
+    public abstract class Repository<T> : IRepository<T> where T : class, IModel
     {
         protected GraphContext _Context;
 
@@ -42,6 +43,11 @@ namespace Dogovor.Infrastructure.Database.Command.Repository
         public virtual async Task<T> GetById(Guid id)
         {
             return await _Context.Set<T>().FindAsync(id);
+        }
+
+        public virtual async Task<IEnumerable<T>> GetByIds(List<Guid> ids)
+        {
+            return await Task.FromResult(_Context.Set<T>().Where(item => ids.Contains(item.Id)).ToList());
         }
 
         public virtual Task Remove(T obj)

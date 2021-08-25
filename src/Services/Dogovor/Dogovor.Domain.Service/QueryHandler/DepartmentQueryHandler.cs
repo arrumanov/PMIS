@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace Dogovor.Domain.Service.QueryHandler
     using DepartmentQuery = Infrastructure.Database.Query.Model.Department;
 
     public class DepartmentQueryHandler : IRequestHandler<GetDepartmentCommand, IQueryable<DepartmentQuery>>,
-        IRequestHandler<GetDepartmentByIdQuery, DepartmentQuery>
+        IRequestHandler<GetDepartmentByIdQuery, DepartmentQuery>,
+        IRequestHandler<GetDepartmentsByIdsQuery, IEnumerable<DepartmentQuery>>
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IServiceBus _Bus;
@@ -51,6 +53,18 @@ namespace Dogovor.Domain.Service.QueryHandler
             
             var departmentDomain = await _DepartmentRepository.GetById(request.Id);
             var response = departmentDomain.ToQueryModel<DepartmentQuery>(_Mapper);
+
+            #endregion
+
+            return response;
+        }
+
+        public async Task<IEnumerable<DepartmentQuery>> Handle(GetDepartmentsByIdsQuery request, CancellationToken cancellationToken)
+        {
+            #region Persistence
+            
+            var departmentsDomain = await _DepartmentRepository.GetByIds(request.Ids);
+            var response = departmentsDomain.Select(item => item.ToQueryModel<DepartmentQuery>(_Mapper));
 
             #endregion
 

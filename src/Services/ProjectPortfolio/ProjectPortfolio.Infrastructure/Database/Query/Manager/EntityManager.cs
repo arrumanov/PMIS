@@ -25,6 +25,11 @@ namespace ProjectPortfolio.Infrastructure.Database.Query.Manager
             return _Manager.Get();
         }
 
+        public IEnumerable<T> GetList()
+        {
+            return _Manager.Get().GetAwaiter().GetResult().ToList();
+        }
+
         public Task<T> GetById(Guid id, string[] fields)
         {
             return _Manager.GetById(id, fields);

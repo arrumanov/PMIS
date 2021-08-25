@@ -10,27 +10,29 @@ namespace ProjectPortfolio.Domain.Model
 {
     public class Project : IDomain
     {
-        public Project(string name, string description, Guid departmentId, Guid contragentId, Guid productId)
+        public Project(string name, string description, Guid responsibleDepartmentId, List<Guid> departmentId, List<Guid> contragentId, List<Guid> productId)
         {
             Id = Guid.NewGuid();
             Name = name;
+            ResponsibleDepartmentId = responsibleDepartmentId;
             Description = description;
-            DepartmentId = departmentId;
-            ContragentId = contragentId;
-            ProductId = productId;
+            DepartmentIds = departmentId;
+            ContragentIds = contragentId;
+            ProductIds = productId;
             Users = new List<User>();
             Tasks = new List<Task>();
             State = DomainState.NEW;
         }
 
-        public Project(Guid id, string name, string description, Guid departmentId, Guid contragentId, Guid productId, ICollection<User> users, ICollection<Task> tasks)
+        public Project(Guid id, string name, string description, Guid responsibleDepartmentId, List<Guid> departmentId, List<Guid> contragentId, List<Guid> productId, ICollection<User> users, ICollection<Task> tasks)
         {
             Id = id;
             Name = name;
             Description = description;
-            DepartmentId = departmentId;
-            ContragentId = contragentId;
-            ProductId = productId;
+            ResponsibleDepartmentId = responsibleDepartmentId;
+            DepartmentIds = departmentId;
+            ContragentIds = contragentId;
+            ProductIds = productId;
             Users = users;
             Tasks = tasks;
             State = DomainState.FROM_DB;
@@ -39,9 +41,10 @@ namespace ProjectPortfolio.Domain.Model
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public Guid DepartmentId { get; set; }
-        public Guid ContragentId { get; set; }
-        public Guid ProductId { get; set; }
+        public Guid ResponsibleDepartmentId { get; set; }
+        public ICollection<Guid> DepartmentIds { get; set; }
+        public ICollection<Guid> ContragentIds { get; set; }
+        public ICollection<Guid> ProductIds { get; set; }
 
 
         public ICollection<User> Users { get; private set; }

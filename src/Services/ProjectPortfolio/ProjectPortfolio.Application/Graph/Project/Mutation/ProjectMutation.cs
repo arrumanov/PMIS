@@ -26,9 +26,10 @@ namespace ProjectPortfolio.Application.Graph.Project.Mutation
             {
                 Name = input.Name,
                 Description = input.Description,
-                DepartmentId = input.DepartmentId,
-                ContragentId = input.ContragentId,
-                ProductId = input.ProductId
+                ResponsibleDepartmentId = input.ResponsibleDepartmentId,
+                DepartmentIds = input.DepartmentIds,
+                ContragentIds = input.ContragentIds,
+                ProductIds = input.ProductIds
             };
             using (var scope = serviceProvider.CreateScope())
             {

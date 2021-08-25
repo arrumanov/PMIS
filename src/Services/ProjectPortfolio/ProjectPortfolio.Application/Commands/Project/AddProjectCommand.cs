@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProjectPortfolio.Application.Commands.Project
 {
@@ -6,8 +7,9 @@ namespace ProjectPortfolio.Application.Commands.Project
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid DepartmentId { get; set; }
-        public Guid ContragentId { get; set; }
-        public Guid ProductId { get; set; }
+        public Guid ResponsibleDepartmentId { get; set; }
+        public List<Guid> DepartmentIds { get; set; }
+        public List<Guid> ContragentIds { get; set; }
+        public List<Guid> ProductIds { get; set; }
     }
 }

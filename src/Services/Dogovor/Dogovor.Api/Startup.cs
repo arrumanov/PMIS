@@ -13,6 +13,7 @@ using Dogovor.Infrastructure.Database;
 using Dogovor.Infrastructure.Database.Command;
 using Dogovor.Infrastructure.Extensions;
 using Dogovor.Infrastructure.ServiceBus;
+using HotChocolate.Types;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
@@ -50,6 +51,7 @@ namespace Dogovor.Api
 
             services
                 .AddGraphQLServer()
+                //.AddType(new UuidType('D'))
                 //.AddQueryType<ContractQuery>()
                 //.AddMutationType<ContractMutation>()
                 .AddQueryType(d => d.Name("Query"))

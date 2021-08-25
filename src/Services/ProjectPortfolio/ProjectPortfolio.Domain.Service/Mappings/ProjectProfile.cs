@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Command = ProjectPortfolio.Infrastructure.Database.Command.Model;
 using Query = ProjectPortfolio.Infrastructure.Database.Query.Model.Project;
 using System.Linq;
@@ -36,12 +37,14 @@ namespace ProjectPortfolio.Domain.Service.Mappings
                 .ForMember(i => i.State, j => j.MapFrom(m => DomainState.FROM_DB));
 
             CreateMap<Project, Query.Project>()
+                .ForMember(i => i.ProjectContragents, j => j.MapFrom(m => m.ContragentIds.Select(c => new Query.ProjectContragent{ContragentId = c.ToString().ToLower()})))
                 .ForMember(i => i.Tasks, j => j.MapFrom(m => m.Tasks))
                 .ForMember(i => i.Participants, j => j.MapFrom(m => m.Users.Where(u => u.State != DomainState.REMOVE_RELATION)))
                 .ForMember(i => i.FinishedCount, j => j.MapFrom(m => m.Tasks.Where(i => i.Status == CrossCutting.TaskStatusEnum.DONE).Count()))
                 .ForMember(i => i.UnfinishedCount, j => j.MapFrom(m => m.Tasks.Where(i => i.Status != CrossCutting.TaskStatusEnum.DONE).Count()));
 
             CreateMap<Command.Project, Query.Project>()
+                .ForMember(i => i.ProjectContragents, j => j.MapFrom(m => m.ContragentIds.Select(c => new Query.ProjectContragent { ContragentId = c.ToString().ToLower() })))
                 .ForMember(i => i.Tasks, j => j.MapFrom(m => m.Tasks))
                 .ForMember(i => i.Participants, j => j.MapFrom(m => m.UserProjects.Select(s => s.User)));
 

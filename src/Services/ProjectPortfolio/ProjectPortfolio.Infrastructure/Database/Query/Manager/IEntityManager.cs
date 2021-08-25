@@ -14,5 +14,6 @@ namespace ProjectPortfolio.Infrastructure.Database.Query.Manager
         Task<T> GetById(Guid id);
         Task<IEnumerable<T>> Get(string[] fields, IDictionary<string, GraphFilter> filters, string order, int skip, int take);
         Task<IQueryable<T>> Get();
+        IEnumerable<T> GetList();
     }
 }
