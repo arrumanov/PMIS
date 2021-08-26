@@ -2,9 +2,9 @@
 
 namespace ProjectPortfolio.Infrastructure.Database.Query.Model.Project
 {
-    public class ProjectContragent
+    public class ProjectProduct
     {
-        [BsonElement("contragentId")]
-        public string ContragentId { get; set; }    
+        [BsonElement("productId")]
+        public string ProductId { get; set; }    
     }
 }

@@ -10,29 +10,33 @@ namespace ProjectPortfolio.Domain.Model
 {
     public class Project : IDomain
     {
-        public Project(string name, string description, Guid responsibleDepartmentId, List<Guid> departmentId, List<Guid> contragentId, List<Guid> productId)
+        public Project(string name, string description, Guid responsibleDepartmentId)
         {
             Id = Guid.NewGuid();
             Name = name;
             ResponsibleDepartmentId = responsibleDepartmentId;
             Description = description;
-            DepartmentIds = departmentId;
-            ContragentIds = contragentId;
-            ProductIds = productId;
+            ProjectDepartments = new List<ProjectDepartment>();
+            ProjectContragents = new List<ProjectContragent>();
+            ProjectProducts = new List<ProjectProduct>();
             Users = new List<User>();
             Tasks = new List<Task>();
             State = DomainState.NEW;
+            CreatedDate = DateTime.UtcNow;
         }
 
-        public Project(Guid id, string name, string description, Guid responsibleDepartmentId, List<Guid> departmentId, List<Guid> contragentId, List<Guid> productId, ICollection<User> users, ICollection<Task> tasks)
+        public Project(Guid id, string name, string description, Guid responsibleDepartmentId,
+            ICollection<ProjectDepartment> projectDepartments, ICollection<ProjectContragent> projectContragents, 
+            ICollection<ProjectProduct> projectProducts, 
+            ICollection<User> users, ICollection<Task> tasks)
         {
             Id = id;
             Name = name;
             Description = description;
             ResponsibleDepartmentId = responsibleDepartmentId;
-            DepartmentIds = departmentId;
-            ContragentIds = contragentId;
-            ProductIds = productId;
+            ProjectDepartments = projectDepartments;
+            ProjectContragents = projectContragents;
+            ProjectProducts = projectProducts;
             Users = users;
             Tasks = tasks;
             State = DomainState.FROM_DB;
@@ -41,15 +45,79 @@ namespace ProjectPortfolio.Domain.Model
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public DateTime CreatedDate { get; private set; }
         public Guid ResponsibleDepartmentId { get; set; }
-        public ICollection<Guid> DepartmentIds { get; set; }
-        public ICollection<Guid> ContragentIds { get; set; }
-        public ICollection<Guid> ProductIds { get; set; }
+
+        public ICollection<ProjectDepartment> ProjectDepartments { get; set; }
+        public ICollection<ProjectProduct> ProjectProducts { get; set; }
+        public ICollection<ProjectContragent> ProjectContragents { get; set; }
+        public DictionaryValue Probability { get; set; }
+        public DictionaryValue Statement { get; set; }
 
 
         public ICollection<User> Users { get; private set; }
         public ICollection<Task> Tasks { get; private set; }
         public DomainState State { get; private set; }
+
+        public void AddDepartment(ProjectDepartment projectDepartment)
+        {
+            projectDepartment.Validate();
+
+            if (ProjectDepartments.Any(i => i.Id == projectDepartment.Id)) throw new ValidationException("PROJDEPARTMENT-01");
+
+            ProjectDepartments.Add(projectDepartment);
+        }
+
+        public void RemoveDepartment(ProjectDepartment projectDepartment)
+        {
+            projectDepartment.Validate();
+
+            if (!ProjectDepartments.Any(i => i.Id == projectDepartment.Id)) throw new ValidationException("PROJDEPARTMENT-02");
+
+            ProjectDepartments.Update(projectDepartment);
+
+
+        }
+
+        public void AddContragent(ProjectContragent projectContragent)
+        {
+            projectContragent.Validate();
+
+            if (ProjectContragents.Any(i => i.Id == projectContragent.Id)) throw new ValidationException("PROJCONTRAGENT-01");
+
+            ProjectContragents.Add(projectContragent);
+        }
+
+        public void RemoveContragent(ProjectContragent projectContragent)
+        {
+            projectContragent.Validate();
+
+            if (!ProjectContragents.Any(i => i.Id == projectContragent.Id)) throw new ValidationException("PROJCONTRAGENT-02");
+
+            ProjectContragents.Update(projectContragent);
+
+
+        }
+
+        public void AddProduct(ProjectProduct projectProduct)
+        {
+            projectProduct.Validate();
+
+            if (ProjectProducts.Any(i => i.Id == projectProduct.Id)) throw new ValidationException("PROJPRODUCT-01");
+
+            ProjectProducts.Add(projectProduct);
+        }
+
+        public void RemoveProduct(ProjectProduct projectProduct)
+        {
+            projectProduct.Validate();
+
+            if (!ProjectProducts.Any(i => i.Id == projectProduct.Id)) throw new ValidationException("PROJPRODUCT-02");
+
+            ProjectProducts.Update(projectProduct);
+
+
+        }
 
         public void AddUser(User user)
         {

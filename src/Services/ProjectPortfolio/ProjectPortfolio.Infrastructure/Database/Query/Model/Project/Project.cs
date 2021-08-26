@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ProjectPortfolio.CrossCutting.Interfaces;
 using MongoDB.Bson.Serialization.Attributes;
+using ProjectPortfolio.Infrastructure.Database.Command.Model;
 
 namespace ProjectPortfolio.Infrastructure.Database.Query.Model.Project
 {
@@ -15,11 +15,14 @@ namespace ProjectPortfolio.Infrastructure.Database.Query.Model.Project
         [BsonElement("description")]
         public string Description { get; set; }
 
-        //[BsonElement("category")]
-        //public DictionaryValue Category { get; set; }
+        [BsonElement("responsibleDepartmentId")]
+        public string ResponsibleDepartmentId { get; set; }
 
-        //[BsonElement("type")]
-        //public DictionaryValue Type { get; set; }
+        [BsonElement("category")]
+        public DictionaryValue Category { get; set; }
+
+        [BsonElement("type")]
+        public DictionaryValue Type { get; set; }
 
         //[BsonElement("initiator")]
         //public string Initiator { get; set; }
@@ -30,34 +33,12 @@ namespace ProjectPortfolio.Infrastructure.Database.Query.Model.Project
         //[BsonElement("manager")]
         //public string Manager { get; set; }
 
-        [BsonElement("responsibleDepartmentId")]
-        public string ResponsibleDepartmentId { get; set; }
 
-        [BsonElement("departmentIds")]
-        public ICollection<string> DepartmentIds { get; set; }
+        [BsonElement("probability")]
+        public DictionaryValue Probability { get; set; }
 
-        //[BsonElement("contragentIds")]
-        //public ICollection<string> ContragentIds { get; set; }
-
-        [BsonElement("productIds")]
-        public ICollection<string> ProductIds { get; set; }
-
-        //TODO: костыль, в будущем нужно найти решение лучше
-        [BsonIgnore]
-        public string DepartmentIdsStr { get; set; }
-
-        //[BsonIgnore]
-        //public string ContragentIdsStr { get; set; }
-
-        [BsonIgnore]
-        public string ProductIdsStr { get; set; }
-        //:TODO
-
-        //[BsonElement("probability")]
-        //public string Probability { get; set; }
-
-        //[BsonElement("statement")]
-        //public string Statement { get; set; }
+        [BsonElement("statement")]
+        public DictionaryValue Statement { get; set; }
 
         //[BsonElement("status")]
         //public string Status { get; set; }
@@ -65,16 +46,22 @@ namespace ProjectPortfolio.Infrastructure.Database.Query.Model.Project
         //[BsonElement("creatorId")]
         //public string CreatorId { get; set; }
 
-        //[BsonElement("creationDate")]
-        //public string CreationDate { get; set; }
+        [BsonElement("createdDate")]
+        public long CreatedDate { get; set; }
 
         //[BsonElement("objectType")]
         //public string ObjectType { get; set; }
 
 
 
+        [BsonElement("departments")]
+        public ICollection<ProjectDepartment> ProjectDepartments { get; set; }
+
+        [BsonElement("products")]
+        public ICollection<ProjectProduct> ProjectProducts { get; set; }
+
         [BsonElement("contragents")]
-        public List<ProjectContragent> ProjectContragents { get; set; }
+        public ICollection<ProjectContragent> ProjectContragents { get; set; }
 
         [BsonElement("tasks")]
         public ICollection<ProjectTask> Tasks { get; set; }

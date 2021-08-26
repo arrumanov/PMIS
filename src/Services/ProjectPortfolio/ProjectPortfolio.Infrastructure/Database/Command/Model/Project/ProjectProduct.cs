@@ -3,12 +3,12 @@ using ProjectPortfolio.CrossCutting.Interfaces;
 
 namespace ProjectPortfolio.Infrastructure.Database.Command.Model
 {
-    public class ProjectContragent : IModel
+    public class ProjectProduct : IModel
     {
         public Guid Id { get; set; }
 
         public Guid ProjectId { get; set; }
 
-        public Guid ContragentId { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

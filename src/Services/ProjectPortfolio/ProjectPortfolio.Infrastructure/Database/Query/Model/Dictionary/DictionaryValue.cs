@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using ProjectPortfolio.CrossCutting.Interfaces;
 
-namespace ProjectPortfolio.Infrastructure.Database.Query.Model
+namespace ProjectPortfolio.Infrastructure.Database.Query.Model.Dictionary
 {
     public class DictionaryValue : IQueryModel
     {

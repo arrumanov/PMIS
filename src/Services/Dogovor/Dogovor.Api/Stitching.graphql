@@ -3,6 +3,14 @@
   products: [Product] @delegate(path: "productsOfProject(ids: $fields:productIdsStr)")
 }
 
+extend type ProjectDepartment {
+  department: Department @delegate(path: "departmentById(id: $fields:departmentId)")
+}
+
 extend type ProjectContragent {
   contragent: Contragent @delegate(path: "contragentById(id: $fields:contragentId)")
+}
+
+extend type ProjectProduct {
+  product: Product @delegate(path: "productById(id: $fields:productId)")
 }

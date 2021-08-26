@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Command = ProjectPortfolio.Infrastructure.Database.Command.Model;
 using Query = ProjectPortfolio.Infrastructure.Database.Query.Model.Project;
 using UserQuery = ProjectPortfolio.Infrastructure.Database.Query.Model.User;
@@ -7,6 +8,7 @@ using MediatR;
 using ProjectPortfolio.CrossCutting.Extensions;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper.Internal;
 using ProjectPortfolio.Infrastructure.ServiceBus;
 using ProjectPortfolio.Application.Commands.Project;
 using ProjectPortfolio.Application.MessageHandler;
@@ -40,8 +42,29 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
 
         public async Task<Infrastructure.Database.Query.Model.Project.Project> Handle(AddProjectCommand request, CancellationToken cancellationToken)
         {
-            var projectDomain = new Project(request.Name, request.Description, request.ResponsibleDepartmentId, 
-                request.DepartmentIds, request.ContragentIds, request.ProductIds);
+            var projectDomain = new Project(request.Name, request.Description, request.ResponsibleDepartmentId);
+            
+            var projectDepartmentsDomain = request.DepartmentIds.Select(item =>
+            {
+                var newItem = new ProjectDepartment(projectDomain.Id, item);
+                newItem.Validate();
+                return newItem;
+            });
+            var projectContragentsDomain = request.ContragentIds.Select(item => {
+                var newItem = new ProjectContragent(projectDomain.Id, item);
+                newItem.Validate();
+                return newItem;
+            });
+            var projectproductsDomain = request.ProductIds.Select(item => {
+                var newItem = new ProjectProduct(projectDomain.Id, item);
+                newItem.Validate();
+                return newItem;
+            });
+
+            projectDepartmentsDomain.ForAll(item => projectDomain.AddDepartment(item));
+            projectContragentsDomain.ForAll(item => projectDomain.AddContragent(item));
+            projectproductsDomain.ForAll(item => projectDomain.AddProduct(item));
+
             projectDomain.Validate();
 
             #region Persistence

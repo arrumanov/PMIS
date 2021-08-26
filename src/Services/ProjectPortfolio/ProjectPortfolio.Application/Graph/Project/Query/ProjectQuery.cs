@@ -26,15 +26,7 @@ namespace ProjectPortfolio.Application.Graph.Project.Query
             [Service] IEntityManager<Infrastructure.Database.Query.Model.Project.Project> query)
         {
             _logger.LogInformation("GetProjects");
-            return query.GetList()
-                .Select(item =>
-                {
-                    //TODO: костыль, в будущем нужно найти решение лучше
-                    item.DepartmentIdsStr = JsonConvert.SerializeObject(item.DepartmentIds);
-                    item.ProductIdsStr = JsonConvert.SerializeObject(item.ProductIds);
-                    //:TODO
-                    return item;
-                });
+            return query.GetList();
         }
 
         [UseFiltering()]
