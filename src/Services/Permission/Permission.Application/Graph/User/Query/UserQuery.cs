@@ -40,5 +40,21 @@ namespace Permission.Application.Graph.User.Query
                 return (await mediator.Send(getUserCommand, cancellationToken)).ToList();
             }
         }
+
+        public async Task<Infrastructure.Database.Query.Model.User> GetUserById(
+            [GraphQLType(typeof(IdType))] Guid id,
+            [Service] IServiceProvider serviceProvider,
+            CancellationToken cancellationToken)
+        {
+            var getUserByIdQuery = new GetUserByIdQuery
+            {
+                Id = id
+            };
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                return await mediator.Send(getUserByIdQuery, cancellationToken);
+            }
+        }
     }
 }

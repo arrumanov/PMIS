@@ -10,22 +10,28 @@ namespace ProjectPortfolio.Domain.Model
 {
     public class Project : IDomain
     {
-        public Project(string name, string description, Guid responsibleDepartmentId)
+        public Project(string name, string description, Guid responsibleDepartmentId,
+            Guid initiatorId, Guid curatorId, Guid managerId)
         {
             Id = Guid.NewGuid();
             Name = name;
             ResponsibleDepartmentId = responsibleDepartmentId;
             Description = description;
+            InitiatorId = initiatorId;
+            CuratorId = curatorId;
+            ManagerId = managerId;
             ProjectDepartments = new List<ProjectDepartment>();
             ProjectContragents = new List<ProjectContragent>();
             ProjectProducts = new List<ProjectProduct>();
-            Users = new List<User>();
-            Tasks = new List<Task>();
-            State = DomainState.NEW;
+            //Users = new List<User>();
+            //Tasks = new List<Task>();
+            //State = DomainState.NEW;
             CreatedDate = DateTime.UtcNow;
+            CreatorId = Guid.Parse("380355c1-f504-3cd9-d44a-39e066738668");
         }
 
         public Project(Guid id, string name, string description, Guid responsibleDepartmentId,
+            Guid initiatorId, Guid curatorId, Guid managerId,
             ICollection<ProjectDepartment> projectDepartments, ICollection<ProjectContragent> projectContragents, 
             ICollection<ProjectProduct> projectProducts, 
             ICollection<User> users, ICollection<Task> tasks)
@@ -34,12 +40,15 @@ namespace ProjectPortfolio.Domain.Model
             Name = name;
             Description = description;
             ResponsibleDepartmentId = responsibleDepartmentId;
+            InitiatorId = initiatorId;
+            CuratorId = curatorId;
+            ManagerId = managerId;
             ProjectDepartments = projectDepartments;
             ProjectContragents = projectContragents;
             ProjectProducts = projectProducts;
-            Users = users;
-            Tasks = tasks;
-            State = DomainState.FROM_DB;
+            //Users = users;
+            //Tasks = tasks;
+            //State = DomainState.FROM_DB;
         }
 
         public Guid Id { get; private set; }
@@ -47,6 +56,10 @@ namespace ProjectPortfolio.Domain.Model
         public string Description { get; private set; }
         public DateTime CreatedDate { get; private set; }
         public Guid ResponsibleDepartmentId { get; private set; }
+        public Guid InitiatorId { get; private set; }
+        public Guid CuratorId { get; private set; }
+        public Guid ManagerId { get; private set; }
+        public Guid CreatorId { get; private set; }
 
         public ICollection<ProjectDepartment> ProjectDepartments { get; private set; }
         public ICollection<ProjectProduct> ProjectProducts { get; private set; }
@@ -55,9 +68,9 @@ namespace ProjectPortfolio.Domain.Model
         public DictionaryValue Statement { get; private set; }
 
 
-        public ICollection<User> Users { get; private set; }
-        public ICollection<Task> Tasks { get; private set; }
-        public DomainState State { get; private set; }
+        //public ICollection<User> Users { get; private set; }
+        //public ICollection<Task> Tasks { get; private set; }
+        //public DomainState State { get; private set; }
 
         public void AddDepartment(ProjectDepartment projectDepartment)
         {
@@ -119,63 +132,63 @@ namespace ProjectPortfolio.Domain.Model
 
         }
 
-        public void AddUser(User user)
-        {
-            user.Validate();
+        //public void AddUser(User user)
+        //{
+        //    user.Validate();
 
-            if (Users.Any(i => i.Id == user.Id)) throw new ValidationException("PROJUSER-01");
+        //    if (Users.Any(i => i.Id == user.Id)) throw new ValidationException("PROJUSER-01");
 
-            user.SetStateForRelation(true);
+        //    user.SetStateForRelation(true);
 
-            user.AddProject(this);
-            Users.Add(user);
-        }
+        //    user.AddProject(this);
+        //    Users.Add(user);
+        //}
 
-        public void RemoveUser(User user)
-        {
-            user.Validate();
+        //public void RemoveUser(User user)
+        //{
+        //    user.Validate();
 
-            if (!Users.Any(i => i.Id == user.Id)) throw new ValidationException("PROJUSER-02");
+        //    if (!Users.Any(i => i.Id == user.Id)) throw new ValidationException("PROJUSER-02");
 
-            user.SetStateForRelation(false);
+        //    user.SetStateForRelation(false);
 
-            user.RemoveProject(this);
-            Users.Update(user);
+        //    user.RemoveProject(this);
+        //    Users.Update(user);
 
 
-        }
+        //}
 
-        public void AddTask(Task task)
-        {
-            task.Validate();
+        //public void AddTask(Task task)
+        //{
+        //    task.Validate();
 
-            if (Tasks.Any(i => i.Id == task.Id)) throw new ValidationException("PROJTASK-01");
-            if (!Users.Any(i => i.Id == task.Assignee.Id) || !Users.Any(i => i.Id == task.Reporter.Id)) throw new ValidationException("PROJTASK-02");
+        //    if (Tasks.Any(i => i.Id == task.Id)) throw new ValidationException("PROJTASK-01");
+        //    if (!Users.Any(i => i.Id == task.Assignee.Id) || !Users.Any(i => i.Id == task.Reporter.Id)) throw new ValidationException("PROJTASK-02");
 
-            Tasks.Add(task);
-        }
+        //    Tasks.Add(task);
+        //}
 
-        public void UpdateTask(Task task)
-        {
-            task.Validate();
+        //public void UpdateTask(Task task)
+        //{
+        //    task.Validate();
 
-            var selectedTask = Tasks.FirstOrDefault(i => i.Id == task.Id);
+        //    var selectedTask = Tasks.FirstOrDefault(i => i.Id == task.Id);
 
-            if (selectedTask.IsNull()) throw new ValidationException("PROJTASK-01");
-            if (!Users.Any(i => i.Id == task.Assignee.Id) || !Users.Any(i => i.Id == task.Reporter.Id))
-                throw new ValidationException("PROJTASK-02");
+        //    if (selectedTask.IsNull()) throw new ValidationException("PROJTASK-01");
+        //    if (!Users.Any(i => i.Id == task.Assignee.Id) || !Users.Any(i => i.Id == task.Reporter.Id))
+        //        throw new ValidationException("PROJTASK-02");
 
-            Tasks.Update(task);
-        }
+        //    Tasks.Update(task);
+        //}
 
-        public void RemoveTask(Task task)
-        {
-            task.Validate();
+        //public void RemoveTask(Task task)
+        //{
+        //    task.Validate();
 
-            if (!Tasks.Any(i => i.Id == task.Id)) throw new ValidationException("PROJTASK-01");
+        //    if (!Tasks.Any(i => i.Id == task.Id)) throw new ValidationException("PROJTASK-01");
 
-            Tasks.Remove(task);
-        }
+        //    Tasks.Remove(task);
+        //}
 
         public void SetDescription(string name, string description)
         {

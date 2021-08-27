@@ -42,7 +42,8 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
 
         public async Task<Infrastructure.Database.Query.Model.Project.Project> Handle(AddProjectCommand request, CancellationToken cancellationToken)
         {
-            var projectDomain = new Project(request.Name, request.Description, request.ResponsibleDepartmentId);
+            var projectDomain = new Project(request.Name, request.Description, request.ResponsibleDepartmentId,
+                request.InitiatorId, request.CuratorId, request.ManagerId);
             
             var projectDepartmentsDomain = request.DepartmentIds.Select(item =>
             {
@@ -96,7 +97,7 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
             var projectDomain = _ProjectRepository.GetById(request.ProjectId).Result.ToDomain<Project>(_Mapper);
 
             projectDomain.Validate();
-            projectDomain.AddUser(userDomain);
+            //projectDomain.AddUser(userDomain);
 
             #region Persistence
 
@@ -129,7 +130,7 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
             var projectDomain = _ProjectRepository.GetById(request.ProjectId).Result.ToDomain<Project>(_Mapper);
 
             projectDomain.Validate();
-            projectDomain.RemoveUser(userDomain);
+            //projectDomain.RemoveUser(userDomain);
 
             #region Persistence
 

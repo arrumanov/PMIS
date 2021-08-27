@@ -148,7 +148,7 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
             var reporter = _UserRepository.GetById(request.ReporterId).Result.ToDomain<Model.User>(_Mapper);
 
             var taskDomain = new Model.Task(request.Description, request.LongDescription, request.DeadLine, assignee, reporter, projectDomain);
-            projectDomain.AddTask(taskDomain);
+            //projectDomain.AddTask(taskDomain);
 
             #region Persistence
 
@@ -180,7 +180,7 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
             var projectDomain = taskDomain.Project;
             projectDomain.Validate();
 
-            projectDomain.RemoveTask(taskDomain);
+            //projectDomain.RemoveTask(taskDomain);
 
             #region Persistence
 

@@ -27,6 +27,9 @@ namespace ProjectPortfolio.Application.Graph.Project.Mutation
                 Name = input.Name,
                 Description = input.Description,
                 ResponsibleDepartmentId = input.ResponsibleDepartmentId,
+                InitiatorId = input.InitiatorId,
+                CuratorId = input.CuratorId,
+                ManagerId = input.ManagerId,
                 DepartmentIds = input.DepartmentIds,
                 ContragentIds = input.ContragentIds,
                 ProductIds = input.ProductIds
@@ -51,65 +54,65 @@ namespace ProjectPortfolio.Application.Graph.Project.Mutation
             }
         }
 
-        public async Task<AddUserProjectPayload> AddUserProject(
-            UserProjectInput input,
-            [Service] IServiceProvider serviceProvider,
-            CancellationToken cancellationToken)
-        {
-            var addUserProjectCommand = new AddUserProjectCommand()
-            {
-                ProjectId = input.ProjectId,
-                UserId = input.UserId
-            };
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                try
-                {
-                    var response = await mediator.Send(addUserProjectCommand, cancellationToken);
-                    return new AddUserProjectPayload(response.Project, response.User);
-                }
-                catch (ValidationException e)
-                {
-                    var userErrors = new List<UserError>();
-                    e.Message.Split(";").ForAll(item =>
-                    {
-                        userErrors.Add(new UserError(item, item));
-                    });
-                    return new AddUserProjectPayload(userErrors);
-                }
-            }
-        }
+        //public async Task<AddUserProjectPayload> AddUserProject(
+        //    UserProjectInput input,
+        //    [Service] IServiceProvider serviceProvider,
+        //    CancellationToken cancellationToken)
+        //{
+        //    var addUserProjectCommand = new AddUserProjectCommand()
+        //    {
+        //        ProjectId = input.ProjectId,
+        //        UserId = input.UserId
+        //    };
+        //    using (var scope = serviceProvider.CreateScope())
+        //    {
+        //        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        //        try
+        //        {
+        //            var response = await mediator.Send(addUserProjectCommand, cancellationToken);
+        //            return new AddUserProjectPayload(response.Project, response.User);
+        //        }
+        //        catch (ValidationException e)
+        //        {
+        //            var userErrors = new List<UserError>();
+        //            e.Message.Split(";").ForAll(item =>
+        //            {
+        //                userErrors.Add(new UserError(item, item));
+        //            });
+        //            return new AddUserProjectPayload(userErrors);
+        //        }
+        //    }
+        //}
 
-        public async Task<AddUserProjectPayload> RemoveUserProject(
-            UserProjectInput input,
-            [Service] IServiceProvider serviceProvider,
-            CancellationToken cancellationToken)
-        {
-            var removeUserProjectCommand = new RemoveUserProjectCommand()
-            {
-                ProjectId = input.ProjectId,
-                UserId = input.UserId
-            };
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                try
-                {
-                    var response = await mediator.Send(removeUserProjectCommand, cancellationToken);
-                    return new AddUserProjectPayload(response.Project, response.User);
-                }
-                catch (ValidationException e)
-                {
-                    var userErrors = new List<UserError>();
-                    e.Message.Split(";").ForAll(item =>
-                    {
-                        userErrors.Add(new UserError(item, item));
-                    });
-                    return new AddUserProjectPayload(userErrors);
-                }
-            }
-        }
+        //public async Task<AddUserProjectPayload> RemoveUserProject(
+        //    UserProjectInput input,
+        //    [Service] IServiceProvider serviceProvider,
+        //    CancellationToken cancellationToken)
+        //{
+        //    var removeUserProjectCommand = new RemoveUserProjectCommand()
+        //    {
+        //        ProjectId = input.ProjectId,
+        //        UserId = input.UserId
+        //    };
+        //    using (var scope = serviceProvider.CreateScope())
+        //    {
+        //        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        //        try
+        //        {
+        //            var response = await mediator.Send(removeUserProjectCommand, cancellationToken);
+        //            return new AddUserProjectPayload(response.Project, response.User);
+        //        }
+        //        catch (ValidationException e)
+        //        {
+        //            var userErrors = new List<UserError>();
+        //            e.Message.Split(";").ForAll(item =>
+        //            {
+        //                userErrors.Add(new UserError(item, item));
+        //            });
+        //            return new AddUserProjectPayload(userErrors);
+        //        }
+        //    }
+        //}
 
         public async Task<AddProjectPayload> UpdateProjectInfo(
             UpdateProjectInfoInput input,

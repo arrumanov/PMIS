@@ -12,7 +12,8 @@ namespace Permission.Domain.Service.QueryHandler
 {
     using UserQuery = Infrastructure.Database.Query.Model.User;
 
-    public class UserQueryHandler : IRequestHandler<GetUserCommand, IQueryable<UserQuery>>
+    public class UserQueryHandler : IRequestHandler<GetUserCommand, IQueryable<UserQuery>>,
+        IRequestHandler<GetUserByIdQuery, UserQuery>
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IServiceBus _Bus;
@@ -37,6 +38,18 @@ namespace Permission.Domain.Service.QueryHandler
             var contragentsDomain = await _UserRepository.Get(request.GraphFilters);
             var response = contragentsDomain.Select(item => 
                 item.ToQueryModel<UserQuery>(_Mapper));
+
+            #endregion
+
+            return response;
+        }
+
+        public async Task<UserQuery> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        {
+            #region Persistence
+
+            var UserDomain = await _UserRepository.GetById(request.Id);
+            var response = UserDomain.ToQueryModel<UserQuery>(_Mapper);
 
             #endregion
 

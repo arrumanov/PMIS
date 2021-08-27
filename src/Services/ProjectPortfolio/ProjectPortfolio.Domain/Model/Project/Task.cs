@@ -55,7 +55,7 @@ namespace ProjectPortfolio.Domain.Model
 
             this.Validate();
 
-            this.Project.UpdateTask(this);
+            //this.Project.UpdateTask(this);
         }
 
         public void SetStatus(TaskStatusEnum status)
@@ -64,7 +64,7 @@ namespace ProjectPortfolio.Domain.Model
 
             this.Validate();
 
-            this.Project.UpdateTask(this);
+            //this.Project.UpdateTask(this);
         }
 
         public void SetDeadline(DateTime deadline)
@@ -73,7 +73,7 @@ namespace ProjectPortfolio.Domain.Model
 
             this.Validate();
 
-            this.Project.UpdateTask(this);
+            //this.Project.UpdateTask(this);
         }
 
         public void ChangeAssignee(User assignee)
@@ -84,7 +84,7 @@ namespace ProjectPortfolio.Domain.Model
 
             this.Validate();
 
-            this.Project.UpdateTask(this);
+            //this.Project.UpdateTask(this);
         }
 
         public void Validate()

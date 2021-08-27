@@ -30,7 +30,7 @@ namespace ProjectPortfolio.Infrastructure.Database.Command.EntityTypeConfigurati
     {
         public void Configure(EntityTypeBuilder<Project> builder)
         {
-            builder.HasMany(i => i.Tasks).WithOne(i => i.Project);
+            builder.Property(i => i.Name).HasMaxLength(120).IsRequired();
         }
     }
 

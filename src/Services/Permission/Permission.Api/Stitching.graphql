@@ -1,0 +1,6 @@
+﻿extend type Project {
+  initiator: User @delegate(path: "userById(id: $fields:initiatorId)")
+  curator: User @delegate(path: "userById(id: $fields:curatorId)")
+  manager: User @delegate(path: "userById(id: $fields:managerId)")
+  creator: User @delegate(path: "userById(id: $fields:creatorId)")
+}

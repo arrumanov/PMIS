@@ -40,6 +40,7 @@ namespace ApiGateways.Gql
                 //.AddQueryType(d => d.Name("Query"))
                 //.AddMutationType(d => d.Name("Mutation"))
                 .AddRemoteSchemasFromRedis("PMIS", sp => sp.GetRequiredService<ConnectionMultiplexer>());
+            //.AddTypeExtensionsFromFile("./Stitching.graphql");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

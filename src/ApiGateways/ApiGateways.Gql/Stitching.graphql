@@ -1,3 +1,19 @@
 ﻿extend type Project {
-  department: Department @delegate(path: "department(id: $fields:departmentId)")
+  responsibleDepartment: Department @delegate(schema: "dogovors", path: "departmentById(id: $fields:responsibleDepartmentId)")
+  initiator: User @delegate(schema: "permissions", path: "userById(id: $fields:initiatorId)")
+  curator: User @delegate(schema: "permissions", path: "userById(id: $fields:curatorId)")
+  manager: User @delegate(schema: "permissions", path: "userById(id: $fields:managerId)")
+  creator: User @delegate(schema: "permissions", path: "userById(id: $fields:creatorId)")
+}
+
+extend type ProjectDepartment {
+  department: Department @delegate(schema: "dogovors", path: "departmentById(id: $fields:departmentId)")
+}
+
+extend type ProjectContragent {
+  contragent: Contragent @delegate(schema: "dogovors", path: "contragentById(id: $fields:contragentId)")
+}
+
+extend type ProjectProduct {
+  product: Product @delegate(schema: "dogovors", path: "productById(id: $fields:productId)")
 }
