@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HotChocolate.Stitching.Redis" Version="11.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Permission.Application\Permission.Application.csproj" />
+    <ProjectReference Include="..\Permission.CrossCutting.Ioc\Permission.CrossCutting.Ioc.csproj" />
+    <ProjectReference Include="..\Permission.Domain.Service\Permission.Domain.Service.csproj" />
+    <ProjectReference Include="..\Permission.Infrastructure\Permission.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

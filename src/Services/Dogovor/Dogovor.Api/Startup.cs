@@ -13,7 +13,6 @@ using Dogovor.Infrastructure.Database;
 using Dogovor.Infrastructure.Database.Command;
 using Dogovor.Infrastructure.Extensions;
 using Dogovor.Infrastructure.ServiceBus;
-using HotChocolate.Types;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
