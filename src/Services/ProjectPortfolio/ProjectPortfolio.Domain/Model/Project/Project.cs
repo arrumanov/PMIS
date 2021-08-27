@@ -46,13 +46,13 @@ namespace ProjectPortfolio.Domain.Model
         public string Name { get; private set; }
         public string Description { get; private set; }
         public DateTime CreatedDate { get; private set; }
-        public Guid ResponsibleDepartmentId { get; set; }
+        public Guid ResponsibleDepartmentId { get; private set; }
 
-        public ICollection<ProjectDepartment> ProjectDepartments { get; set; }
-        public ICollection<ProjectProduct> ProjectProducts { get; set; }
-        public ICollection<ProjectContragent> ProjectContragents { get; set; }
-        public DictionaryValue Probability { get; set; }
-        public DictionaryValue Statement { get; set; }
+        public ICollection<ProjectDepartment> ProjectDepartments { get; private set; }
+        public ICollection<ProjectProduct> ProjectProducts { get; private set; }
+        public ICollection<ProjectContragent> ProjectContragents { get; private set; }
+        public DictionaryValue Probability { get; private set; }
+        public DictionaryValue Statement { get; private set; }
 
 
         public ICollection<User> Users { get; private set; }

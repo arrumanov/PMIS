@@ -15,11 +15,11 @@ namespace ProjectPortfolio.Domain.Model
             DepartmentId = departmentId;
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
-        public Guid DepartmentId { get; set; }
+        public Guid DepartmentId { get; private set; }
 
-        public Guid ProjectId { get; set; }
+        public Guid ProjectId { get; private set; }
 
         public void Validate()
         {

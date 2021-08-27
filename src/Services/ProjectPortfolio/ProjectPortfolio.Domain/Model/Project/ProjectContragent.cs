@@ -15,11 +15,11 @@ namespace ProjectPortfolio.Domain.Model
             ContragentId = contragentId;
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
         
-        public Guid ContragentId { get; set; }
+        public Guid ContragentId { get; private set; }
 
-        public Guid ProjectId { get; set; }
+        public Guid ProjectId { get; private set; }
 
 
         public void Validate()

@@ -39,4 +39,8 @@
     <ProjectReference Include="..\ProjectPortfolio.CrossCutting\ProjectPortfolio.CrossCutting.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Database\Command\EntityTypeConfiguration\" />
+  </ItemGroup>
+
 </Project>
