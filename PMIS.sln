@@ -53,19 +53,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingDwh.Api", "src\Ser
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Permission", "Permission", "{F604D905-CAC7-4A1E-B445-1CE017289479}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission.Api", "src\Services\Permission\Permission.Api\Permission.Api.csproj", "{1DF3E3BF-63E9-4230-A99D-98BB31C416E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission.Api", "src\Services\Permission\Permission.Api\Permission.Api.csproj", "{1DF3E3BF-63E9-4230-A99D-98BB31C416E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission.Application", "src\Services\Permission\Permission.Application\Permission.Application.csproj", "{3FCAC7C7-7E7C-4F8B-B9AB-8453003436FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission.Application", "src\Services\Permission\Permission.Application\Permission.Application.csproj", "{3FCAC7C7-7E7C-4F8B-B9AB-8453003436FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission.CrossCutting", "src\Services\Permission\Permission.CrossCutting\Permission.CrossCutting.csproj", "{9D2C04C8-38BF-441D-B6BA-EB02E0CD720F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission.CrossCutting", "src\Services\Permission\Permission.CrossCutting\Permission.CrossCutting.csproj", "{9D2C04C8-38BF-441D-B6BA-EB02E0CD720F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission.CrossCutting.Ioc", "src\Services\Permission\Permission.CrossCutting.Ioc\Permission.CrossCutting.Ioc.csproj", "{92A38DFD-7C1D-48B8-B96C-5A18BFD5327F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission.CrossCutting.Ioc", "src\Services\Permission\Permission.CrossCutting.Ioc\Permission.CrossCutting.Ioc.csproj", "{92A38DFD-7C1D-48B8-B96C-5A18BFD5327F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission.Domain", "src\Services\Permission\Permission.Domain\Permission.Domain.csproj", "{C6EA42EA-A816-419B-AB26-4ED41CADFDF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission.Domain", "src\Services\Permission\Permission.Domain\Permission.Domain.csproj", "{C6EA42EA-A816-419B-AB26-4ED41CADFDF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission.Domain.Service", "src\Services\Permission\Permission.Domain.Service\Permission.Domain.Service.csproj", "{FC34F3BF-0C1A-4FB1-8069-8D9E15679349}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission.Domain.Service", "src\Services\Permission\Permission.Domain.Service\Permission.Domain.Service.csproj", "{FC34F3BF-0C1A-4FB1-8069-8D9E15679349}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission.Infrastructure", "src\Services\Permission\Permission.Infrastructure\Permission.Infrastructure.csproj", "{3E07FC80-A2B9-4F7E-A7FF-0322DFFFE177}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission.Infrastructure", "src\Services\Permission\Permission.Infrastructure\Permission.Infrastructure.csproj", "{3E07FC80-A2B9-4F7E-A7FF-0322DFFFE177}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflow", "Workflow", "{A4329ED6-9C91-4B50-8E9F-EF59D13B4987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workflow.Api", "src\Services\Workflow\Workflow.Api\Workflow.Api.csproj", "{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -365,6 +369,18 @@ Global
 		{3E07FC80-A2B9-4F7E-A7FF-0322DFFFE177}.Release|x64.Build.0 = Release|Any CPU
 		{3E07FC80-A2B9-4F7E-A7FF-0322DFFFE177}.Release|x86.ActiveCfg = Release|Any CPU
 		{3E07FC80-A2B9-4F7E-A7FF-0322DFFFE177}.Release|x86.Build.0 = Release|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Debug|x64.Build.0 = Debug|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Debug|x86.Build.0 = Debug|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Release|x64.ActiveCfg = Release|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Release|x64.Build.0 = Release|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Release|x86.ActiveCfg = Release|Any CPU
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -400,6 +416,8 @@ Global
 		{C6EA42EA-A816-419B-AB26-4ED41CADFDF2} = {F604D905-CAC7-4A1E-B445-1CE017289479}
 		{FC34F3BF-0C1A-4FB1-8069-8D9E15679349} = {F604D905-CAC7-4A1E-B445-1CE017289479}
 		{3E07FC80-A2B9-4F7E-A7FF-0322DFFFE177} = {F604D905-CAC7-4A1E-B445-1CE017289479}
+		{A4329ED6-9C91-4B50-8E9F-EF59D13B4987} = {D590F5EB-D0C6-4983-AF97-06BBBB84D6FC}
+		{8EAABD10-CE2E-441A-BFD2-3CD491AE5074} = {A4329ED6-9C91-4B50-8E9F-EF59D13B4987}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB5A7879-385B-4A7E-860D-0B980AED0E98}
