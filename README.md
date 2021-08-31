@@ -14,6 +14,11 @@ docker run --network pmis-network -d --name pmis-rabbit -p 5672:5672 -p 5673:567
 
 docker run --network pmis-network --name pmis-redis-stitching -p 7000:6379 -d redis
 
+
+docker pull camunda/camunda-bpm-platform:latest
+docker run -d --name camunda -p 8080:8080 camunda/camunda-bpm-platform:latest
+# open browser with url: http://localhost:8080/camunda-welcome/index.html
+
 =======================================================================================================================================================
 
 
