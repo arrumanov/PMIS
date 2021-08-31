@@ -16,9 +16,9 @@ namespace Workflow.Api.Bpmn
                 {
                     options.BaseUri = new Uri(camundaRestApiUri);
                     options.WorkerCount = 1;
-                })
-                .AddHandler<NotifyCustomerTaskHandler>()
-                .AddHandler<CreateInvoiceTaskHandler>();
+                });
+                //.AddHandler<NotifyCustomerTaskHandler>()
+                //.AddHandler<CreateInvoiceTaskHandler>();
 
             return services;
         }

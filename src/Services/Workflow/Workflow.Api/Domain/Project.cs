@@ -24,6 +24,16 @@ namespace Workflow.Api.Domain
             this.ProcessInstanceId = processInstanceId;
         }
 
+        public void Prepare()
+        {
+            Status = ProjectStatus.Prepared;
+        }
+
+        public void Close()
+        {
+            Status = ProjectStatus.Closed;
+        }
+
         public void Accept()
         {
             Status = ProjectStatus.Accepted;
@@ -43,6 +53,8 @@ namespace Workflow.Api.Domain
     public enum ProjectStatus
     {
         New,
+        Prepared,
+        Closed,
         Accepted,
         Rejected,
         Cancelled

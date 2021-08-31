@@ -23,9 +23,7 @@ namespace Workflow.Api.Bpmn
 
         public async Task DeployProcessDefinition()
         {
-            var bpmnResourceStream = this.GetType()
-                .Assembly
-                .GetManifestResourceStream("HeroesForHire.Bpmn.hire-heroes.bpmn");
+            var bpmnResourceStream = this.GetType().Assembly.GetManifestResourceStream("Workflow.Api.Bpmn.Process_Project.bpmn");
 
             try
             {
@@ -35,7 +33,7 @@ namespace Workflow.Api.Bpmn
                     true,
                     null,
                     null,
-                    new ResourceDataContent(bpmnResourceStream, "hire-heroes.bpmn"));
+                    new ResourceDataContent(bpmnResourceStream, "Process_Project.bpmn"));
             }
             catch (Exception e)
             {
@@ -52,7 +50,7 @@ namespace Workflow.Api.Bpmn
             processParams.BusinessKey = project.Id.ToString();
 
             var processStartResult = await
-                camunda.ProcessDefinitions.ByKey("Process_Hire_Hero").StartProcessInstance(processParams);
+                camunda.ProcessDefinitions.ByKey("Process_Project").StartProcessInstance(processParams);
 
             return processStartResult.Id;
         }
@@ -61,22 +59,22 @@ namespace Workflow.Api.Bpmn
         {
             var groupTaskQuery = new TaskQuery
             {
-                ProcessDefinitionKeys = { "Process_Hire_Hero" },
-                CandidateGroup = group
+                ProcessDefinitionKeys = { "Process_Project" },
+                //CandidateGroup = group
             };
             var groupTasks = await camunda.UserTasks.Query(groupTaskQuery).List();
 
-            if (user != null)
-            {
-                var userTaskQuery = new TaskQuery
-                {
-                    ProcessDefinitionKeys = { "Process_Hire_Hero" },
-                    Assignee = user
-                };
-                var userTasks = await camunda.UserTasks.Query(userTaskQuery).List();
+            //if (user != null)
+            //{
+            //    var userTaskQuery = new TaskQuery
+            //    {
+            //        ProcessDefinitionKeys = { "Process_Project" },
+            //        Assignee = user
+            //    };
+            //    var userTasks = await camunda.UserTasks.Query(userTaskQuery).List();
 
-                groupTasks.AddRange(userTasks);
-            }
+            //    groupTasks.AddRange(userTasks);
+            //}
 
             return groupTasks;
         }
@@ -88,30 +86,30 @@ namespace Workflow.Api.Bpmn
             return task;
         }
 
-        //public async Task<UserTaskInfo> CompleteTask(string taskId, Order order)
-        //{
-        //    var task = await camunda.UserTasks[taskId].Get();
-        //    var completeTask = new CompleteTask()
-        //        .SetVariable("orderStatus", VariableValue.FromObject(order.Status.ToString()));
-        //    await camunda.UserTasks[taskId].Complete(completeTask);
-        //    return task;
-        //}
+        public async Task<UserTaskInfo> CompleteTask(string taskId, Project project)
+        {
+            var task = await camunda.UserTasks[taskId].Get();
+            var completeTask = new CompleteTask()
+                .SetVariable("projectStatus", VariableValue.FromObject(project.Status.ToString()));
+            await camunda.UserTasks[taskId].Complete(completeTask);
+            return task;
+        }
 
-        //public async Task SendMessageInvoicePaid(Order order)
-        //{
-        //    await camunda.Messages.DeliverMessage(new CorrelationMessage
-        //    {
-        //        BusinessKey = order.Id.Value.ToString(),
-        //        MessageName = "Message_InvoicePaid"
-        //    });
-        //}
+        public async Task SendMessageInvoicePaid(Project project)
+        {
+            await camunda.Messages.DeliverMessage(new CorrelationMessage
+            {
+                BusinessKey = project.Id.ToString(),
+                MessageName = "Message_InvoicePaid"
+            });
+        }
 
         public async Task CleanupProcessInstances()
         {
             var instances = await camunda.ProcessInstances
                 .Query(new ProcessInstanceQuery
                 {
-                    ProcessDefinitionKey = "Process_Hire_Hero"
+                    ProcessDefinitionKey = "Process_Project"
                 })
                 .List();
 

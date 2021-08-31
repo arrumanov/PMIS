@@ -5,10 +5,8 @@ namespace Workflow.Api.Bpmn
 {
     public enum TaskActions
     {
-        NotifyNoHeroesAvailable,
-        CreateOffer,
-        AcceptOffer,
-        RejectOffer
+        Prepare,
+        Close
     }
 
     public static class UserTaskInfoExtension
@@ -17,8 +15,8 @@ namespace Workflow.Api.Bpmn
         {
             return userTask.TaskDefinitionKey switch
             {
-                "Task_PrepareOffer" => new List<TaskActions> { TaskActions.NotifyNoHeroesAvailable, TaskActions.CreateOffer },
-                "Task_AcceptOffer" => new List<TaskActions> { TaskActions.AcceptOffer, TaskActions.RejectOffer },
+                "Task_PrepareProject" => new List<TaskActions> { TaskActions.Prepare },
+                "Task_CloseProject" => new List<TaskActions> { TaskActions.Close },
                 _ => new List<TaskActions> { }
             };
         }

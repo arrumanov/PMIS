@@ -12,6 +12,7 @@ namespace ApiGateways.Gql
         public const string Projects = "projects";
         public const string Dogovors = "dogovors";
         public const string Permissions = "permissions";
+        public const string Workflows = "workflows";
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -19,6 +20,7 @@ namespace ApiGateways.Gql
             services.AddHttpClient(Projects, c => c.BaseAddress = new Uri("https://localhost:44342/graphql"));
             services.AddHttpClient(Dogovors, c => c.BaseAddress = new Uri("https://localhost:44343/graphql"));
             services.AddHttpClient(Permissions, c => c.BaseAddress = new Uri("https://localhost:44359/graphql"));
+            services.AddHttpClient(Workflows, c => c.BaseAddress = new Uri("https://localhost:44314/graphql"));
 
             //https://alikzlda.medium.com/a-simple-pub-sub-scenario-with-masstransit-6-2-rabbitmq-net-core-3-1-elasticsearch-mssql-5a65c993b2fd
             //docker run -p 9200:9200 -p 9300:9300 --network elasticsearchnetwork -e "discovery.type=single-node" --name elasticsearch elasticsearch:7.6.2
