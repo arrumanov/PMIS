@@ -56,6 +56,36 @@ namespace Workflow.Api.Graph.Project.Mutation
             return new TaskPayload();
         }
 
+        public async Task<TaskPayload> CreateProjectInJira(
+            ChangeStatusInput input,
+            [Service] IMediator bus,
+            [Service] IServiceProvider serviceProvider,
+            CancellationToken cancellationToken)
+        {
+            await bus.Send(new CreateProjectInJira.Command
+            {
+                ProjectId = input.ProjectId,
+                TaskId = input.TaskId
+            });
+
+            return new TaskPayload();
+        }
+
+        public async Task<TaskPayload> ProjectRejected(
+            ChangeStatusInput input,
+            [Service] IMediator bus,
+            [Service] IServiceProvider serviceProvider,
+            CancellationToken cancellationToken)
+        {
+            await bus.Send(new ProjectReject.Command
+            {
+                ProjectId = input.ProjectId,
+                TaskId = input.TaskId
+            });
+
+            return new TaskPayload();
+        }
+
         public async Task<TaskPayload> MarkProjectCreatedInJira(
             ChangeStatusInput input,
             [Service] IMediator bus,

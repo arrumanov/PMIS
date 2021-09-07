@@ -38,6 +38,8 @@ namespace Workflow.Api.Domain
 
                 await db.SaveChangesAsync(cancellationToken);
 
+                //необходимо обязательно удалять Task из Camunda при окончании Пользовательского перехода,
+                //иначе не даст перевести в следующий статус в Camunda
                 await bpmnService.CompleteTask(request.TaskId, project);
 
                 tx.Complete();

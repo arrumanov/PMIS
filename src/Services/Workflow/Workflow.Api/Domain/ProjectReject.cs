@@ -9,7 +9,7 @@ using Workflow.Api.DataAccess;
 
 namespace Workflow.Api.Domain
 {
-    public class CreateProjectInJira
+    public class ProjectReject
     {
         public class Command : IRequest<Guid>
         {
@@ -34,7 +34,7 @@ namespace Workflow.Api.Domain
 
                 var project = await db.Projects.FirstAsync(p => p.Id == request.ProjectId, cancellationToken);
 
-                project.CreateInJira();
+                project.Reject();
 
                 await db.SaveChangesAsync(cancellationToken);
 

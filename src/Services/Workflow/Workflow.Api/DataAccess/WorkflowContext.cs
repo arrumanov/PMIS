@@ -8,6 +8,7 @@ namespace Workflow.Api.DataAccess
     public class WorkflowContext : DbContext
     {
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         public WorkflowContext(DbContextOptions options) : base(options)
         {
@@ -21,6 +22,7 @@ namespace Workflow.Api.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+            modelBuilder.ApplyConfiguration(new NotificationConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -31,6 +33,18 @@ namespace Workflow.Api.DataAccess
                 modelBuilder.HasKey(s => s.Id);
                 modelBuilder.Property(s => s.Status).HasConversion(new EnumToStringConverter<ProjectStatus>());
                 modelBuilder.Property(s => s.ProcessInstanceId);
+            }
+        }
+
+        class NotificationConfiguration : IEntityTypeConfiguration<Notification>
+        {
+            public void Configure(EntityTypeBuilder<Notification> modelBuilder)
+            {
+                modelBuilder.HasKey(s => s.Id);
+                modelBuilder.Property(s => s.Text);
+                modelBuilder.Property(s => s.TargetGroup);
+                modelBuilder.Property(s => s.TargetUser);
+                modelBuilder.Property(s => s.IsRead);
             }
         }
     }
