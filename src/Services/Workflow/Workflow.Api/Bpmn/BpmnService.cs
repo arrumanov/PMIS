@@ -100,7 +100,7 @@ namespace Workflow.Api.Bpmn
             await camunda.Messages.DeliverMessage(new CorrelationMessage
             {
                 BusinessKey = project.Id.ToString(),
-                MessageName = "Message_InvoicePaid"
+                MessageName = "Message_ProjectCreatedInJira"
             });
         }
 

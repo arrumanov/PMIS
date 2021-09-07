@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1q2u19l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.9.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1q2u19l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.9.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
   <bpmn:process id="Process_Project" name="Project" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_04zm9nc</bpmn:outgoing>
@@ -9,29 +9,96 @@
       <bpmn:incoming>Flow_04zm9nc</bpmn:incoming>
       <bpmn:outgoing>Flow_0f3n866</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0f3n866" sourceRef="Task_PrepareProject" targetRef="Task_CloseProject" />
-    <bpmn:userTask id="Task_CloseProject" name="Close project">
+    <bpmn:sequenceFlow id="Flow_0f3n866" sourceRef="Task_PrepareProject" targetRef="Task_AcceptProject" />
+    <bpmn:userTask id="Task_AcceptProject" name="Accept project">
       <bpmn:incoming>Flow_0f3n866</bpmn:incoming>
-      <bpmn:outgoing>Flow_0zfx1pt</bpmn:outgoing>
+      <bpmn:incoming>Flow_1gpvv7o</bpmn:incoming>
+      <bpmn:outgoing>Flow_1w4t61x</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="Event_1uw86fw">
-      <bpmn:incoming>Flow_0zfx1pt</bpmn:incoming>
+      <bpmn:incoming>Flow_1u4u5jd</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0zfx1pt" sourceRef="Task_CloseProject" targetRef="Event_1uw86fw" />
+    <bpmn:sequenceFlow id="Flow_1w4t61x" sourceRef="Task_AcceptProject" targetRef="Task_CreateProjectInJira" />
+    <bpmn:serviceTask id="Task_CreateProjectInJira" name="Create project in jira" camunda:type="external" camunda:topic="Topic_CreateProjectInJira">
+      <bpmn:incoming>Flow_1w4t61x</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rn44xw</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:eventBasedGateway id="ExclusiveGateway_0v7gzkj" name="Wait for creation in jira">
+      <bpmn:incoming>Flow_0rn44xw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hybw4e</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0e190gu</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:sequenceFlow id="Flow_0rn44xw" sourceRef="Task_CreateProjectInJira" targetRef="ExclusiveGateway_0v7gzkj" />
+    <bpmn:intermediateCatchEvent id="Event_0vn1d0h" name="Project created in jira">
+      <bpmn:incoming>Flow_0e190gu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qf4rpk</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_02b6ry4" messageRef="Message_0wrvic5" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0hybw4e" sourceRef="ExclusiveGateway_0v7gzkj" targetRef="IntermediateCatchEvent_0r0d52q" />
+    <bpmn:sequenceFlow id="Flow_0rq98sw" sourceRef="IntermediateCatchEvent_0r0d52q" targetRef="Task_ProjectNotCreatedInJira" />
+    <bpmn:serviceTask id="Task_ProjectNotCreatedInJira" name="project not created in jira" camunda:type="external" camunda:topic="Topic_ProjectNotCreatedInJira">
+      <bpmn:incoming>Flow_0rq98sw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gpvv7o</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0e190gu" sourceRef="ExclusiveGateway_0v7gzkj" targetRef="Event_0vn1d0h" />
+    <bpmn:sequenceFlow id="Flow_1qf4rpk" sourceRef="Event_0vn1d0h" targetRef="Task_ProjectCreatedInJira" />
+    <bpmn:sequenceFlow id="Flow_1u4u5jd" sourceRef="Task_ProjectCreatedInJira" targetRef="Event_1uw86fw" />
+    <bpmn:serviceTask id="Task_ProjectCreatedInJira" name="Project created in jira" camunda:type="external" camunda:topic="Topic_ProjectCreatedInJira">
+      <bpmn:incoming>Flow_1qf4rpk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1u4u5jd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0r0d52q" name="30 seconds delay">
+      <bpmn:incoming>Flow_0hybw4e</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rq98sw</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0vcr622">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT30S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1gpvv7o" sourceRef="Task_ProjectNotCreatedInJira" targetRef="Task_AcceptProject" />
   </bpmn:process>
+  <bpmn:message id="Message_0wrvic5" name="Message_ProjectCreatedInJira" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Project">
-      <bpmndi:BPMNEdge id="Flow_04zm9nc_di" bpmnElement="Flow_04zm9nc">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="300" y="117" />
+      <bpmndi:BPMNEdge id="Flow_1gpvv7o_di" bpmnElement="Flow_1gpvv7o">
+        <di:waypoint x="840" y="420" />
+        <di:waypoint x="540" y="420" />
+        <di:waypoint x="540" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u4u5jd_di" bpmnElement="Flow_1u4u5jd">
+        <di:waypoint x="1190" y="117" />
+        <di:waypoint x="1272" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qf4rpk_di" bpmnElement="Flow_1qf4rpk">
+        <di:waypoint x="1018" y="117" />
+        <di:waypoint x="1090" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e190gu_di" bpmnElement="Flow_0e190gu">
+        <di:waypoint x="915" y="117" />
+        <di:waypoint x="982" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rq98sw_di" bpmnElement="Flow_0rq98sw">
+        <di:waypoint x="890" y="268" />
+        <di:waypoint x="890" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hybw4e_di" bpmnElement="Flow_0hybw4e">
+        <di:waypoint x="890" y="142" />
+        <di:waypoint x="890" y="232" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rn44xw_di" bpmnElement="Flow_0rn44xw">
+        <di:waypoint x="800" y="117" />
+        <di:waypoint x="865" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w4t61x_di" bpmnElement="Flow_1w4t61x">
+        <di:waypoint x="590" y="117" />
+        <di:waypoint x="700" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0f3n866_di" bpmnElement="Flow_0f3n866">
         <di:waypoint x="400" y="117" />
         <di:waypoint x="490" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0zfx1pt_di" bpmnElement="Flow_0zfx1pt">
-        <di:waypoint x="590" y="117" />
-        <di:waypoint x="682" y="117" />
+      <bpmndi:BPMNEdge id="Flow_04zm9nc_di" bpmnElement="Flow_04zm9nc">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="300" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="99" width="36" height="36" />
@@ -39,11 +106,38 @@
       <bpmndi:BPMNShape id="Activity_1af01ma_di" bpmnElement="Task_PrepareProject">
         <dc:Bounds x="300" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1tgn9y2_di" bpmnElement="Task_CloseProject">
+      <bpmndi:BPMNShape id="Activity_1tgn9y2_di" bpmnElement="Task_AcceptProject">
         <dc:Bounds x="490" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1uw86fw_di" bpmnElement="Event_1uw86fw">
-        <dc:Bounds x="682" y="99" width="36" height="36" />
+        <dc:Bounds x="1272" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_118lg5s_di" bpmnElement="Task_CreateProjectInJira">
+        <dc:Bounds x="700" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1y49vjh_di" bpmnElement="ExclusiveGateway_0v7gzkj">
+        <dc:Bounds x="865" y="92" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="853" y="62" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vn1d0h_di" bpmnElement="Event_0vn1d0h">
+        <dc:Bounds x="982" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="958" y="142" width="86" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_064ut2f_di" bpmnElement="Task_ProjectNotCreatedInJira">
+        <dc:Bounds x="840" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xf5y52_di" bpmnElement="Task_ProjectCreatedInJira">
+        <dc:Bounds x="1090" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0lwvaa2_di" bpmnElement="IntermediateCatchEvent_0r0d52q">
+        <dc:Bounds x="872" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="775" y="240" width="87" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

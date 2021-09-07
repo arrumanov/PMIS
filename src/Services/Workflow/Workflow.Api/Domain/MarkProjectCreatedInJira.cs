@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using MediatR;
@@ -8,15 +9,14 @@ using Workflow.Api.DataAccess;
 
 namespace Workflow.Api.Domain
 {
-    public class ProjectAccepted
+    public class MarkProjectCreatedInJira
     {
-        public class Command : IRequest<Unit>
+        public class Command : IRequest<Guid>
         {
-            public string ProjectId { get; set; }
-            public string TaskId { get; set; }
+            public Guid ProjectId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Unit>
+        public class Handler : IRequestHandler<Command, Guid>
         {
             private readonly WorkflowContext db;
             private readonly BpmnService bpmnService;
@@ -27,21 +27,15 @@ namespace Workflow.Api.Domain
                 this.bpmnService = bpmnService;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Guid> Handle(Command request, CancellationToken cancellationToken)
             {
                 using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
-                var project = await db.Projects.FirstAsync(p => p.Id.ToString() == request.ProjectId, cancellationToken);
-
-                project.Accept();
-
+                var project = await db.Projects.FirstAsync(i => i.Id == request.ProjectId, cancellationToken);
+                project.MarkProjectCreatedInJira();
                 await db.SaveChangesAsync(cancellationToken);
-
-                await bpmnService.CompleteTask(request.TaskId, project);
-
+                await bpmnService.SendMessageInvoicePaid(project);
                 tx.Complete();
-
-                return Unit.Value;
+                return project.Id;
             }
         }
     }

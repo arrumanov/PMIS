@@ -48,6 +48,26 @@ namespace Workflow.Api.Domain
         {
             Status = ProjectStatus.Cancelled;
         }
+
+        public void CreateInJira()
+        {
+            Status = ProjectStatus.CreatingInJira;
+        }
+
+        public void NotCreatedInJira()
+        {
+            Status = ProjectStatus.Closed;
+        }
+
+        public void MarkProjectCreatedInJira()
+        {
+            Status = ProjectStatus.ProjectIsMarkedAsCreated;
+        }
+
+        public void ProjectCreatedInJira()
+        {
+            Status = ProjectStatus.ProjectCreatedInJira;
+        }
     }
 
     public enum ProjectStatus
@@ -55,6 +75,10 @@ namespace Workflow.Api.Domain
         New,
         Prepared,
         Closed,
+        CreatingInJira,
+        NotCreatedInJira,
+        ProjectCreatedInJira,
+        ProjectIsMarkedAsCreated,
         Accepted,
         Rejected,
         Cancelled

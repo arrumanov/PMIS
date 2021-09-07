@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Types;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using Workflow.Api.Domain;
 using Workflow.Api.Graph.Project.Types;
 
@@ -43,16 +41,30 @@ namespace Workflow.Api.Graph.Project.Mutation
             return new TaskPayload();
         }
 
-        public async Task<TaskPayload> ProjectClosed(
+        public async Task<TaskPayload> ProjectAccepted(
             ChangeStatusInput input,
             [Service] IMediator bus,
             [Service] IServiceProvider serviceProvider,
             CancellationToken cancellationToken)
         {
-            await bus.Send(new ProjectClosed.Command
+            await bus.Send(new ProjectAccepted.Command
             {
                 ProjectId = input.ProjectId.ToString(),
                 TaskId = input.TaskId
+            });
+
+            return new TaskPayload();
+        }
+
+        public async Task<TaskPayload> MarkProjectCreatedInJira(
+            ChangeStatusInput input,
+            [Service] IMediator bus,
+            [Service] IServiceProvider serviceProvider,
+            CancellationToken cancellationToken)
+        {
+            await bus.Send(new MarkProjectCreatedInJira.Command
+            {
+                ProjectId = input.ProjectId
             });
 
             return new TaskPayload();
