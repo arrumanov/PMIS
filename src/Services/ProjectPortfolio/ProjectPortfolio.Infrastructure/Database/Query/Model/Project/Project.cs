@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ProjectPortfolio.CrossCutting.Interfaces;
 using MongoDB.Bson.Serialization.Attributes;
-using ProjectPortfolio.Infrastructure.Database.Command.Model;
+using ProjectPortfolio.Infrastructure.Database.Query.Model.Dictionary;
 
 namespace ProjectPortfolio.Infrastructure.Database.Query.Model.Project
 {
@@ -17,6 +17,13 @@ namespace ProjectPortfolio.Infrastructure.Database.Query.Model.Project
 
         [BsonElement("responsibleDepartmentId")]
         public string ResponsibleDepartmentId { get; set; }
+
+
+        [BsonElement("categoryId")]
+        public string CategoryId { get; set; }
+
+        [BsonElement("typeId")]
+        public string TypeId { get; set; }
 
         [BsonElement("category")]
         public DictionaryValue Category { get; set; }

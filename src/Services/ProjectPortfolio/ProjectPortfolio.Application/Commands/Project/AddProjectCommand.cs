@@ -7,6 +7,8 @@ namespace ProjectPortfolio.Application.Commands.Project
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public Guid CategoryId { get; set; }
+        public Guid TypeId { get; set; }
         public Guid ResponsibleDepartmentId { get; set; }
         public Guid InitiatorId { get; set; }
         public Guid CuratorId { get; set; }

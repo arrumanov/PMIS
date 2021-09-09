@@ -41,6 +41,9 @@ namespace ProjectPortfolio.Infrastructure.Database.Command.Model
 
         //public Guid ObjectTypeId { get; set; }
 
+        public virtual DictionaryValue Category { get; set; }
+        public virtual DictionaryValue Type { get; set; }
+
 
         public virtual ICollection<ProjectDepartment> ProjectDepartments { get; set; }
         public virtual ICollection<ProjectProduct> ProjectProducts { get; set; }

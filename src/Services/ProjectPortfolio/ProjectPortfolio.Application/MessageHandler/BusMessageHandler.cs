@@ -9,6 +9,7 @@ using ProjectPortfolio.Infrastructure.Database.Query.Model.Project;
 using ProjectPortfolio.Infrastructure.Database.Query.Model.User;
 using ProjectPortfolio.Infrastructure.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectPortfolio.Infrastructure.Database.Query.Model.Dictionary;
 using TaskSchema = ProjectPortfolio.Infrastructure.Database.Query.Model.Task;
 
 namespace ProjectPortfolio.Application.MessageHandler
@@ -127,5 +128,26 @@ namespace ProjectPortfolio.Application.MessageHandler
 
         #endregion
 
+        #region Dictionary
+
+        private async Task AddDictionary(Message message, IServiceScope scope)
+        {
+            var dictionary = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary>(message.MessageData);
+
+            var manager = scope.ServiceProvider.GetRequiredService<IEntityManager<Dictionary>>();
+
+            await manager.Index(dictionary);
+        }
+
+        private async Task AddDictionaryValue(Message message, IServiceScope scope)
+        {
+            var dictionaryValue = Newtonsoft.Json.JsonConvert.DeserializeObject<DictionaryValue>(message.MessageData);
+
+            var manager = scope.ServiceProvider.GetRequiredService<IEntityManager<DictionaryValue>>();
+
+            await manager.Index(dictionaryValue);
+        }
+
+        #endregion
     }
 }

@@ -8,7 +8,7 @@ namespace ProjectPortfolio.Domain.Model
 {
     public class DictionaryValue : IDomain
     {
-        public DictionaryValue(string dictionaryKey, string name, bool isActive, string code, int sequence)
+        public DictionaryValue(string name, string dictionaryKey, bool isActive, string code, int sequence)
         {
             Id = Guid.NewGuid();
             DictionaryKey = dictionaryKey;

@@ -9,6 +9,13 @@ namespace ProjectPortfolio.Domain.Service.Mappings
     {
         public DictionaryProfile()
         {
+            CreateMap<Dictionary, Command.Dictionary>();
+
+            CreateMap<Command.Dictionary, Dictionary>();
+
+            CreateMap<Dictionary, Query.Dictionary>();
+
+
             CreateMap<DictionaryValue, Command.DictionaryValue>();
 
             CreateMap<Command.DictionaryValue, DictionaryValue>();

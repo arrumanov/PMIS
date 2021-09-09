@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoMapper;
 using Command = ProjectPortfolio.Infrastructure.Database.Command.Model;
 using Query = ProjectPortfolio.Infrastructure.Database.Query.Model.Project;
@@ -24,27 +25,38 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IServiceBus _Bus;
         private readonly IProjectRepository _ProjectRepository;
+        private readonly IDictionaryValueRepository _DictionaryValueRepository;
         private readonly IUserRepository _UserRepository;
         private readonly IMapper _Mapper;
 
         public ProjectCommandHandler(IUnitOfWork unitOfWork,
                                      IServiceBus bus,
                                      IProjectRepository projectRepository,
+                                     IDictionaryValueRepository dictionaryValueRepository,
                                      IUserRepository userRepository,
                                      IMapper mapper)
         {
             _UnitOfWork = unitOfWork;
             _Bus = bus;
             _ProjectRepository = projectRepository;
+            _DictionaryValueRepository = dictionaryValueRepository;
             _UserRepository = userRepository;
             _Mapper = mapper;
         }
 
         public async Task<Infrastructure.Database.Query.Model.Project.Project> Handle(AddProjectCommand request, CancellationToken cancellationToken)
         {
-            var projectDomain = new Project(request.Name, request.Description, request.ResponsibleDepartmentId,
+            var projectDomain = new Project(request.Name, request.Description, 
+                request.CategoryId, request.TypeId, request.ResponsibleDepartmentId,
                 request.InitiatorId, request.CuratorId, request.ManagerId);
-            
+            var categoryDomain = _DictionaryValueRepository.GetById(request.CategoryId).Result
+                .ToDomain<DictionaryValue>(_Mapper);
+            projectDomain.Category = categoryDomain;
+            var typeDomain = _DictionaryValueRepository.GetById(request.TypeId).Result
+                .ToDomain<DictionaryValue>(_Mapper);
+            projectDomain.Type = typeDomain;
+
+
             var projectDepartmentsDomain = request.DepartmentIds.Select(item =>
             {
                 var newItem = new ProjectDepartment(projectDomain.Id, item);
@@ -71,7 +83,6 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
             #region Persistence
 
             var project = projectDomain.ToModel<Command.Project>(_Mapper);
-
             await _ProjectRepository.Add(project);
             await _UnitOfWork.Commit();
 

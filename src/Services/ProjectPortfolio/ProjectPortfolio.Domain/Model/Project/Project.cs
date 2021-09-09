@@ -10,11 +10,14 @@ namespace ProjectPortfolio.Domain.Model
 {
     public class Project : IDomain
     {
-        public Project(string name, string description, Guid responsibleDepartmentId,
+        public Project(string name, string description, 
+            Guid categoryId, Guid typeId, Guid responsibleDepartmentId,
             Guid initiatorId, Guid curatorId, Guid managerId)
         {
             Id = Guid.NewGuid();
             Name = name;
+            CategoryId = categoryId;
+            TypeId = typeId; 
             ResponsibleDepartmentId = responsibleDepartmentId;
             Description = description;
             InitiatorId = initiatorId;
@@ -30,7 +33,8 @@ namespace ProjectPortfolio.Domain.Model
             CreatorId = Guid.Parse("380355c1-f504-3cd9-d44a-39e066738668");
         }
 
-        public Project(Guid id, string name, string description, Guid responsibleDepartmentId,
+        public Project(Guid id, string name, string description, 
+            Guid categoryId, Guid typeId, Guid responsibleDepartmentId,
             Guid initiatorId, Guid curatorId, Guid managerId,
             ICollection<ProjectDepartment> projectDepartments, ICollection<ProjectContragent> projectContragents, 
             ICollection<ProjectProduct> projectProducts, 
@@ -39,6 +43,8 @@ namespace ProjectPortfolio.Domain.Model
             Id = id;
             Name = name;
             Description = description;
+            CategoryId = categoryId;
+            TypeId = typeId;
             ResponsibleDepartmentId = responsibleDepartmentId;
             InitiatorId = initiatorId;
             CuratorId = curatorId;
@@ -54,6 +60,8 @@ namespace ProjectPortfolio.Domain.Model
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public Guid CategoryId { get; set; }
+        public Guid TypeId { get; set; }
         public DateTime CreatedDate { get; private set; }
         public Guid ResponsibleDepartmentId { get; private set; }
         public Guid InitiatorId { get; private set; }
@@ -61,11 +69,14 @@ namespace ProjectPortfolio.Domain.Model
         public Guid ManagerId { get; private set; }
         public Guid CreatorId { get; private set; }
 
+        public DictionaryValue Category { get; set; }
+        public DictionaryValue Type { get; set; }
+
         public ICollection<ProjectDepartment> ProjectDepartments { get; private set; }
         public ICollection<ProjectProduct> ProjectProducts { get; private set; }
         public ICollection<ProjectContragent> ProjectContragents { get; private set; }
-        public DictionaryValue Probability { get; private set; }
-        public DictionaryValue Statement { get; private set; }
+        //public DictionaryValue Probability { get; private set; }
+        //public DictionaryValue Statement { get; private set; }
 
 
         //public ICollection<User> Users { get; private set; }

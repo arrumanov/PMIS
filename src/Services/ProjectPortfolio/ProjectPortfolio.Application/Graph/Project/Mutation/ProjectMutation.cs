@@ -22,10 +22,12 @@ namespace ProjectPortfolio.Application.Graph.Project.Mutation
             [Service] IServiceProvider serviceProvider,
             CancellationToken cancellationToken)
         {
-            var addProjectCommand = new AddProjectCommand()
+            var addProjectCommand = new AddProjectCommand
             {
                 Name = input.Name,
                 Description = input.Description,
+                CategoryId = input.CategoryId,
+                TypeId = input.TypeId,
                 ResponsibleDepartmentId = input.ResponsibleDepartmentId,
                 InitiatorId = input.InitiatorId,
                 CuratorId = input.CuratorId,
