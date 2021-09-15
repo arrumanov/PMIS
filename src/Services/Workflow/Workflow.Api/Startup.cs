@@ -1,8 +1,8 @@
-using FluentValidation.AspNetCore;
+using MassTransit;
+using MassTransit.Definition;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +13,7 @@ using Workflow.Api.DataAccess;
 using Workflow.Api.Graph.Project.Mutation;
 using Workflow.Api.Graph.Project.Query;
 using Workflow.Api.Init;
+using Workflow.Api.IntegrationEvents;
 
 namespace Workflow.Api
 {
@@ -71,6 +72,37 @@ namespace Workflow.Api
                         sp => sp.GetRequiredService<ConnectionMultiplexer>()));
 
             //-------- Hot Chocolate -----------//
+
+            //-------- MassTransit -----------//
+
+            services.AddMassTransit(x =>
+            {
+                x.SetSnakeCaseEndpointNameFormatter();
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host($"rabbitmq://localhost/", configurator =>
+                    {
+                        configurator.Username("guest");
+                        configurator.Password("guest");
+                    });
+
+                    cfg.ClearMessageDeserializers();
+                    cfg.UseRawJsonSerializer();
+                    //cfg.UseHealthCheck(context);
+                    cfg.ConfigureEndpoints(context, SnakeCaseEndpointNameFormatter.Instance);
+
+                    cfg.ReceiveEndpoint("TestQueue", e =>
+                    {
+                        e.Consumer<ProjectWorkflowConsumer>();
+                    });
+                });
+                //x.AddConsumer<TestConsumer>();
+            });
+
+            services.AddMassTransitHostedService();
+
+            //-------- MassTransit -----------//
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

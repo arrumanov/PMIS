@@ -10,9 +10,12 @@ using ProjectPortfolio.CrossCutting.Extensions;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper.Internal;
+using CrossCutting;
+using MassTransit;
 using ProjectPortfolio.Infrastructure.ServiceBus;
 using ProjectPortfolio.Application.Commands.Project;
 using ProjectPortfolio.Application.MessageHandler;
+using ProjectPortfolio.CrossCutting;
 using ProjectPortfolio.Domain.Model;
 
 namespace ProjectPortfolio.Domain.Service.CommandHandler
@@ -23,21 +26,27 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
                                          IRequestHandler<RemoveUserProjectCommand, ProjectUserMessage>
     {
         private readonly IUnitOfWork _UnitOfWork;
-        private readonly IServiceBus _Bus;
+        //private readonly IServiceBus _Bus;
+        private readonly IPublishEndpoint _PublishEndpoint;
+        private readonly ISendEndpointProvider _SendEndpointProvider;
         private readonly IProjectRepository _ProjectRepository;
         private readonly IDictionaryValueRepository _DictionaryValueRepository;
         private readonly IUserRepository _UserRepository;
         private readonly IMapper _Mapper;
 
         public ProjectCommandHandler(IUnitOfWork unitOfWork,
-                                     IServiceBus bus,
+                                     //IServiceBus bus,
+                                     IPublishEndpoint publishEndpoint,
+                                     ISendEndpointProvider sendEndpointProvider,
                                      IProjectRepository projectRepository,
                                      IDictionaryValueRepository dictionaryValueRepository,
                                      IUserRepository userRepository,
                                      IMapper mapper)
         {
             _UnitOfWork = unitOfWork;
-            _Bus = bus;
+            //_Bus = bus;
+            _PublishEndpoint = publishEndpoint;
+            _SendEndpointProvider = sendEndpointProvider;
             _ProjectRepository = projectRepository;
             _DictionaryValueRepository = dictionaryValueRepository;
             _UserRepository = userRepository;
@@ -95,7 +104,14 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
             var response = projectDomain.ToQueryModel<Query.Project>(_Mapper);
             publishMessage.SetData(response);
 
-            await _Bus.SendMessage(publishMessage);
+            //await _Bus.SendMessage(publishMessage);
+            await _SendEndpointProvider.Send(publishMessage, cancellationToken);
+
+            await _PublishEndpoint.Publish<ProjectCreated>(new
+            {
+                Id = project.Id,
+                Name = project.Name
+            }, cancellationToken);
 
             #endregion
 
@@ -126,9 +142,9 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
                 Project = projectDomain.ToQueryModel<Query.Project>(_Mapper),
                 User = userDomain.ToQueryModel<UserQuery.User>(_Mapper)
             };
-            addUserProjectMessage.SetData(response); 
+            addUserProjectMessage.SetData(response);
 
-            await _Bus.SendMessage(addUserProjectMessage);
+            await _SendEndpointProvider.Send(addUserProjectMessage, cancellationToken);
 
             #endregion
 
@@ -161,7 +177,7 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
             };
             addUserProjectMessage.SetData(response);
 
-            await _Bus.SendMessage(addUserProjectMessage);
+            await _SendEndpointProvider.Send(addUserProjectMessage, cancellationToken);
 
             #endregion
 
@@ -191,7 +207,7 @@ namespace ProjectPortfolio.Domain.Service.CommandHandler
             var response = projectDomain.ToQueryModel<Query.Project>(_Mapper);
             publishMessage.SetData(response);
 
-            await _Bus.SendMessage(publishMessage);
+            await _SendEndpointProvider.Send(publishMessage, cancellationToken);
 
             #endregion
 

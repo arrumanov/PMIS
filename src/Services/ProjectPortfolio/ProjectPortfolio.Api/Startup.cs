@@ -1,3 +1,5 @@
+using MassTransit;
+using MassTransit.Definition;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -76,6 +78,40 @@ namespace ProjectPortfolio.Api
             services.RegisterLogging(Configuration);
 
             //-------- Serilog -----------//
+
+            //-------- MassTransit -----------//
+
+            services.AddMassTransit(x =>
+            {
+                x.SetSnakeCaseEndpointNameFormatter();
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host($"rabbitmq://localhost/", configurator =>
+                    {
+                        configurator.Username("guest");
+                        configurator.Password("guest");
+                    });
+
+                    cfg.ClearMessageDeserializers();
+                    cfg.UseRawJsonSerializer();
+                    //cfg.UseHealthCheck(context);
+                    cfg.ConfigureEndpoints(context, SnakeCaseEndpointNameFormatter.Instance);
+
+                    cfg.ReceiveEndpoint("TestQueue2", e =>
+                    {
+                        var sp = services.BuildServiceProvider();
+                        var subscriber = sp.GetService<ISubscribe>();
+                        e.Handler<Message>(ctx => subscriber.HandleMessage(ctx.Message));
+
+                        EndpointConvention.Map<Message>(e.InputAddress);
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
+            //-------- MassTransit -----------//
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -69,7 +69,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission.Infrastructure",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflow", "Workflow", "{A4329ED6-9C91-4B50-8E9F-EF59D13B4987}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workflow.Api", "src\Services\Workflow\Workflow.Api\Workflow.Api.csproj", "{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workflow.Api", "src\Services\Workflow\Workflow.Api\Workflow.Api.csproj", "{8EAABD10-CE2E-441A-BFD2-3CD491AE5074}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
