@@ -1,0 +1,35 @@
+@import (reference) 'theme/index.less';
+
+.header {
+  display: flex;
+  align-items: center;
+  background-color: @component-background;
+  height: 100%;
+  padding: @padding-xs @padding-md;
+  flex: 0 0 0;
+}
+.path {
+  flex: 1 1 auto;
+}
+.logo {
+  height: 24px;
+}
+.title {
+  color: @primary-color;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.actions {
+  flex: 0 0 auto;
+  padding: @padding-xs;
+}
+.large {
+  &.header {
+    padding: @padding-sm @padding-md;
+  }
+}
+.small {
+  &.header {
+    padding: @padding-xss @padding-sm;
+  }
+}

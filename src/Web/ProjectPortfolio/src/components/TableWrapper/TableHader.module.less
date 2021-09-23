@@ -1,0 +1,31 @@
+@import (reference) 'theme/index.less';
+
+.title {
+  padding: @padding-sm;
+  border-bottom: 1px solid @border-color-split;
+  display: flex;
+  align-items: center;
+
+  & .text {
+    color: @primary-color;
+    margin: 0;
+  }
+}
+
+.titleBlock {
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+}
+
+.large {
+  &.title {
+    padding: @padding-md;
+  }
+}
+
+.small {
+  &.title {
+    padding: @padding-xs;
+  }
+}

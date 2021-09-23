@@ -1,0 +1,9 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "complexity": ["warn", 10],
+    "react/jsx-no-bind": "warn",
+    "no-shadow": "warn",
+    "no-restricted-globals": "warn"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "components": {
+    "Size": {
+      "small": "Мелкий",
+      "middle": "Средний",
+      "large": "Крупный"
+    },
+    "Filter": {
+      "titlte": "Фильтр",
+      "reset": "Сбросить",
+      "apply": "Применить",
+      "configure": "Настроить"
+    },
+    "Header": {
+      "title": "Демо",
+      "profile": "Профиль",
+      "settings": "Настройки",
+      "out": "Выйти"
+    },
+    "Menu": {
+      "collapse": "Свернуть",
+      "expand": "Развернуть"
+    },
+    "TableConfig": {
+      "title": "Настройка таблицы"
+    },
+    "MultiPanel": {
+      "info_0": "{{count}} строка выделена",
+      "info_1": "{{count}} строки выделено",
+      "info_2": "{{count}} строк выделено"
+    }
+  },
+  "menu": {
+    "dashboard": "Дашборд",
+    "main": "Основное",
+    "minimal": "Минимальная таблица",
+    "simple": "Простая таблица",
+    "workflow": "Действия из workflow",
+    "multi": "Мультивыбор",
+    "master": "Мастер детали",
+    "admin": "Настройки"
+  }
+}

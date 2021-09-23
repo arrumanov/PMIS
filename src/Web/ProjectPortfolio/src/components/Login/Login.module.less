@@ -1,0 +1,44 @@
+@import (reference) 'theme/index.less';
+
+.root {
+  height: 100%;
+  display: flex;
+}
+.left {
+  background: url('theme/res/login_bg.png') center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex: 1 1 auto;
+}
+.left > div {
+  height: 100%;
+  backdrop-filter: saturate(0.15) contrast(1.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15vh;
+}
+.right {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 400px;
+}
+.title {
+  color: @primary-color !important;
+}
+.form {
+  width: 20rem;
+  margin: auto;
+}
+.label {
+  margin: @padding-sm 0;
+  display: block;
+  font-weight: bold;
+}
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  padding: @padding-xs 0;
+}

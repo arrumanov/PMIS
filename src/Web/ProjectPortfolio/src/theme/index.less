@@ -1,0 +1,82 @@
+@import '~antd/dist/antd.less';
+@import '~@st/fpi/dist/Styles/index.less';
+
+// override antd variables
+@primary-color: #232e4a;
+@form-vertical-label-padding: 0;
+@border-radius-base: 4px;
+@menu-dark-bg: transparent;
+@menu-dark-submenu-bg: transparent;
+@menu-dark-item-active-bg: #ffffff25;
+@table-selected-row-bg: darken(@component-background, 10%);
+@table-padding-vertical: 12px;
+@table-padding-horizontal: 12px;
+@red-base: #ed524a;
+@green-base: #54cc86;
+@avatar-bg: #b9bcc5;
+
+// override antd classes
+.ant-menu-submenu-popup {
+  background-color: @primary-color !important;
+}
+.ant-tabs-content {
+  height: inherit;
+}
+.ant-table-content {
+  overflow: auto;
+}
+.ant-table-pagination.ant-pagination {
+  margin: @margin-md !important;
+}
+
+/* Override antd styles for Modal */
+.ant-modal-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.ant-modal {
+  max-height: calc(100% - 120px);
+  top: 0 !important;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+  margin: auto;
+}
+.ant-modal-header,
+.ant-modal-footer {
+  flex: 0 0 auto;
+}
+.ant-modal-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+}
+.ant-modal-body {
+  overflow: auto;
+  flex-grow: 1;
+}
+
+// base styles
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}

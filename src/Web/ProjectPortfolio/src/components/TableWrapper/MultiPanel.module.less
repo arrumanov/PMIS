@@ -1,0 +1,25 @@
+@import (reference) 'theme/index.less';
+
+.panel {
+  padding: @padding-xs @padding-md;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid @border-color-split;
+  background: @descriptions-bg;
+}
+
+.text {
+  line-height: @height-base;
+}
+
+.small {
+  & .text {
+    line-height: @height-sm;
+  }
+}
+
+.large {
+  & .text {
+    line-height: @height-lg;
+  }
+}
