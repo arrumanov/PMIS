@@ -28,7 +28,7 @@ namespace Workflow.Api.Bpmn
             try
             {
                 await camunda.Deployments.Create(
-                    "HireHeroes Deployment",
+                    "Project Workflow Deployment",
                     true,
                     true,
                     null,

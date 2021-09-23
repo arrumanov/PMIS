@@ -14,7 +14,7 @@ namespace Workflow.Api.Domain
     {
         public class Query : IRequest<ICollection<TaskPayload>>
         {
-            public string SalesmanLogin { get; set; }
+            public string UserLogin { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, ICollection<TaskPayload>>
@@ -30,7 +30,7 @@ namespace Workflow.Api.Domain
 
             public async Task<ICollection<TaskPayload>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var tasks = await bpmnService.GetTasksForCandidateGroup("Sales", request.SalesmanLogin);
+                var tasks = await bpmnService.GetTasksForCandidateGroup("Sales", request.UserLogin);
                 var processIds = tasks.Select(t => t.ProcessInstanceId).ToList();
 
                 var projects = await db.Projects

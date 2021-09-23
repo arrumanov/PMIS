@@ -20,7 +20,7 @@ namespace Workflow.Api.Graph.Project.Query
         {
             var tasks = await bus.Send(new GetProjectTasks.Query
             {
-                SalesmanLogin = "" //User.Identity.Name
+                UserLogin = "" //User.Identity.Name
             });
             return tasks;
         }

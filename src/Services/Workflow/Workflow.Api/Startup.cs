@@ -100,7 +100,7 @@ namespace Workflow.Api
                     //cfg.ConfigureEndpoints(context, SnakeCaseEndpointNameFormatter.Instance);
                     cfg.ConfigureEndpoints(context);
 
-                    //cfg.ReceiveEndpoint("ProjectCreatedQueue", e =>
+                    //cfg.ReceiveEndpoint("ProjectCreatedWorkflowQueue", e =>
                     //{
                     //    e.Consumer<ProjectWorkflowConsumer>();
                     //});
