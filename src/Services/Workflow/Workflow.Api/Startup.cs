@@ -77,7 +77,10 @@ namespace Workflow.Api
 
             services.AddMassTransit(x =>
             {
-                x.SetSnakeCaseEndpointNameFormatter();
+                //https://masstransit-project.com/usage/containers/#bus-configuration
+                //x.SetSnakeCaseEndpointNameFormatter();
+
+                x.AddConsumer<ProjectWorkflowConsumer>(typeof(ProjectWorkflowConsumerDefinition));
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
@@ -87,17 +90,21 @@ namespace Workflow.Api
                         configurator.Password("guest");
                     });
 
+                    //https://masstransit-project.com/architecture/encrypted-messages.html#unencrypted-message
                     cfg.ClearMessageDeserializers();
+                    //https://masstransit-project.com/releases/v7.1.8.html#raw-json-message-headers
                     cfg.UseRawJsonSerializer();
+                    // configure health checks for this bus instance
                     //cfg.UseHealthCheck(context);
-                    cfg.ConfigureEndpoints(context, SnakeCaseEndpointNameFormatter.Instance);
+                    //https://masstransit-project.com/usage/containers/#bus-configuration
+                    //cfg.ConfigureEndpoints(context, SnakeCaseEndpointNameFormatter.Instance);
+                    cfg.ConfigureEndpoints(context);
 
-                    cfg.ReceiveEndpoint("TestQueue", e =>
-                    {
-                        e.Consumer<ProjectWorkflowConsumer>();
-                    });
+                    //cfg.ReceiveEndpoint("ProjectCreatedQueue", e =>
+                    //{
+                    //    e.Consumer<ProjectWorkflowConsumer>();
+                    //});
                 });
-                //x.AddConsumer<TestConsumer>();
             });
 
             services.AddMassTransitHostedService();

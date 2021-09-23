@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Camunda.Api.Client.UserTask;
+using HotChocolate;
+using HotChocolate.Types;
 using Workflow.Api.Bpmn;
 
 namespace Workflow.Api.Graph.Project.Types
@@ -14,8 +16,8 @@ namespace Workflow.Api.Graph.Project.Types
         public string TaskName { get; set; }
 
         public string Assignee { get; set; }
-
-        public Guid? ProjectId { get; set; }
+        
+        public string ProjectId { get; set; }
 
         public string RequestedSuperpower { get; set; }
 
@@ -31,7 +33,7 @@ namespace Workflow.Api.Graph.Project.Types
                 TaskType = task.TaskDefinitionKey,
                 TaskName = task.Name,
                 Assignee = task.Assignee,
-                ProjectId = project?.Id,
+                ProjectId = project?.Id.ToString(),
                 ProjectStatus = project?.Status.ToString(),
                 Actions = task.AvailableActions()
             };
