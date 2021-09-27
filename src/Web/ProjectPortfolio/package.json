@@ -22,6 +22,7 @@
     "watchTests": "jest --config --watch"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.13",
     "@st/fpi": "^4.0.4",
     "@st/unified-core": "^2.0.37",
     "@stomp/stompjs": "^5.4.4",
@@ -33,6 +34,7 @@
     "core-js": "^3.8.0",
     "file-saver": "^2.0.5",
     "first-di": "^0.1.29",
+    "graphql": "^15.6.0",
     "i18next": "^19.8.4",
     "i18next-xhr-backend": "^3.2.2",
     "immutability-helper": "^3.1.1",
@@ -55,6 +57,7 @@
     "@types/classnames": "^2.2.10",
     "@types/enzyme": "^3.10.7",
     "@types/file-saver": "^2.0.1",
+    "@types/graphql": "^14.5.0",
     "@types/jest": "^25.2.3",
     "@types/lodash": "^4.14.165",
     "@types/node": "^13.13.34",
@@ -67,6 +70,7 @@
     "@types/sockjs-client": "^1.5.0",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
+    "apollo": "^2.33.6",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.1",
     "css-modules-typescript-loader": "^4.0.1",

@@ -17,6 +17,11 @@ type StructItem = {
 
 const struct: StructItem[] = [
   {
+    code: 'projects',
+    icon: 'DashboardOutlined',
+    route: Routes.PROJECTS,
+  },
+  {
     code: 'dashboard',
     icon: 'DashboardOutlined',
     route: Routes.DASHBOARD,

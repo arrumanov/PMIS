@@ -16,6 +16,16 @@ namespace ApiGateways.Gql
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("DefaultPolicy", builder =>
+                {
+                    builder.AllowAnyHeader()
+                        .WithMethods("GET", "POST")
+                        .WithOrigins("http://localhost:1234");
+                });
+            });
+
             //Настройки при запуске в IIS
             services.AddHttpClient(Projects, c => c.BaseAddress = new Uri("https://localhost:44342/graphql"));
             services.AddHttpClient(Dogovors, c => c.BaseAddress = new Uri("https://localhost:44343/graphql"));
@@ -54,6 +64,9 @@ namespace ApiGateways.Gql
             }
 
             app.UseRouting();
+
+            // подключаем CORS
+            app.UseCors("DefaultPolicy");
 
             app.UseEndpoints(endpoints =>
             {

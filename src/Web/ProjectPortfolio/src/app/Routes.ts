@@ -8,4 +8,5 @@ export const Routes = {
   WORKFLOW: 'Workflow',
   MULTI: 'Multi',
   MASTER: 'Master',
+  PROJECTS: 'Projects',
 };

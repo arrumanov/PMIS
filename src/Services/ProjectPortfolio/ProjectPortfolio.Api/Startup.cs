@@ -34,6 +34,7 @@ namespace ProjectPortfolio.Api
             services.Configure<DatabaseConfiguration>(Configuration.GetSection("ConnectionStrings"));
 
             services.AddSingleton(ConnectionMultiplexer.Connect("localhost:7000"));
+            
 
             services.AddControllers();
 
@@ -125,7 +126,7 @@ namespace ProjectPortfolio.Api
             //-------- Hot Chocolate -----------//
 
             app.UseRouting();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGraphQL();

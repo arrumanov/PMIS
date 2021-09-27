@@ -14,6 +14,7 @@ const MasterTableModule = lazy(() => import('modules/masterTable'));
 const WFTableModule = lazy(() => import('modules/wfTable'));
 const MultiTableModule = lazy(() => import('modules/multiTable'));
 const MinTableModule = lazy(() => import('modules/minimalTable'));
+const ProjectsModule = lazy(() => import('modules/projects'));
 
 export const AppBody = observer(() => {
   useEffect(() => {
@@ -32,13 +33,14 @@ export const AppBody = observer(() => {
         <div id="content">
           <Suspense fallback={<Spin className="spinner" style={{ margin: 'auto' }} />}>
             <Switch>
+              <Route exact path={`/${Routes.PROJECTS}`} component={ProjectsModule} />
               <Route exact path={`/${Routes.DASHBOARD}`} component={DashboardModule} />
               <Route exact path={`/${Routes.SIMPLE}`} component={SimpleTableModule} />
               <Route exact path={`/${Routes.MINIMAL}`} component={MinTableModule} />
               <Route exact path={`/${Routes.MASTER}`} component={MasterTableModule} />
               <Route exact path={`/${Routes.WORKFLOW}`} component={WFTableModule} />
               <Route exact path={`/${Routes.MULTI}`} component={MultiTableModule} />
-              <Redirect to={`/${Routes.DASHBOARD}`} />
+              <Redirect to={`/${Routes.PROJECTS}`} />
             </Switch>
           </Suspense>
         </div>
