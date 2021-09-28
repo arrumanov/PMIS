@@ -2,9 +2,9 @@
 
 namespace Workflow.Api.Graph.Project.Types
 {
-    public class ProjectFilterInputType : FilterInputType<Domain.Project>
+    public class ProjectFilterInputType : FilterInputType<Domain.ProjectWf>
     {
-        protected override void Configure(IFilterInputTypeDescriptor<Domain.Project> descriptor)
+        protected override void Configure(IFilterInputTypeDescriptor<Domain.ProjectWf> descriptor)
         {
             descriptor.Ignore(t => t.Id);
         }

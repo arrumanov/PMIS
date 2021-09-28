@@ -12,6 +12,7 @@ namespace Workflow.Api.Domain
     {
         public class Command : IRequest<Unit>
         {
+            public Guid ObjectWfId { get; set; }
             public Guid ProjectId { get; set; }
         }
 
@@ -28,12 +29,12 @@ namespace Workflow.Api.Domain
             {
                 using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-                var project = await db.Projects.FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken);
+                var projectWf = await db.ProjectWfs.FirstOrDefaultAsync(p => p.Id == request.ObjectWfId, cancellationToken);
 
-                var (notificationText, targetGroup) = project.Status switch
+                var (notificationText, targetGroup) = projectWf.Status switch
                 {
                     ProjectStatus.Rejected =>
-                        ($"Your project {project.Id} be rejected", "User"),
+                        ($"Your projectWf {projectWf.Id} be rejected", "User"),
                     _ =>
                         ("", "")
                 };

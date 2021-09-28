@@ -2,20 +2,24 @@
 
 namespace Workflow.Api.Domain
 {
-    public class Project
+    public class ProjectWf
     {
         public Guid Id { get; }
         public ProjectStatus Status { get; protected set; }
         public string ProcessInstanceId { get; private set; }
+        public Guid ObjectId { get; set; }
+        public string ObjectName { get; set; }
 
-        public Project(string name)
+        public ProjectWf(Guid objectId, string objectName)
         {
             Id = Guid.NewGuid();
             Status = ProjectStatus.New;
             ProcessInstanceId = null;
+            ObjectId = objectId;
+            ObjectName = objectName;
         }
 
-        protected Project()
+        protected ProjectWf()
         {
         }
 

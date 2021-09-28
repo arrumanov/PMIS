@@ -20,7 +20,8 @@ namespace Workflow.Api.Graph.Project.Mutation
         {
             await bus.Send(new ProjectNew.Command
             {
-                ProjectId = Guid.NewGuid().ToString()
+                ProjectId = Guid.NewGuid(),
+                ProjectName = string.Empty
             });
 
             return new TaskPayload();
@@ -34,7 +35,8 @@ namespace Workflow.Api.Graph.Project.Mutation
         {
             await bus.Send(new ProjectPrepared.Command
             {
-                ProjectId = input.ProjectId.ToString(),
+                ObjectWfId = input.ObjectWfId,
+                ProjectId = input.ObjectId,
                 TaskId = input.TaskId
             });
 
@@ -49,7 +51,8 @@ namespace Workflow.Api.Graph.Project.Mutation
         {
             await bus.Send(new ProjectAccepted.Command
             {
-                ProjectId = input.ProjectId.ToString(),
+                ObjectWfId = input.ObjectWfId,
+                ProjectId = input.ObjectId,
                 TaskId = input.TaskId
             });
 
@@ -64,7 +67,8 @@ namespace Workflow.Api.Graph.Project.Mutation
         {
             await bus.Send(new CreateProjectInJira.Command
             {
-                ProjectId = input.ProjectId,
+                ObjectWfId = input.ObjectWfId,
+                ProjectId = input.ObjectId,
                 TaskId = input.TaskId
             });
 
@@ -79,7 +83,8 @@ namespace Workflow.Api.Graph.Project.Mutation
         {
             await bus.Send(new ProjectReject.Command
             {
-                ProjectId = input.ProjectId,
+                ObjectWfId = input.ObjectWfId,
+                ProjectId = input.ObjectId,
                 TaskId = input.TaskId
             });
 
@@ -94,7 +99,7 @@ namespace Workflow.Api.Graph.Project.Mutation
         {
             await bus.Send(new MarkProjectCreatedInJira.Command
             {
-                ProjectId = input.ProjectId
+                ProjectId = input.ObjectId
             });
 
             return new TaskPayload();

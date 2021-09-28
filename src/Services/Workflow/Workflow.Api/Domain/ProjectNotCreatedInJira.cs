@@ -12,6 +12,7 @@ namespace Workflow.Api.Domain
     {
         public class Command : IRequest<Guid>
         {
+            public Guid ObjectWfId { get; set; }
             public Guid ProjectId { get; set; }
         }
 
@@ -28,15 +29,15 @@ namespace Workflow.Api.Domain
             {
                 using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-                var project = await db.Projects.FirstAsync(p => p.Id == request.ProjectId, cancellationToken);
+                var projectWf = await db.ProjectWfs.FirstAsync(p => p.Id == request.ObjectWfId, cancellationToken);
 
-                project.Accept();
+                projectWf.Accept();
 
                 await db.SaveChangesAsync(cancellationToken);
 
                 tx.Complete();
 
-                return project.Id;
+                return projectWf.Id;
             }
         }
     }

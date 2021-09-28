@@ -41,13 +41,15 @@ namespace Workflow.Api.Bpmn
             }
         }
 
-        public async Task<string> StartProcessFor(Project project)
+        public async Task<string> StartProcessFor(ProjectWf projectWf)
         {
             var processParams = new StartProcessInstance()
-                .SetVariable("projectId", VariableValue.FromObject(project.Id.ToString()))
-                .SetVariable("projectStatus", VariableValue.FromObject(project.Status.ToString()));
+                .SetVariable("objectWfId", VariableValue.FromObject(projectWf.Id.ToString()))
+                .SetVariable("objectId", VariableValue.FromObject(projectWf.ObjectId.ToString()))
+                .SetVariable("objectName", VariableValue.FromObject(projectWf.ObjectName))
+                .SetVariable("objectStatus", VariableValue.FromObject(projectWf.Status.ToString()));
 
-            processParams.BusinessKey = project.Id.ToString();
+            processParams.BusinessKey = projectWf.Id.ToString();
 
             var processStartResult = await
                 camunda.ProcessDefinitions.ByKey("Process_Project").StartProcessInstance(processParams);
@@ -86,20 +88,20 @@ namespace Workflow.Api.Bpmn
             return task;
         }
 
-        public async Task<UserTaskInfo> CompleteTask(string taskId, Project project)
+        public async Task<UserTaskInfo> CompleteTask(string taskId, ProjectWf projectWf)
         {
             var task = await camunda.UserTasks[taskId].Get();
             var completeTask = new CompleteTask()
-                .SetVariable("projectStatus", VariableValue.FromObject(project.Status.ToString()));
+                .SetVariable("objectStatus", VariableValue.FromObject(projectWf.Status.ToString()));
             await camunda.UserTasks[taskId].Complete(completeTask);
             return task;
         }
 
-        public async Task SendMessageInvoicePaid(Project project)
+        public async Task SendMessageInvoicePaid(ProjectWf projectWf)
         {
             await camunda.Messages.DeliverMessage(new CorrelationMessage
             {
-                BusinessKey = project.Id.ToString(),
+                BusinessKey = projectWf.Id.ToString(),
                 MessageName = "Message_ProjectCreatedInJira"
             });
         }

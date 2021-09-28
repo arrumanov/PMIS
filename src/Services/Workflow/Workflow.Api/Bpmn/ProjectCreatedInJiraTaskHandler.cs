@@ -20,7 +20,8 @@ namespace Workflow.Api.Bpmn
         {
             await bus.Send(new ProjectCreatedInJira.Command
             {
-                ProjectId = Guid.Parse(externalTask.Variables["projectId"].AsString())
+                ObjectWfId = Guid.Parse(externalTask.Variables["objectWfId"].AsString()),
+                ProjectId = Guid.Parse(externalTask.Variables["objectId"].AsString())
             });
 
             return new CompleteResult { };

@@ -13,7 +13,8 @@ namespace Workflow.Api.Domain
     {
         public class Command : IRequest<Unit>
         {
-            public string ProjectId { get; set; }
+            public Guid ObjectWfId { get; set; }
+            public Guid ProjectId { get; set; }
             public string TaskId { get; set; }
         }
 
@@ -32,15 +33,15 @@ namespace Workflow.Api.Domain
             {
                 using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-                var project = await db.Projects.FirstAsync(p => p.Id.ToString() == request.ProjectId, cancellationToken);
+                var projectWf = await db.ProjectWfs.FirstAsync(p => p.Id == request.ObjectWfId, cancellationToken);
 
-                project.Prepare();
+                projectWf.Prepare();
 
                 await db.SaveChangesAsync(cancellationToken);
 
                 //необходимо обязательно удалять Task из Camunda при окончании Пользовательского перехода,
                 //иначе не даст перевести в следующий статус в Camunda
-                await bpmnService.CompleteTask(request.TaskId, project);
+                await bpmnService.CompleteTask(request.TaskId, projectWf);
 
                 tx.Complete();
 

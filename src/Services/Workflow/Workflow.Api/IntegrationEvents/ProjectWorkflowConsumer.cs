@@ -23,7 +23,8 @@ namespace Workflow.Api.IntegrationEvents
             {
                 await _Bus.Send(new ProjectNew.Command
                 {
-                    ProjectId = context.Message.Id.ToString()
+                    ProjectId = context.Message.Id,
+                    ProjectName = context.Message.Name
                 });
                 Console.WriteLine("DWHConsumer successful");
             }

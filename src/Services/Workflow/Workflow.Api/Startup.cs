@@ -41,7 +41,7 @@ namespace Workflow.Api
                 ;
 
             services.AddMediatR(typeof(Startup));
-            services.AddDataAccess(Configuration.GetConnectionString("HeroesDb"));
+            services.AddDataAccess(Configuration.GetConnectionString("WorkflowDb"));
             services.AddDbInitializer();
             services.AddCamunda(appSettings.CamundaRestApiUri);
 

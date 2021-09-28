@@ -33,14 +33,14 @@ namespace Workflow.Api.Domain
                 var tasks = await bpmnService.GetTasksForCandidateGroup("Sales", request.UserLogin);
                 var processIds = tasks.Select(t => t.ProcessInstanceId).ToList();
 
-                var projects = await db.Projects
+                var projectWfs = await db.ProjectWfs
                     .Where(p => processIds.Contains(p.ProcessInstanceId))
                     .ToListAsync(cancellationToken: cancellationToken);
-                var processIdToProjectMap = projects.ToDictionary(o => o.ProcessInstanceId, o => o);
+                var processIdToProjectMap = projectWfs.ToDictionary(o => o.ProcessInstanceId, o => o);
 
                 return (from task in tasks
-                        let relatedProject = processIdToProjectMap.ContainsKey(task.ProcessInstanceId) ? processIdToProjectMap[task.ProcessInstanceId] : null
-                        select TaskPayload.FromEntity(task, relatedProject))
+                        let relatedProjectWf = processIdToProjectMap.ContainsKey(task.ProcessInstanceId) ? processIdToProjectMap[task.ProcessInstanceId] : null
+                        select TaskPayload.FromEntity(task, relatedProjectWf))
                     .ToList();
             }
         }

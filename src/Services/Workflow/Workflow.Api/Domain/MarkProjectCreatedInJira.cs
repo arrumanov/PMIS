@@ -13,6 +13,7 @@ namespace Workflow.Api.Domain
     {
         public class Command : IRequest<Guid>
         {
+            public Guid ObjectWfId { get; set; }
             public Guid ProjectId { get; set; }
         }
 
@@ -30,12 +31,12 @@ namespace Workflow.Api.Domain
             public async Task<Guid> Handle(Command request, CancellationToken cancellationToken)
             {
                 using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-                var project = await db.Projects.FirstAsync(i => i.Id == request.ProjectId, cancellationToken);
-                project.MarkProjectCreatedInJira();
+                var projectWf = await db.ProjectWfs.FirstAsync(i => i.Id == request.ObjectWfId, cancellationToken);
+                projectWf.MarkProjectCreatedInJira();
                 await db.SaveChangesAsync(cancellationToken);
-                await bpmnService.SendMessageInvoicePaid(project);
+                await bpmnService.SendMessageInvoicePaid(projectWf);
                 tx.Complete();
-                return project.Id;
+                return projectWf.Id;
             }
         }
     }

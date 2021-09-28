@@ -12,7 +12,8 @@ namespace Workflow.Api.Domain
     {
         public class Command : IRequest<Unit>
         {
-            public string ProjectId { get; set; }
+            public Guid ProjectId { get; set; }
+            public string ProjectName { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Unit>
@@ -28,13 +29,13 @@ namespace Workflow.Api.Domain
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var newProject = new Project("");
+                var newProjectWf = new ProjectWf(request.ProjectId, request.ProjectName);
 
-                db.Projects.Add(newProject);
+                db.ProjectWfs.Add(newProjectWf);
                 await db.SaveChangesAsync(cancellationToken);
 
-                var processInstanceId = await bpmnService.StartProcessFor(newProject);
-                newProject.AssociateWithProcessInstance(processInstanceId);
+                var processInstanceId = await bpmnService.StartProcessFor(newProjectWf);
+                newProjectWf.AssociateWithProcessInstance(processInstanceId);
                 await db.SaveChangesAsync(cancellationToken);
 
                 return Unit.Value;

@@ -7,7 +7,7 @@ namespace Workflow.Api.DataAccess
 {
     public class WorkflowContext : DbContext
     {
-        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectWf> ProjectWfs { get; set; }
         public DbSet<Notification> Notifications { get; set; }
 
         public WorkflowContext(DbContextOptions options) : base(options)
@@ -26,9 +26,9 @@ namespace Workflow.Api.DataAccess
             base.OnModelCreating(modelBuilder);
         }
 
-        class ProjectConfiguration : IEntityTypeConfiguration<Project>
+        class ProjectConfiguration : IEntityTypeConfiguration<ProjectWf>
         {
-            public void Configure(EntityTypeBuilder<Project> modelBuilder)
+            public void Configure(EntityTypeBuilder<ProjectWf> modelBuilder)
             {
                 modelBuilder.HasKey(s => s.Id);
                 modelBuilder.Property(s => s.Status).HasConversion(new EnumToStringConverter<ProjectStatus>());
