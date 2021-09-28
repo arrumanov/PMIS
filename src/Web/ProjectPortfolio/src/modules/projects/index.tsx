@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { Button, Dropdown, Menu, Radio, Space } from 'antd';
+import { Spin, Button, Dropdown, Menu, Radio, Space } from 'antd';
 import { EllipsisOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react';
 import { RadioChangeEvent } from 'antd/lib/radio';
 
-import {useQuery} from '@apollo/client';
-import {Spin} from 'antd';
+import {gql, useMutation, useQuery} from '@apollo/client';
 
 import {GET_PROJECTS} from 'graphql/queries/GetProjects';
 import {GetProjects_projects, GetProjects} from 'graphql/queries/__generated__/GetProjects';
@@ -105,7 +104,7 @@ export default observer(() => {
     <Container>
       <SimpleTable
         store={store}
-        title="Projects"
+        title="Проекты"
         filterDefinition={filterDefinition}
         actions={headerActions}
         extra={headerExtra}

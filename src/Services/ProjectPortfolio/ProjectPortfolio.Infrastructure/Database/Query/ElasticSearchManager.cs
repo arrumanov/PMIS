@@ -42,7 +42,13 @@ namespace ProjectPortfolio.Infrastructure.Database.Query
 
         public async Task<IQueryable<T>> Get()
         {
-            var request = new SearchRequest<T>(_Index);
+            var request = new SearchRequest<T>(_Index)
+            //------- временно добавил. необходимо будет удалить------------//
+            {
+                From = 0,
+                Size = 100
+            };
+            //----------------------------------//
 
             var response = await _Client.SearchAsync<T>(request);
 

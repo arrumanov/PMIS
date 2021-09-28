@@ -7,12 +7,12 @@ const { Text } = Typography;
 
 export const userTableColumns: LocalColumnType<Project>[] = [
   {
-    title: 'Project ID',
+    title: 'ID проекта',
     dataIndex: 'id',
     width: 180,
   },
   {
-    title: 'Name',
+    title: 'Название',
     dataIndex: 'name',
     width: 250,
     render: (value: any, record: Project, index: number) => (
@@ -20,7 +20,7 @@ export const userTableColumns: LocalColumnType<Project>[] = [
     ),
   },
   {
-    title: 'Description',
+    title: 'Описание',
     dataIndex: 'description',
     width: 250,
   },

@@ -2,14 +2,18 @@ import { Page } from 'types';
 import { ATableStore } from './ATableStore';
 
 export abstract class ARemoteTableStore<T> extends ATableStore<T, Page<T>> {
+
+  //---------- кастыль. возможно есть решение лучше -----------------//
   protected dataGql?: T[];
 
   setDataGql(data: T[]){
     this.dataGql = data;
   }
+  //------------------------------------------------------------------//
 
   get data(): T[] {
-    return this.dataGql || [];
+    return this.dataPromise?.value?.content || [];
+    // return this.dataGql || []; //кастыль. возможно есть решение лучше
   }
 
   protected async getData() {
